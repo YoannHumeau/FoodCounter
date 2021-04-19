@@ -1,5 +1,7 @@
 using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Repositories.Implementations;
+using FoodCounter.Api.Service;
+using FoodCounter.Api.Service.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,8 @@ namespace FoodCounter.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<IAlimentService, AlimentService>();
 
             services.AddScoped<IAlimentRepository, AlimentRepository>();
         }
