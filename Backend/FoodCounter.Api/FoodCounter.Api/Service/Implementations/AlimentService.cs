@@ -1,6 +1,7 @@
 ﻿using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Service.Implementations
 {
@@ -13,9 +14,9 @@ namespace FoodCounter.Api.Service.Implementations
             _alimentRepository = alimentRepository;
         }
 
-        public IEnumerable<AlimentModel> GetAll()
+        public async Task<IEnumerable<AlimentModel>> GetAllAsync()
         {
-            var result = _alimentRepository.GetAll();
+            var result = await _alimentRepository.GetAllAsync();
 
             return result;
         }

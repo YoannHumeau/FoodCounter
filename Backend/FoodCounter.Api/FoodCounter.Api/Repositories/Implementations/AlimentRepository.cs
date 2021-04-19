@@ -7,9 +7,9 @@ namespace FoodCounter.Api.Repositories.Implementations
 {
     public class AlimentRepository : BaseRepository, IAlimentRepository
     {
-        public IEnumerable<Models.AlimentModel> GetAll()
+        public async Task<IEnumerable<Models.AlimentModel>> GetAllAsync()
         {
-            var result = _connection.GetAll<AlimentModel>();
+            var result = await _connection.GetAllAsync<AlimentModel>();
 
             return result;
         }

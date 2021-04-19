@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using FoodCounter.Api.Service;
+using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -21,11 +22,11 @@ namespace FoodCounter.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<AlimentModel> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var result =  _alimentService.GetAll();
+            var result = await _alimentService.GetAllAsync();
 
-            return result;
+            return Ok(result);
         }
     }
 }
