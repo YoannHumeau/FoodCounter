@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace FoodCounter.Api.Repositories
 {
     /// <summary>
-    /// Aliment repository
+    /// Aliment repository class
     /// </summary>
     public interface IAlimentRepository
     {
