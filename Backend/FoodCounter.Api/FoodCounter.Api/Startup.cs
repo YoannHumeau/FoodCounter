@@ -29,7 +29,7 @@ namespace FoodCounter.Api
 
             services.AddScoped<IAlimentRepository, AlimentRepository>();
 
-            services.AddScoped<DbAccess>(sp => new DbAccess("Data Source=test.db"));
+            services.AddScoped<DbAccess>(sp => new DbAccess(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
