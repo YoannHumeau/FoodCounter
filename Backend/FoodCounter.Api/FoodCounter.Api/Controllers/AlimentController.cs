@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using FoodCounter.Api.Service;
 using System.Threading.Tasks;
 using FoodCounter.Api.Resources;
-using Newtonsoft.Json;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -51,7 +50,7 @@ namespace FoodCounter.Api.Controllers
             var result = await _alimentService.GetOneByIdAsync(id);
 
             if (result == null)
-                return NotFound(JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentNotFound }));
+                return NotFound(new { Message = ResourceEn.AlimentNotFound });
 
             return Ok(result);
         }

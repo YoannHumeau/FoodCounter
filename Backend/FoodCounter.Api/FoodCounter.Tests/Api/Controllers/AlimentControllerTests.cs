@@ -69,7 +69,10 @@ namespace FoodCounter.Tests.Api.Controllers
 
             okObjectResult.Should().NotBeNull();
             okObjectResult.StatusCode.Should().Be(404);
-            okObjectResult.Value.Should().Be(JsonConvert.SerializeObject( new { Message = ResourceEn.AlimentNotFound } ));
+
+            // Put the content as a json and compare
+            JsonConvert.SerializeObject(okObjectResult.Value).Should().Be(
+                JsonConvert.SerializeObject( new { Message = ResourceEn.AlimentNotFound } ));
 
             _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
