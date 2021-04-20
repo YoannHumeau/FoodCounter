@@ -30,5 +30,13 @@ namespace FoodCounter.Api.Repositories.Implementations
 
             return result;
         }
+
+        /// <inheritdoc/>
+        public async Task<AlimentModel> GetOneByIdAsync(long id)
+        {
+            var result = await _connection.GetAsync<AlimentModel>(id);
+
+            return result;
+        }
     }
 }

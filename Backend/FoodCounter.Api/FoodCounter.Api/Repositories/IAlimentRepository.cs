@@ -10,9 +10,15 @@ namespace FoodCounter.Api.Repositories
     public interface IAlimentRepository
     {
         /// <summary>
-        /// Gett all the aliments
+        /// Get all the aliments
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of aliments</returns>
         public Task<IEnumerable<AlimentModel>> GetAllAsync();
+
+        /// <summary>
+        /// Get one aliment by id
+        /// </summary>
+        /// <returns>One aliment</returns>
+        public Task<AlimentModel> GetOneByIdAsync(long id);
     }
 }
