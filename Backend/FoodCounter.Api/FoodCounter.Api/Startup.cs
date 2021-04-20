@@ -1,3 +1,4 @@
+using FoodCounter.Api.DataAccess.DataAccess;
 using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Repositories.Implementations;
 using FoodCounter.Api.Service;
@@ -27,6 +28,8 @@ namespace FoodCounter.Api
             services.AddScoped<IAlimentService, AlimentService>();
 
             services.AddScoped<IAlimentRepository, AlimentRepository>();
+
+            services.AddScoped<DbAccess>(sp => new DbAccess("Data Source=test.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,13 +3,21 @@ using System.Data;
 
 namespace FoodCounter.Api.DataAccess.DataAccess
 {
+    /// <summary>
+    /// Database access class
+    /// </summary>
     public class DbAccess
     {
-        private readonly IDbConnection _connection;
-
+        /// <summary>
+        /// Connection to db
+        /// </summary>
         public IDbConnection Connection { get; set; }
 
-        public DbAccess(string connectionString = "Data Source=test.db")
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="connectionString">Connectio string</param>
+        public DbAccess(string connectionString)
         {
             var connection = new SqliteConnection(connectionString);
 
