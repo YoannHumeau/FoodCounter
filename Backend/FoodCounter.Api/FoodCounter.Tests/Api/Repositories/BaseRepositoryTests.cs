@@ -12,6 +12,7 @@ namespace FoodCounter.Tests.Api.Repositories
 {
     public class BaseRepositoryTests
     {
+        private string _connectionStringTest = "Data Source=test.db";
         public readonly DbAccess _dbAccess;
 
         /// <summary>
@@ -19,9 +20,7 @@ namespace FoodCounter.Tests.Api.Repositories
         /// </summary>
         public BaseRepositoryTests()
         {
-            var connectionString = "Data Source=test.db";
-
-            _dbAccess = new DbAccess(connectionString);
+            _dbAccess = new DbAccess(_connectionStringTest);
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace FoodCounter.Tests.Api.Repositories
             UpdateDatabase(scope.ServiceProvider);
 
             // Insert values in database
-            using (IDbConnection connection = new SqliteConnection("Data Source=test.db"))
+            using (IDbConnection connection = new SqliteConnection(_connectionStringTest))
             {
                 connection.Open();
 
