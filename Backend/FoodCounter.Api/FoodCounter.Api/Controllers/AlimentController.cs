@@ -1,9 +1,8 @@
-﻿using FoodCounter.Api.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using FoodCounter.Api.Service;
 using System.Threading.Tasks;
+using FoodCounter.Api.Resources;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -21,10 +20,29 @@ namespace FoodCounter.Api.Controllers
             _alimentService = alimentService;
         }
 
+        /// <summary>
+        /// Get all the aliments
+        /// </summary>
+        /// <returns>List of aliments</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await _alimentService.GetAllAsync();
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get one aliment by id
+        /// </summary>
+        /// <returns>One aliment</returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOneById([FromRoute] long id)
+        {
+            var result = await _alimentService.GetOneByIdAsync(id);
+
+            if (result == null)
+                return NotFound(new { Message = ResourceEn.AlimentNotFound });
 
             return Ok(result);
         }
