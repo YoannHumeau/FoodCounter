@@ -1,15 +1,11 @@
 ﻿using FluentAssertions;
-using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
-using FoodCounter.Api.Repositories.Implementations;
 using FoodCounter.Api.Service;
 using FoodCounter.Api.Service.Implementations;
 using Moq;
-using Moq.AutoMock;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
+using FoodCounter.Tests.ExampleDatas;
+using System.Linq;
 
 namespace FoodCounter.Tests.Api.Services
 {
@@ -27,24 +23,41 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void GetAllAliments_OK()
         {
-            var list = new List<AlimentModel>
-            {
-                new AlimentModel
-                {
-                    Id = 1,
-                    Name = "Aliment 1",
-                    Calories = 200,
-                    Barecode = null
-                }
-            };
-
-            _mockAlimentRepository.Setup(m => m.GetAllAsync()).ReturnsAsync(list);
+            _mockAlimentRepository.Setup(m => m.GetAllAsync()).ReturnsAsync(AlimentDatas.listAliments);
 
             var result = await _alimentService.GetAllAsync();
 
-            result.Should().BeEquivalentTo(list);
+            result.Should().BeEquivalentTo(AlimentDatas.listAliments);
 
             _mockAlimentRepository.Verify(x => x.GetAllAsync(), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneAlimentById_Ok()
+        {
+            int id = 2;
+
+            _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentDatas.listAliments.ElementAt(id - 1));
+
+            var result = await _alimentService.GetOneByIdAsync(id);
+
+            result.Should().BeEquivalentTo(AlimentDatas.listAliments.ElementAt(id - 1));
+
+            _mockAlimentRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneAlimentById_Bad_NotFound()
+        {
+            int id = 777;
+
+            _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+
+            var result = await _alimentService.GetOneByIdAsync(id);
+
+            result.Should().BeNull();
+
+            _mockAlimentRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
     }
 }
