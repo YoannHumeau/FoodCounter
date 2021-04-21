@@ -103,7 +103,7 @@ namespace FoodCounter.Tests.Api.Repositories
 
             // Delete the aliment
             var result = await _alimentRepository.DeleteAsync(id);
-            result.Should().Be(true);
+            result.Should().BeTrue();
 
             // Check the aliment is deleted
             var resultAfter = await _alimentRepository.GetOneByIdAsync(id);
@@ -132,7 +132,7 @@ namespace FoodCounter.Tests.Api.Repositories
 
             // Try to delete 
             var result = await _alimentRepository.DeleteAsync(id);
-            result.Should().Be(false);
+            result.Should().BeFalse();
 
             // Check that the other aliment still exists
             var resultOtherAfter = await _alimentRepository.GetOneByIdAsync(otherId + 1);
