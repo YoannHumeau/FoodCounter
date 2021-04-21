@@ -25,6 +25,8 @@ namespace FoodCounter.Api
         {
             services.AddControllers();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddScoped<IAlimentService, AlimentService>();
 
             services.AddScoped<IAlimentRepository, AlimentRepository>();
