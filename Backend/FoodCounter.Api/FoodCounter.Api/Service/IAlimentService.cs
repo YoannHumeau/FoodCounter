@@ -20,5 +20,11 @@ namespace FoodCounter.Api.Service
         /// </summary>
         /// <returns>One aliment</returns>
         public Task<AlimentModel> GetOneByIdAsync(long id);
+
+        /// <summary>
+        /// Get one aliment by name
+        /// </summary>
+        /// <returns>One aliment</returns>
+        public Task<AlimentModel> GetOneByNameAsync(string name);
     }
 }
