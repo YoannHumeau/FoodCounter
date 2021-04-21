@@ -22,9 +22,10 @@ namespace FoodCounter.Tests.Api.Repositories
 
             var result = await _alimentRepository.CreateAsync(AlimentDatas.newAliment);
 
-            AlimentDatas.newAliment.Id = 8;
+            result.Should().BeEquivalentTo(AlimentDatas.newAlimentDto);
 
-            result.Should().BeEquivalentTo(AlimentDatas.newAliment);
+            var resultCheck = await _alimentRepository.GetOneByIdAsync(AlimentDatas.newAlimentDto.Id);
+            resultCheck.Should().BeEquivalentTo(AlimentDatas.newAlimentDto);
         }
 
         [Fact]
