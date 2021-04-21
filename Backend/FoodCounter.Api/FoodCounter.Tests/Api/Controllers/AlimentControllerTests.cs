@@ -199,5 +199,11 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentService.Verify(m => m.DeleteAsync(id), Times.Once);
         }
+
+        [Fact]
+        public async void UpdateAliment_Ok()
+        {
+            // TODO : Update Tests
+        }
     }
 }
