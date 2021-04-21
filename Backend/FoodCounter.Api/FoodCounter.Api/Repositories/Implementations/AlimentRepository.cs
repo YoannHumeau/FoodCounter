@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace FoodCounter.Api.Repositories.Implementations
 {
@@ -22,6 +23,16 @@ namespace FoodCounter.Api.Repositories.Implementations
         public AlimentRepository(DbAccess db)
         {
             _connection = db.Connection;
+        }
+
+        /// <inheritdoc/>
+        public async Task<AlimentModel> CreateAsync(AlimentModel newAliment)
+        {
+            var resultCreationId = await _connection.InsertAsync<AlimentModel>(newAliment);
+
+            newAliment.Id = Convert.ToInt64(resultCreationId);
+
+            return newAliment;
         }
 
         /// <inheritdoc/>
