@@ -7,6 +7,9 @@ using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -80,6 +83,24 @@ namespace FoodCounter.Api.Controllers
 
             if (result == null)
                 return NotFound(new { Message = ResourceEn.AlimentNotFound });
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Update aliment
+        /// </summary>
+        /// <returns>Aliment updated</returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentUpdateModelDto updateAlimentDto)
+        {
+            if (_alimentService.GetOneByIdAsync(id) == null)
+                return NotFound(new { Message = ResourceEn.AlimentNotFound });
+
+            var updateAliment = _mapper.Map<AlimentModel>(updateAlimentDto);
+            updateAliment.Id = id;
+
+            var result = await _alimentService.UpdateAsync(updateAliment);
 
             return Ok(result);
         }

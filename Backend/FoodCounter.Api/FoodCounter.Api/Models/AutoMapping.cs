@@ -13,9 +13,10 @@ namespace FoodCounter.Api.Models
         /// </summary>
         public AutoMapping()
         {
-            // Tip : CreateMap < TSource, TDestination 
+            // Tip : CreateMap < TSource, TDestination > ()
 
             CreateMap<AlimentCreationModelDto, AlimentModel>();
+            CreateMap<AlimentUpdateModelDto, AlimentModel>();
         }
     }
 }
