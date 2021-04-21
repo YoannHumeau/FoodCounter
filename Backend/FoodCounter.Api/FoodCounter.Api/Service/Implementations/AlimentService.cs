@@ -52,5 +52,13 @@ namespace FoodCounter.Api.Service.Implementations
 
             return result;
         }
+
+        ///<inheritdoc/>
+        public async Task<bool> DeleteAsync(long id)
+        {
+            var result = await _alimentRepository.DeleteAsync(id);
+
+            return result;
+        }
     }
 }
