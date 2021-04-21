@@ -13,7 +13,7 @@ namespace FoodCounter.Api.Models
         /// Technical id
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Name of the aliment
