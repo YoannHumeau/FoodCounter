@@ -80,5 +80,13 @@ namespace FoodCounter.Tests.ExampleDatas
             Calories = newAliment.Calories,
             Barecode = newAliment.Barecode
         };
+
+        public static AlimentModel updateAliment = new AlimentModel
+        {
+            Id = 5,
+            Name = $"Aliment 5 Update",
+            Calories = 555,
+            Barecode = $"1234567890555"
+        };
     }
 }

@@ -111,6 +111,36 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public async void UpdateAliment_Ok()
+        {
+            int id = 5;
+            var updateAliment = AlimentDatas.updateAliment;
+
+            _mockAlimentRepository.Setup(m => m.UpdateAsync(updateAliment)).ReturnsAsync(updateAliment);
+
+            var result = await _alimentService.UpdateAsync(updateAliment);
+
+            result.Should().BeEquivalentTo(updateAliment);
+
+            _mockAlimentRepository.Verify(m => m.UpdateAsync(updateAliment), Times.Once);
+        }
+
+        [Fact]
+        public async void UpdateAliment_Bad_NotFound()
+        {
+            int id = 777;
+            var updateAliment = AlimentDatas.updateAliment;
+
+            _mockAlimentRepository.Setup(m => m.UpdateAsync(updateAliment)).ReturnsAsync(() => null);
+
+            var result = await _alimentService.UpdateAsync(updateAliment);
+
+            result.Should().BeNull();
+
+            _mockAlimentRepository.Verify(m => m.UpdateAsync(updateAliment), Times.Once);
+        }
+
+        [Fact]
         public async void DeleteAliment_Ok()
         {
             int id = 2;
