@@ -59,5 +59,34 @@ namespace FoodCounter.Tests.Api.Services
 
             _mockAlimentRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
+
+        [Fact]
+        public async void GetOneAlimentByName_Ok()
+        {
+            int id = 1;
+            var name = AlimentDatas.listAliments.ElementAt(id).Name;
+
+            _mockAlimentRepository.Setup(m => m.GetOneByNameAsync(name)).ReturnsAsync(AlimentDatas.listAliments.ElementAt(id));
+
+            var result = await _alimentService.GetOneByNameAsync(name);
+
+            result.Should().BeEquivalentTo(AlimentDatas.listAliments.ElementAt(id));
+
+            _mockAlimentRepository.Verify(x => x.GetOneByNameAsync(name), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneAlimentByName_Bad_NotFound()
+        {
+            string name = "Troll Name";
+
+            _mockAlimentRepository.Setup(m => m.GetOneByNameAsync(name)).ReturnsAsync(() => null);
+
+            var result = await _alimentService.GetOneByNameAsync(name);
+
+            result.Should().BeNull();
+
+            _mockAlimentRepository.Verify(x => x.GetOneByNameAsync(name), Times.Once);
+        }
     }
 }
