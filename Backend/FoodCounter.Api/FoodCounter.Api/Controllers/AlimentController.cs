@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 using FoodCounter.Api.Service;
 using System.Threading.Tasks;
 using FoodCounter.Api.Resources;
+using FoodCounter.Api.Models.Dto;
+using FoodCounter.Api.Models;
+using AutoMapper;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -15,17 +18,33 @@ namespace FoodCounter.Api.Controllers
     {
         private readonly ILogger<AlimentController> _logger;
         private readonly IAlimentService _alimentService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="alimentService"></param>
-        public AlimentController(ILogger<AlimentController> logger,
-            IAlimentService alimentService)
+        public AlimentController(ILogger<AlimentController> logger, IAlimentService alimentService,
+            IMapper mapper)
         {
             _logger = logger;
             _alimentService = alimentService;
+            _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Create aliment
+        /// </summary>
+        /// <returns>List of aliments</returns>
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(AlimentCreationModelDto newAlimentDto)
+        {
+            var newAliment = _mapper.Map<AlimentModel>(newAlimentDto);
+
+            var result = await _alimentService.CreateAsync(newAliment);
+
+            return Ok(result);
         }
 
         /// <summary>
