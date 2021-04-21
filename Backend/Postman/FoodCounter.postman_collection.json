@@ -9,7 +9,199 @@
 			"name": "Aliments",
 			"item": [
 				{
-					"name": "AlimentsGetAll",
+					"name": "Errors",
+					"item": [
+						{
+							"name": "AlimentCreateBadMissName",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"calories\": 456,\r\n    \"barecode\": \"1234567890\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentCreateBadMissCalories",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Aliment 8\",\r\n    \"barecode\": \"1234567890\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentGetsOneBadId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments/90",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"90"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentGetsOneByNameBadNotFound",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments?name=Troll Aliment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Troll Aliment"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentUpdateBadMissName",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"calories\": 1234,\r\n    \"barecode\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliments/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentUpdateBadMissCalories",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Aliment 001\",\r\n    \"barecode\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliments/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AlimentCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Aliment 8\",\r\n    \"calories\": 456,\r\n    \"barecode\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/aliments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"aliments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlimentGetAll",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -48,26 +240,6 @@
 					"response": []
 				},
 				{
-					"name": "AlimentGetsOneBad",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/aliments/90",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments",
-								"90"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "AlimentGetsOneByNameOk",
 					"request": {
 						"method": "GET",
@@ -93,25 +265,49 @@
 					"response": []
 				},
 				{
-					"name": "AlimentGetsOneByNameBad",
+					"name": "AlimentUpdateOk",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Aliment 001\",\r\n    \"calories\": 1234,\r\n    \"barecode\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:5000/aliments?name=Troll Aliment",
+							"raw": "http://localhost:5000/aliments/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "5000",
 							"path": [
-								"aliments"
+								"aliments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlimentDeleteOneOk",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/aliments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
 							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Troll Aliment"
-								}
+							"port": "5000",
+							"path": [
+								"aliments",
+								"2"
 							]
 						}
 					},
