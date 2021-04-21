@@ -16,7 +16,19 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetAll_Ok()
+        public async void CreateAliment_Ok()
+        {
+            PrepareDatabase();
+
+            var result = await _alimentRepository.CreateAsync(AlimentDatas.newAliment);
+
+            AlimentDatas.newAliment.Id = 8;
+
+            result.Should().BeEquivalentTo(AlimentDatas.newAliment);
+        }
+
+        [Fact]
+        public async void GetAllAliments_Ok()
         {
             PrepareDatabase();
 
@@ -26,7 +38,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetOneById_Ok()
+        public async void GetOneAlimentById_Ok()
         {
             PrepareDatabase();
 
@@ -38,7 +50,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetOneById_Bad_NotFound()
+        public async void GetOneAlimentById_Bad_NotFound()
         {
             PrepareDatabase();
 
@@ -50,7 +62,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetOneByName_Ok()
+        public async void GetOneAlimentByName_Ok()
         {
             PrepareDatabase();
 

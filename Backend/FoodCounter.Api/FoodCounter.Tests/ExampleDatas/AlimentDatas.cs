@@ -57,5 +57,12 @@ namespace FoodCounter.Tests.ExampleDatas
                 Barecode = "1234567890"
             }
         };
+
+        public static AlimentModel newAliment = new AlimentModel
+            {
+                Name = "Aliment 8",
+                Calories = 100,
+                Barecode = null
+            };
     }
 }
