@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "a44bf9fd-a5f0-4b04-a50c-f72b9a95634e",
+		"name": "FoodCounter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Aliments",
+			"item": [
+				{
+					"name": "AlimentsGetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/aliments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"aliments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlimentGetsOneOk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/aliments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"aliments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlimentGetsOneBad",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/aliments/90",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"aliments",
+								"90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlimentGetsOneByNameOk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/aliments?name=Aliment 2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"aliments"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Aliment 2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlimentGetsOneByNameBad",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/aliments?name=Troll Aliment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"aliments"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Troll Aliment"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
