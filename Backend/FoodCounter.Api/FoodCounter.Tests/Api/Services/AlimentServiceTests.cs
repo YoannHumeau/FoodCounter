@@ -6,6 +6,7 @@ using Moq;
 using Xunit;
 using FoodCounter.Tests.ExampleDatas;
 using System.Linq;
+using FoodCounter.Api.Models;
 
 namespace FoodCounter.Tests.Api.Services
 {
@@ -18,6 +19,26 @@ namespace FoodCounter.Tests.Api.Services
         {
             _mockAlimentRepository = new Mock<IAlimentRepository>();
             _alimentService = new AlimentService(_mockAlimentRepository.Object);
+        }
+
+        [Fact]
+        public async void CreateAliment_Ok()
+        {
+            var newAliment = new AlimentModel
+            {
+                Id = 8,
+                Name = AlimentDatas.newAliment.Name,
+                Calories = AlimentDatas.newAliment.Calories,
+                Barecode = AlimentDatas.newAliment.Barecode
+            };
+
+            _mockAlimentRepository.Setup(m => m.CreateAsync(AlimentDatas.newAliment)).ReturnsAsync(newAliment);
+
+            var result = await _alimentService.CreateAsync(AlimentDatas.newAliment);
+
+            result.Should().BeEquivalentTo(newAliment);
+
+            _mockAlimentRepository.Verify(m => m.CreateAsync(AlimentDatas.newAliment));
         }
 
         [Fact]
