@@ -34,6 +34,12 @@ namespace FoodCounter.Api.Repositories
         public Task<AlimentModel> GetOneByNameAsync(string name);
 
         /// <summary>
+        /// Update an aliment
+        /// </summary>
+        /// <returns>Aliment created</returns>
+        public Task<AlimentModel> UpdateAsync(AlimentModel newAliment);
+
+        /// <summary>
         /// Delete one aliment by id
         /// </summary>
         /// <returns>Boolean</returns>
