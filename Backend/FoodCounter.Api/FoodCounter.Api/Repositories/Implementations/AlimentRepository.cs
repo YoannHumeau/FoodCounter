@@ -63,6 +63,12 @@ namespace FoodCounter.Api.Repositories.Implementations
         public async Task<AlimentModel> UpdateAsync(AlimentModel updateAliment)
         {
             var aliment = await _connection.GetAsync<AlimentModel>(updateAliment.Id);
+            if (aliment == null)
+                return null;
+
+            aliment.Name = updateAliment.Name;
+            aliment.Calories = updateAliment.Calories;
+            aliment.Barecode = updateAliment.Barecode;
 
             var result = await _connection.UpdateAsync<AlimentModel>(aliment);
 

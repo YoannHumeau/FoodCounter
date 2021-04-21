@@ -3,6 +3,9 @@ using FoodCounter.Api.Repositories.Implementations;
 using Xunit;
 using FoodCounter.Tests.ExampleDatas;
 using System.Linq;
+using FoodCounter.Api.Models;
+using System;
+using Microsoft.Data.Sqlite;
 
 namespace FoodCounter.Tests.Api.Repositories
 {
@@ -87,7 +90,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void DeletedOneById_Ok()
+        public async void DeleteAliment_Ok()
         {
             PrepareDatabase();
 
@@ -115,7 +118,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void DeletedOneById_Bad_NotFound()
+        public async void DeleteAliment_Bad_NotFound()
         {
             PrepareDatabase();
 
@@ -137,6 +140,48 @@ namespace FoodCounter.Tests.Api.Repositories
             // Check that the other aliment still exists
             var resultOtherAfter = await _alimentRepository.GetOneByIdAsync(otherId + 1);
             resultOtherAfter.Should().BeEquivalentTo(AlimentDatas.listAliments.ElementAt(otherId));
+        }
+
+        [Fact]
+        public async void UpdateAliment_Ok()
+        {
+            PrepareDatabase();
+
+            int id = 5;
+            var updateAliment = new AlimentModel
+            {
+                Id = AlimentDatas.listAliments.ElementAt(id - 1).Id,
+                Name = $"Aliment {id} Update",
+                Calories = id * 111,
+                Barecode = $"1234567890{id}{id}{id}"
+            };
+
+            // Check that the aliment in database is different before updating
+            var resultBefore = await _alimentRepository.GetOneByIdAsync(id);
+            resultBefore.Should().NotBeEquivalentTo(updateAliment);
+
+            var result = await _alimentRepository.UpdateAsync(updateAliment);
+
+            result.Should().BeEquivalentTo(updateAliment);
+        }
+
+        [Fact]
+        public async void UpdateAliment_Bad_NameNull()
+        {
+            PrepareDatabase();
+
+            int id = 5;
+            var updateAliment = new AlimentModel
+            {
+                Id = AlimentDatas.listAliments.ElementAt(id - 1).Id,
+                Name = null,
+                Calories = id * 111,
+                Barecode = $"1234567890{id * 111}"
+            };
+
+            var result = await Record.ExceptionAsync(() => _alimentRepository.UpdateAsync(updateAliment));
+            Assert.IsType<SqliteException>(result);
+            Assert.Equal("SQLite Error 19: 'NOT NULL constraint failed: Aliments.Name'.", result.Message);
         }
     }
 }
