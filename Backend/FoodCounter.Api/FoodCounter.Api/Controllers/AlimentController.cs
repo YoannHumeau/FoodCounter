@@ -25,8 +25,7 @@ namespace FoodCounter.Api.Controllers
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="alimentService"></param>
-        public AlimentController(ILogger<AlimentController> logger, IAlimentService alimentService,
-            IMapper mapper)
+        public AlimentController(ILogger<AlimentController> logger, IMapper mapper, IAlimentService alimentService)
         {
             _logger = logger;
             _alimentService = alimentService;
@@ -36,7 +35,7 @@ namespace FoodCounter.Api.Controllers
         /// <summary>
         /// Create aliment
         /// </summary>
-        /// <returns>List of aliments</returns>
+        /// <returns>Aliment created</returns>
         [HttpPost]
         public async Task<IActionResult> CreateAsync(AlimentCreationModelDto newAlimentDto)
         {
