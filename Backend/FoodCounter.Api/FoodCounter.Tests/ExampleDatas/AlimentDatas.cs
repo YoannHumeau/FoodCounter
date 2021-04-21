@@ -1,4 +1,5 @@
 ﻿using FoodCounter.Api.Models;
+using FoodCounter.Api.Models.Dto;
 using System.Collections.Generic;
 
 namespace FoodCounter.Tests.ExampleDatas
@@ -59,10 +60,25 @@ namespace FoodCounter.Tests.ExampleDatas
         };
 
         public static AlimentModel newAliment = new AlimentModel
-            {
-                Name = "Aliment 8",
-                Calories = 100,
-                Barecode = null
-            };
+        {
+            Name = "Aliment 8",
+            Calories = 123,
+            Barecode = null
+        };
+
+        public static AlimentCreationModelDto newAlimentCreationDto = new AlimentCreationModelDto
+        {
+            Name = newAliment.Name,
+            Calories = newAliment.Calories,
+            Barecode = newAliment.Barecode
+        };
+
+        public static AlimentModel newAlimentDto = new AlimentModel
+        {
+            Id = 8,
+            Name = newAliment.Name,
+            Calories = newAliment.Calories,
+            Barecode = newAliment.Barecode
+        };
     }
 }

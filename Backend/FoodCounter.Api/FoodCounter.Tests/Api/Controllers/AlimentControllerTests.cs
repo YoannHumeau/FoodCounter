@@ -9,21 +9,42 @@ using Xunit;
 using System.Linq;
 using FoodCounter.Api.Resources;
 using Newtonsoft.Json;
+using AutoMapper;
+using FoodCounter.Api.Models;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
     public class AlimentControllerTests
     {
-        private readonly Mock<ILogger<AlimentController>> _mockIlogger;
+        private readonly Mock<ILogger<AlimentController>> _mockLogger;
+        private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IAlimentService> _mockAlimentService;
         private readonly AlimentController _alimentController;
 
         public AlimentControllerTests()
         {
+            _mockLogger = new Mock<ILogger<AlimentController>>();
+            _mockMapper = new Mock<IMapper>();
             _mockAlimentService = new Mock<IAlimentService>();
-            _mockIlogger = new Mock<ILogger<AlimentController>>();
-            _alimentController = new AlimentController(_mockIlogger.Object, _mockAlimentService.Object);
+            _alimentController = new AlimentController(_mockLogger.Object, _mockMapper.Object, _mockAlimentService.Object);
         }
+
+        [Fact]
+        public async void CreateAliment_Ok()
+        {
+            _mockAlimentService.Setup(m => m.CreateAsync(It.IsAny<AlimentModel>())).ReturnsAsync(AlimentDatas.newAlimentDto);
+
+            var result = await _alimentController.CreateAsync(AlimentDatas.newAlimentCreationDto);
+            var okObjectResult = result as OkObjectResult;
+
+            okObjectResult.Should().NotBeNull();
+            okObjectResult.StatusCode.Should().Be(200);
+            okObjectResult.Value.Should().Be(AlimentDatas.newAlimentDto);
+
+            _mockAlimentService.Verify(m => m.CreateAsync(It.IsAny<AlimentModel>()), Times.Once);
+        }
+
+        // TODO : Make test for bad json inoyut
 
         [Fact]
         public async void GetAllAliment_Ok()
