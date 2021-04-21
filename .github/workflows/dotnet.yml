@@ -1,0 +1,23 @@
+name: .NET
+
+on: [push, pull_request]
+
+jobs:
+  build_and_tests:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Restore dependencies
+      run: dotnet restore Backend/FoodCounter.Api/
+    - name: Build
+      run: dotnet build Backend/FoodCounter.Api/ --no-restore
+    - name: Test
+      run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
+    - name: CountCodeLines-FAQ
+      run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
