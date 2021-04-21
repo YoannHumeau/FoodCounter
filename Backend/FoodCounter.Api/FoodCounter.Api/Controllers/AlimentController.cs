@@ -6,6 +6,7 @@ using FoodCounter.Api.Resources;
 using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -81,6 +82,24 @@ namespace FoodCounter.Api.Controllers
                 return NotFound(new { Message = ResourceEn.AlimentNotFound });
 
             return Ok(result);
+        }
+
+        /// <summary>
+        /// Delete one aliment by id
+        /// </summary>
+        /// <returns>Boolean</returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] long id)
+        {
+            if ((await _alimentService.GetOneByIdAsync(id)) == null)
+                return NotFound(new { Message = ResourceEn.AlimentNotFound });
+
+            var result = await _alimentService.DeleteAsync(id);
+
+            if (result)
+                return NoContent();
+            else
+                return StatusCode(StatusCodes.Status500InternalServerError, null);
         }
     }
 }
