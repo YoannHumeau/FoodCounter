@@ -29,12 +29,22 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
-        /// Get all the aliments
+        /// Get all the aliments or one aliment by name
         /// </summary>
         /// <returns>List of aliments</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAsync([FromQuery] string name)
         {
+            if (name != null)
+            {
+                var resultByName = await _alimentService.GetOneByNameAsync(name);
+
+                if (resultByName == null)
+                    return NotFound(new { Message = ResourceEn.AlimentNotFound });
+
+                return Ok(resultByName);
+            }
+
             var result = await _alimentService.GetAllAsync();
 
             return Ok(result);
