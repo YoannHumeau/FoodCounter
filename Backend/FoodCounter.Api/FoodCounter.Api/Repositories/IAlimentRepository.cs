@@ -12,7 +12,7 @@ namespace FoodCounter.Api.Repositories
         /// <summary>
         /// Create aliment
         /// </summary>
-        /// <returns>List of aliments</returns>
+        /// <returns>Aliment created</returns>
         public Task<AlimentModel> CreateAsync(AlimentModel newAliment);
 
         /// <summary>
