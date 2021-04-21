@@ -25,6 +25,6 @@ namespace FoodCounter.Api.Models.Dto
         /// </summary>
         /// <example>456</example>
         [Required]
-        public int Calories { get; set; }
+        public int? Calories { get; set; }
     }
 }
