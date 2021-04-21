@@ -19,5 +19,5 @@ jobs:
       run: dotnet build Backend/FoodCounter.Api/ --no-restore
     - name: Test
       run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
-    - name: CountCodeLines-FAQ
+    - name: CountCodeLines
       run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
