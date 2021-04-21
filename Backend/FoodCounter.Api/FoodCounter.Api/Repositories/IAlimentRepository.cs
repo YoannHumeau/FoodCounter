@@ -32,5 +32,11 @@ namespace FoodCounter.Api.Repositories
         /// </summary>
         /// <returns>One aliment</returns>
         public Task<AlimentModel> GetOneByNameAsync(string name);
+
+        /// <summary>
+        /// Delete one aliment by id
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Task<bool> DeleteAsync(long id);
     }
 }
