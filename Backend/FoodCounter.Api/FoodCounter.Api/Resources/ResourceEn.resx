@@ -120,4 +120,7 @@
   <data name="AlimentNotFound" xml:space="preserve">
     <value>Aliment not found</value>
   </data>
+  <data name="ProblemDeleting" xml:space="preserve">
+    <value>Problem while deleting</value>
+  </data>
 </root>

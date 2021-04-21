@@ -99,7 +99,7 @@ namespace FoodCounter.Api.Controllers
             if (result)
                 return NoContent();
             else
-                return StatusCode(StatusCodes.Status500InternalServerError, null);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ResourceEn.ProblemDeleting });
         }
     }
 }
