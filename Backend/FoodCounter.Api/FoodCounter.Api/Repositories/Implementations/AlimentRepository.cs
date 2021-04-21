@@ -4,6 +4,7 @@ using FoodCounter.Api.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FoodCounter.Api.Repositories.Implementations
 {
@@ -35,6 +36,14 @@ namespace FoodCounter.Api.Repositories.Implementations
         public async Task<AlimentModel> GetOneByIdAsync(long id)
         {
             var result = await _connection.GetAsync<AlimentModel>(id);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public async Task<AlimentModel> GetOneByNameAsync(string name)
+        {
+            var result = (await _connection.SelectAsync<AlimentModel>(s => s.Name == name)).FirstOrDefault();
 
             return result;
         }

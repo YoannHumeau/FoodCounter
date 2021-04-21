@@ -48,5 +48,29 @@ namespace FoodCounter.Tests.Api.Repositories
 
             result.Should().BeNull();
         }
+
+        [Fact]
+        public async void GetOneByName_Ok()
+        {
+            PrepareDatabase();
+
+            var name = AlimentDatas.listAliments.ElementAt(1).Name;
+
+            var result = await _alimentRepository.GetOneByNameAsync(name);
+
+            result.Should().BeEquivalentTo(AlimentDatas.listAliments.ElementAt(1));
+        }
+
+        [Fact]
+        public async void GetOneByName_Bad_NotFound()
+        {
+            PrepareDatabase();
+
+            var name = "Troll Name";
+
+            var result = await _alimentRepository.GetOneByNameAsync(name);
+
+            result.Should().BeNull();
+        }
     }
 }

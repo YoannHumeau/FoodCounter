@@ -20,5 +20,11 @@ namespace FoodCounter.Api.Repositories
         /// </summary>
         /// <returns>One aliment</returns>
         public Task<AlimentModel> GetOneByIdAsync(long id);
+
+        /// <summary>
+        /// Get one aliment by id
+        /// </summary>
+        /// <returns>One aliment</returns>
+        public Task<AlimentModel> GetOneByNameAsync(string name);
     }
 }
