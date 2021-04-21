@@ -22,6 +22,14 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
+        public async Task<AlimentModel> CreateAsync(AlimentModel newAliment)
+        {
+            var result = await _alimentRepository.CreateAsync(newAliment);
+
+            return result;
+        }
+
+        ///<inheritdoc/>
         public async Task<IEnumerable<AlimentModel>> GetAllAsync()
         {
             var result = await _alimentRepository.GetAllAsync();
