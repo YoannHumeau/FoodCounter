@@ -15,9 +15,11 @@ jobs:
         dotnet-version: 3.1.301
     - name: Restore dependencies
       run: dotnet restore Backend/FoodCounter.Api/
-    - name: Build
+    - name: Api_Build
       run: dotnet build Backend/FoodCounter.Api/ --no-restore
-    - name: Test
+    - name: Api_UnitTest
       run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
-    - name: CountCodeLines
-      run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
+    - name: Api_Run
+      run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
+    - name: Api_PostmanTests
+      run: docker run --net=host -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
