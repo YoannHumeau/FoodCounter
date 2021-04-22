@@ -20,9 +20,7 @@ jobs:
     - name: Test
       run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
     - name: Post
-      run: |
-        watch -n 0.5 date &
-        sleep 5 && echo HELLOWORLD
+      run: dotnet run Backend/FoodCounter.Api/ --no-build --verbosity normal
 
     # - name: Test
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
