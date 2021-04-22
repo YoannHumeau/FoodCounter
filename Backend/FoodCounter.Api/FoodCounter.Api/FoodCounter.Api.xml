@@ -14,19 +14,20 @@
             Default constructor
             </summary>
             <param name="logger"></param>
+            <param name="mapper"></param>
             <param name="alimentService"></param>
         </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentController.CreateAsync(FoodCounter.Api.Models.Dto.AlimentCreationModelDto)">
             <summary>
-            Create aliment
+            Create an aliment
             </summary>
             <returns>Aliment created</returns>
         </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentController.GetAsync(System.String)">
             <summary>
-            Get all the aliments or one aliment by name
+            Get all the aliments or one aliment by name in query ?name=
             </summary>
-            <returns>List of aliments</returns>
+            <returns>All aliments or one by search name</returns>
         </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentController.GetOneByIdAsync(System.Int64)">
             <summary>
@@ -36,13 +37,13 @@
         </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentController.UpdateAsync(System.Int64,FoodCounter.Api.Models.Dto.AlimentUpdateModelDto)">
             <summary>
-            Update aliment
+            Update an aliment
             </summary>
             <returns>Aliment updated</returns>
         </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentController.DeleteAsync(System.Int64)">
             <summary>
-            Delete one aliment by id
+            Delete an aliment
             </summary>
             <returns>Boolean</returns>
         </member>
@@ -142,6 +143,24 @@
             Calories for 100g
             </summary>
             <example>456</example>
+        </member>
+        <member name="T:FoodCounter.Api.Program">
+            <summary>
+            Program class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Program.Main(System.String[])">
+            <summary>
+            Main
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            HostBuilder
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
         </member>
         <member name="T:FoodCounter.Api.Repositories.IAlimentRepository">
             <summary>
@@ -308,6 +327,35 @@
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.DeleteAsync(System.Int64)">
             <inheritdoc/>
+        </member>
+        <member name="T:FoodCounter.Api.Startup">
+            <summary>
+            Startup class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:FoodCounter.Api.Startup.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
         </member>
     </members>
 </doc>

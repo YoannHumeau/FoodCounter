@@ -7,9 +7,7 @@ using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Linq;
-using System;
+using System.Net.Mime;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -28,6 +26,7 @@ namespace FoodCounter.Api.Controllers
         /// Default constructor
         /// </summary>
         /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         /// <param name="alimentService"></param>
         public AlimentController(ILogger<AlimentController> logger, IMapper mapper, IAlimentService alimentService)
         {
@@ -37,10 +36,14 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
-        /// Create aliment
+        /// Create an aliment
         /// </summary>
         /// <returns>Aliment created</returns>
         [HttpPost]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(AlimentCreationModelDto newAlimentDto)
         {
             var newAliment = _mapper.Map<AlimentModel>(newAlimentDto);
@@ -51,10 +54,13 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
-        /// Get all the aliments or one aliment by name
+        /// Get all the aliments or one aliment by name in query ?name=
         /// </summary>
-        /// <returns>List of aliments</returns>
+        /// <returns>All aliments or one by search name</returns>
         [HttpGet]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAsync([FromQuery] string name)
         {
             if (name != null)
@@ -77,6 +83,9 @@ namespace FoodCounter.Api.Controllers
         /// </summary>
         /// <returns>One aliment</returns>
         [HttpGet("{id}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOneByIdAsync([FromRoute] long id)
         {
             var result = await _alimentService.GetOneByIdAsync(id);
@@ -88,10 +97,15 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
-        /// Update aliment
+        /// Update an aliment
         /// </summary>
         /// <returns>Aliment updated</returns>
         [HttpPut("{id}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentUpdateModelDto updateAlimentDto)
         {
             if (await _alimentService.GetOneByIdAsync(id) == null)
@@ -106,10 +120,13 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
-        /// Delete one aliment by id
+        /// Delete an aliment
         /// </summary>
         /// <returns>Boolean</returns>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {
             if ((await _alimentService.GetOneByIdAsync(id)) == null)
