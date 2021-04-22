@@ -22,7 +22,7 @@ jobs:
     - name: RunApi
       run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
     - name: Post
-      run: sleep 5 && echo HELLOWORLD
+      run: sleep 10 && curl http://localhost:5000/aliments/4
 
     # - name: Test
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
