@@ -68,7 +68,7 @@
 							"response": []
 						},
 						{
-							"name": "AlimentGetsOneBadId",
+							"name": "AlimentGetOneBadId",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -88,7 +88,7 @@
 							"response": []
 						},
 						{
-							"name": "AlimentGetsOneByNameBadNotFound",
+							"name": "AlimentGetOneByNameBadNotFound",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -220,12 +220,37 @@
 					"response": []
 				},
 				{
-					"name": "AlimentGetsOneOk",
+					"name": "AlimentGetOneOk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var expectedBody =\r",
+									"{\r",
+									"    \"id\": 4,\r",
+									"    \"name\": \"Aliment 4\",\r",
+									"    \"barecode\": \"1234567890123\",\r",
+									"    \"calories\": 400\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Verify return values\", function () { \r",
+									"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/aliments/1",
+							"raw": "http://localhost:5000/aliments/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -233,14 +258,14 @@
 							"port": "5000",
 							"path": [
 								"aliments",
-								"1"
+								"4"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "AlimentGetsOneByNameOk",
+					"name": "AlimentGetOneByNameOk",
 					"request": {
 						"method": "GET",
 						"header": [],
