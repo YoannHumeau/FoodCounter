@@ -20,7 +20,7 @@ jobs:
     - name: Test
       run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
     - name: Post
-      run: ls Backend/FoodCounter.Api/FoodCounter.Tests/bin/Debug/netcoreapp3.1
+      run: ls Backend/FoodCounter.Api/FoodCounter.Tests/bin/Debug/netcoreapp3.1 && dotnet run --project FoodCounter.Api/FoodCounter.Api.csproj
 
     # - name: Test
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
