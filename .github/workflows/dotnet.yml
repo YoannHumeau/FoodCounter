@@ -22,8 +22,8 @@ jobs:
     - name: RunApi
       run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
     - name: Post
-      run: ls && ls Backend && ls Backend/Postman
-      #run: docker run -v $(pwd)/test:/etc/newman -t postman/newman:latest run "Backend/Postman/FoodCounter.postman_collection.json" --reporters="cli"
+      #run: ls && ls Backend && ls Backend/Postman
+      run: docker run -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
       
 
     #   run: sleep 10 && curl http://localhost:5000/aliments/4
