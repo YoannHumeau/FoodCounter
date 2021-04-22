@@ -22,7 +22,7 @@ jobs:
     - name: Post
       run: |
         watch -n 0.5 date &
-        sleep 5 && dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api.csproj
+        sleep 5 && echo HELLOWORLD
 
     # - name: Test
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
