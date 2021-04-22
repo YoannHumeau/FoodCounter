@@ -11,22 +11,24 @@ using FoodCounter.Api.Resources;
 using Newtonsoft.Json;
 using AutoMapper;
 using FoodCounter.Api.Models;
+using FoodCounter.Api.Models.Dto;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
     public class AlimentControllerTests
     {
         private readonly Mock<ILogger<AlimentController>> _mockLogger;
-        private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IAlimentService> _mockAlimentService;
         private readonly AlimentController _alimentController;
 
         public AlimentControllerTests()
         {
             _mockLogger = new Mock<ILogger<AlimentController>>();
-            _mockMapper = new Mock<IMapper>();
             _mockAlimentService = new Mock<IAlimentService>();
-            _alimentController = new AlimentController(_mockLogger.Object, _mockMapper.Object, _mockAlimentService.Object);
+
+            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddMaps(typeof(AutoMapping))));
+
+            _alimentController = new AlimentController(_mockLogger.Object, mapper, _mockAlimentService.Object);
         }
 
         [Fact]
@@ -203,7 +205,37 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void UpdateAliment_Ok()
         {
-            // TODO : Update Tests
+            _mockAlimentService.Setup(m => m.UpdateAsync(It.IsAny<AlimentModel>())).ReturnsAsync(AlimentDatas.updateAliment);
+
+            var result = await _alimentController.UpdateAsync(AlimentDatas.updateAliment.Id, AlimentDatas.updateAlimentUpdateDto);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().Be(AlimentDatas.updateAliment);
+
+            _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<AlimentModel>()), Times.Once);
+        }
+
+        [Fact]
+        public async void UpdateAliment_Bad_NotFound()
+        {
+            int id = 777;
+
+            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+
+            var result = await _alimentController.UpdateAsync(id, AlimentDatas.updateAlimentUpdateDto);
+            var objectResult = result as NotFoundObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(404);
+
+            // Put the content as a json and compare
+            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
+                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentNotFound }));
+
+            _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<AlimentModel>()), Times.Never);
         }
     }
 }
