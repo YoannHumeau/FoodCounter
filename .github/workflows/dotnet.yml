@@ -18,7 +18,7 @@ jobs:
     - name: Build
       run: dotnet build Backend/FoodCounter.Api/ --no-restore
     - name: Post
-      run: dotnet run Backend/FoodCounter.Api/ --no-build --verbosity normal
+      run: ls ../
 
     # - name: Test
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
