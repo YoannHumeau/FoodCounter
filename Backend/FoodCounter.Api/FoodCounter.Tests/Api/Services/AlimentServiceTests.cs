@@ -113,7 +113,6 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void UpdateAliment_Ok()
         {
-            int id = 5;
             var updateAliment = AlimentDatas.updateAliment;
 
             _mockAlimentRepository.Setup(m => m.UpdateAsync(updateAliment)).ReturnsAsync(updateAliment);
@@ -128,7 +127,6 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void UpdateAliment_Bad_NotFound()
         {
-            int id = 777;
             var updateAliment = AlimentDatas.updateAliment;
 
             _mockAlimentRepository.Setup(m => m.UpdateAsync(updateAliment)).ReturnsAsync(() => null);
