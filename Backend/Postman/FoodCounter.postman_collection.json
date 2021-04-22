@@ -202,6 +202,69 @@
 				},
 				{
 					"name": "AlimentGetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var expectedBody =\r",
+									"[\r",
+									"    {\r",
+									"        \"id\": 1,\r",
+									"        \"name\": \"Aliment 1\",\r",
+									"        \"barecode\": null,\r",
+									"        \"calories\": 100\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": 2,\r",
+									"        \"name\": \"Aliment 2\",\r",
+									"        \"barecode\": null,\r",
+									"        \"calories\": 222\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": 3,\r",
+									"        \"name\": \"Aliment 3\",\r",
+									"        \"barecode\": null,\r",
+									"        \"calories\": 300\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": 4,\r",
+									"        \"name\": \"Aliment 4\",\r",
+									"        \"barecode\": \"1234567890123\",\r",
+									"        \"calories\": 400\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": 5,\r",
+									"        \"name\": \"Aliment 5\",\r",
+									"        \"barecode\": \"1234567890456\",\r",
+									"        \"calories\": 555\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": 6,\r",
+									"        \"name\": \"Aliment 6\",\r",
+									"        \"barecode\": \"1234567890\",\r",
+									"        \"calories\": 600\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": 7,\r",
+									"        \"name\": \"Aliment 7\",\r",
+									"        \"barecode\": \"1234567890\",\r",
+									"        \"calories\": 777\r",
+									"    }\r",
+									"]\r",
+									"\r",
+									"pm.test(\"Verify return values\", function () { \r",
+									"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -266,6 +329,31 @@
 				},
 				{
 					"name": "AlimentGetOneByNameOk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var expectedBody =\r",
+									"{\r",
+									"    \"id\": 2,\r",
+									"    \"name\": \"Aliment 2\",\r",
+									"    \"barecode\": null,\r",
+									"    \"calories\": 222\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Verify return values\", function () { \r",
+									"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
