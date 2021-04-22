@@ -17,8 +17,10 @@ jobs:
       run: dotnet restore Backend/FoodCounter.Api/
     - name: Build
       run: dotnet build Backend/FoodCounter.Api/ --no-restore
+    - name: Test
+      run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
     - name: Post
-      run: cd Backend/FoodCounter.Api/FoodCounter.Tests/bin/Debug/netcoreapp3.1 && ls 
+      run: ls Backend/FoodCounter.Api/FoodCounter.Tests/bin/Debug/netcoreapp3.1
 
     # - name: Test
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
