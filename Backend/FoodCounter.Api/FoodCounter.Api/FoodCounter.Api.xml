@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FoodCounter.Api</name>
+    </assembly>
+    <members>
+        <member name="T:FoodCounter.Api.Controllers.AlimentController">
+            <summary>
+            Aliments Controller
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodCounter.Api.Controllers.AlimentController},AutoMapper.IMapper,FoodCounter.Api.Service.IAlimentService)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="logger"></param>
+            <param name="alimentService"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentController.CreateAsync(FoodCounter.Api.Models.Dto.AlimentCreationModelDto)">
+            <summary>
+            Create aliment
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentController.GetAsync(System.String)">
+            <summary>
+            Get all the aliments or one aliment by name
+            </summary>
+            <returns>List of aliments</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentController.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one aliment by id
+            </summary>
+            <returns>One aliment</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentController.UpdateAsync(System.Int64,FoodCounter.Api.Models.Dto.AlimentUpdateModelDto)">
+            <summary>
+            Update aliment
+            </summary>
+            <returns>Aliment updated</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentController.DeleteAsync(System.Int64)">
+            <summary>
+            Delete one aliment by id
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:FoodCounter.Api.DataAccess.DataAccess.DbAccess">
+            <summary>
+            Database access class
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.DataAccess.DataAccess.DbAccess.Connection">
+            <summary>
+            Connection to db
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.DataAccess.DataAccess.DbAccess.#ctor(System.String)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="connectionString">Connectio string</param>
+        </member>
+        <member name="T:FoodCounter.Api.Models.AlimentModel">
+            <summary>
+            Aliment model
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentModel.Id">
+            <summary>
+            Technical id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentModel.Name">
+            <summary>
+            Name of the aliment
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentModel.Barecode">
+            <summary>
+            Barecode used on the package
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentModel.Calories">
+            <summary>
+            Calories for 100g
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Models.AutoMapping">
+            <summary>
+            Mapping class 
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Models.AutoMapping.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Models.Dto.AlimentCreationModelDto">
+            <summary>
+            Aliment creation model dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentCreationModelDto.Name">
+            <summary>
+            Name of the aliment
+            </summary>
+            <example>Aliment 007</example>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentCreationModelDto.Barecode">
+            <summary>
+            Barecode used on the package
+            </summary>
+            <example>1234567890123</example>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentCreationModelDto.Calories">
+            <summary>
+            Calories for 100g
+            </summary>
+            <example>456</example>
+        </member>
+        <member name="T:FoodCounter.Api.Models.Dto.AlimentUpdateModelDto">
+            <summary>
+            Aliment creation model dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentUpdateModelDto.Name">
+            <summary>
+            Name of the aliment
+            </summary>
+            <example>Aliment 007</example>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentUpdateModelDto.Barecode">
+            <summary>
+            Barecode used on the package
+            </summary>
+            <example>1234567890123</example>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentUpdateModelDto.Calories">
+            <summary>
+            Calories for 100g
+            </summary>
+            <example>456</example>
+        </member>
+        <member name="T:FoodCounter.Api.Repositories.IAlimentRepository">
+            <summary>
+            Aliment repository class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentRepository.CreateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <summary>
+            Create aliment
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentRepository.GetAllAsync">
+            <summary>
+            Get all the aliments
+            </summary>
+            <returns>List of aliments</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentRepository.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one aliment by id
+            </summary>
+            <returns>One aliment</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentRepository.GetOneByNameAsync(System.String)">
+            <summary>
+            Get one aliment by id
+            </summary>
+            <returns>One aliment</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentRepository.UpdateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <summary>
+            Update an aliment
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentRepository.DeleteAsync(System.Int64)">
+            <summary>
+            Delete one aliment by id
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:FoodCounter.Api.Repositories.Implementations.AlimentRepository">
+            <summary>
+            Aliment repository class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.#ctor(FoodCounter.Api.DataAccess.DataAccess.DbAccess)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="db">Db Access</param>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.CreateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.GetAllAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.GetOneByNameAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.UpdateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.DeleteAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FoodCounter.Api.Resources.ResourceEn">
+            <summary>
+              Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.ResourceManager">
+            <summary>
+              Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.Culture">
+            <summary>
+              Remplace la propriété CurrentUICulture du thread actuel pour toutes
+              les recherches de ressources à l'aide de cette classe de ressource fortement typée.
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.AlimentNotFound">
+            <summary>
+              Recherche une chaîne localisée semblable à Aliment not found.
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.ProblemDeleting">
+            <summary>
+              Recherche une chaîne localisée semblable à Problem while deleting.
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Service.IAlimentService">
+            <summary>
+            Aliment service class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentService.CreateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <summary>
+            Create aliment
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentService.GetAllAsync">
+            <summary>
+            Get all the aliments
+            </summary>
+            <returns>List of aliments</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentService.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one aliment by id
+            </summary>
+            <returns>One aliment</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentService.GetOneByNameAsync(System.String)">
+            <summary>
+            Get one aliment by name
+            </summary>
+            <returns>One aliment</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentService.UpdateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <summary>
+            Update an aliment
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentService.DeleteAsync(System.Int64)">
+            <summary>
+            Delete one aliment by id
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:FoodCounter.Api.Service.Implementations.AlimentService">
+            <summary>
+            Aliment service class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.#ctor(FoodCounter.Api.Repositories.IAlimentRepository)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="alimentRepository"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.CreateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.GetAllAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.GetOneByNameAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.UpdateAsync(FoodCounter.Api.Models.AlimentModel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.DeleteAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
