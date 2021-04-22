@@ -9,10 +9,358 @@
 			"name": "Aliments",
 			"item": [
 				{
-					"name": "Errors",
+					"name": "Ok",
+					"item": [
+						{
+							"name": "AlimentGetAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"[\r",
+											"    {\r",
+											"        \"id\": 1,\r",
+											"        \"name\": \"Aliment 1\",\r",
+											"        \"barecode\": null,\r",
+											"        \"calories\": 100\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 2,\r",
+											"        \"name\": \"Aliment 2\",\r",
+											"        \"barecode\": null,\r",
+											"        \"calories\": 222\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 3,\r",
+											"        \"name\": \"Aliment 3\",\r",
+											"        \"barecode\": null,\r",
+											"        \"calories\": 300\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 4,\r",
+											"        \"name\": \"Aliment 4\",\r",
+											"        \"barecode\": \"1234567890123\",\r",
+											"        \"calories\": 400\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 5,\r",
+											"        \"name\": \"Aliment 5\",\r",
+											"        \"barecode\": \"1234567890456\",\r",
+											"        \"calories\": 555\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 6,\r",
+											"        \"name\": \"Aliment 6\",\r",
+											"        \"barecode\": \"1234567890\",\r",
+											"        \"calories\": 600\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 7,\r",
+											"        \"name\": \"Aliment 7\",\r",
+											"        \"barecode\": \"1234567890\",\r",
+											"        \"calories\": 777\r",
+											"    }\r",
+											"]\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentGetOneOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 4,\r",
+											"    \"name\": \"Aliment 4\",\r",
+											"    \"barecode\": \"1234567890123\",\r",
+											"    \"calories\": 400\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentGetOneByNameOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 2,\r",
+											"    \"name\": \"Aliment 2\",\r",
+											"    \"barecode\": null,\r",
+											"    \"calories\": 222\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments?name=Aliment 2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Aliment 2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentUpdateOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 1,\r",
+											"    \"name\": \"Aliment 001\",\r",
+											"    \"barecode\": \"123\",\r",
+											"    \"calories\": 1234\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Aliment 001\",\r\n    \"calories\": 1234,\r\n    \"barecode\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliments/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentCreate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 8,\r",
+											"    \"name\": \"Aliment 8\",\r",
+											"    \"barecode\": \"1234567890\",\r",
+											"    \"calories\": 456\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Aliment 8\",\r\n    \"calories\": 456,\r\n    \"barecode\": \"1234567890\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentDeleteOneOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Bad",
 					"item": [
 						{
 							"name": "AlimentCreateBadMissName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"var expectedError =\r",
+											"{\r",
+											"    \"Name\": [\r",
+											"        \"The Name field is required.\"\r",
+											"    ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -41,6 +389,32 @@
 						},
 						{
 							"name": "AlimentCreateBadMissCalories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"var expectedError =\r",
+											"{\r",
+											"    \"Calories\": [\r",
+											"        \"The Calories field is required.\"\r",
+											"    ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -69,11 +443,33 @@
 						},
 						{
 							"name": "AlimentGetOneBadId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"message\": \"Aliment not found\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:5000/aliments/90",
+									"raw": "http://localhost:5000/aliments/777",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -81,7 +477,7 @@
 									"port": "5000",
 									"path": [
 										"aliments",
-										"90"
+										"777"
 									]
 								}
 							},
@@ -89,6 +485,28 @@
 						},
 						{
 							"name": "AlimentGetOneByNameBadNotFound",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"message\": \"Aliment not found\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -114,6 +532,32 @@
 						},
 						{
 							"name": "AlimentUpdateBadMissName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"var expectedError =\r",
+											"{\r",
+											"    \"Name\": [\r",
+											"        \"The Name field is required.\"\r",
+											"    ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -143,6 +587,32 @@
 						},
 						{
 							"name": "AlimentUpdateBadMissCalories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"var expectedError =\r",
+											"{\r",
+											"    \"Calories\": [\r",
+											"        \"The Calories field is required.\"\r",
+											"    ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -169,262 +639,50 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "AlimentDeleteOneBadId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"message\": \"Aliment not found\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliments/777",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliments",
+										"777"
+									]
+								}
+							},
+							"response": []
 						}
 					]
-				},
-				{
-					"name": "AlimentCreate",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Aliment 8\",\r\n    \"calories\": 456,\r\n    \"barecode\": \"1234567890\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/aliments",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AlimentGetAll",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"var expectedBody =\r",
-									"[\r",
-									"    {\r",
-									"        \"id\": 1,\r",
-									"        \"name\": \"Aliment 1\",\r",
-									"        \"barecode\": null,\r",
-									"        \"calories\": 100\r",
-									"    },\r",
-									"    {\r",
-									"        \"id\": 2,\r",
-									"        \"name\": \"Aliment 2\",\r",
-									"        \"barecode\": null,\r",
-									"        \"calories\": 222\r",
-									"    },\r",
-									"    {\r",
-									"        \"id\": 3,\r",
-									"        \"name\": \"Aliment 3\",\r",
-									"        \"barecode\": null,\r",
-									"        \"calories\": 300\r",
-									"    },\r",
-									"    {\r",
-									"        \"id\": 4,\r",
-									"        \"name\": \"Aliment 4\",\r",
-									"        \"barecode\": \"1234567890123\",\r",
-									"        \"calories\": 400\r",
-									"    },\r",
-									"    {\r",
-									"        \"id\": 5,\r",
-									"        \"name\": \"Aliment 5\",\r",
-									"        \"barecode\": \"1234567890456\",\r",
-									"        \"calories\": 555\r",
-									"    },\r",
-									"    {\r",
-									"        \"id\": 6,\r",
-									"        \"name\": \"Aliment 6\",\r",
-									"        \"barecode\": \"1234567890\",\r",
-									"        \"calories\": 600\r",
-									"    },\r",
-									"    {\r",
-									"        \"id\": 7,\r",
-									"        \"name\": \"Aliment 7\",\r",
-									"        \"barecode\": \"1234567890\",\r",
-									"        \"calories\": 777\r",
-									"    }\r",
-									"]\r",
-									"\r",
-									"pm.test(\"Verify return values\", function () { \r",
-									"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/aliments",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AlimentGetOneOk",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"var expectedBody =\r",
-									"{\r",
-									"    \"id\": 4,\r",
-									"    \"name\": \"Aliment 4\",\r",
-									"    \"barecode\": \"1234567890123\",\r",
-									"    \"calories\": 400\r",
-									"}\r",
-									"\r",
-									"pm.test(\"Verify return values\", function () { \r",
-									"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/aliments/4",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AlimentGetOneByNameOk",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"var expectedBody =\r",
-									"{\r",
-									"    \"id\": 2,\r",
-									"    \"name\": \"Aliment 2\",\r",
-									"    \"barecode\": null,\r",
-									"    \"calories\": 222\r",
-									"}\r",
-									"\r",
-									"pm.test(\"Verify return values\", function () { \r",
-									"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/aliments?name=Aliment 2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Aliment 2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AlimentUpdateOk",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Aliment 001\",\r\n    \"calories\": 1234,\r\n    \"barecode\": \"123\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/aliments/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "AlimentDeleteOneOk",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/aliments/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"aliments",
-								"2"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}
