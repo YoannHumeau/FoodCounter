@@ -7,9 +7,11 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using FoodCounter.Tests.ExampleDatas;
 using FoodCounter.Api.DataAccess.DataAccess;
+using Xunit;
 
 namespace FoodCounter.Tests.Api.Repositories
 {
+    [Collection("Sequential")]
     public class BaseRepositoryTests
     {
         private string _connectionStringTest = "Data Source=test.db";
@@ -46,6 +48,7 @@ namespace FoodCounter.Tests.Api.Repositories
                 connection.Open();
 
                 connection.InsertAll(AlimentDatas.listAliments);
+                connection.InsertAll(UserDatas.listUsers);
             }
         }
 
