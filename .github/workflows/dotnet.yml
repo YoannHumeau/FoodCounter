@@ -17,4 +17,4 @@ jobs:
       run: dotnet restore Backend/FoodCounter.Api/
 
     - name: Test variable
-      run: echo ${{ secrets.TESTVARIABLE }}
+      run: ping ${{ secrets.TESTVARIABLE }}
