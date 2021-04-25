@@ -16,18 +16,5 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore Backend/FoodCounter.Api/
 
-      # Build API
-    - name: Api_Build
-      run: dotnet build Backend/FoodCounter.Api/ --no-restore
-      # Run unit tests
-    - name: Api_UnitTest
-      run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
-      # Run functional tests
-    - name: Api_Run
-      run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
-    - name: Api_PostmanTests
-      run: docker run --net=host -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
-
-      # So many lines, so little time
-    - name: CountCodeLines
-      run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
+    - name: Test variable
+      run: echo ${{ secrets.TESTVARIABLE }}
