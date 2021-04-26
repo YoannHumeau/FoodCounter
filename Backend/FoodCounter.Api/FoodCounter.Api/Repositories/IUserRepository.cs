@@ -14,5 +14,10 @@ namespace FoodCounter.Api.Repositories
         /// <returns>User created</returns>
         public Task<User> CreateAsync(User newUser);
 
+        /// <summary>
+        /// Get one user by id
+        /// </summary>
+        /// <returns>One aliment</returns>
+        public Task<User> GetOneByIdAsync(long id);
     }
 }
