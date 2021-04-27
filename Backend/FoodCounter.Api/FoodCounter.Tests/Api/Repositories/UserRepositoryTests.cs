@@ -24,7 +24,8 @@ namespace FoodCounter.Tests.Api.Repositories
 
             result.Should().BeEquivalentTo(UserDatas.newUser);
 
-            // TODO : Check the user created by it's Id.
+            var resultCheck = await _userRepository.GetOneByIdAsync(UserDatas.newUserCreated.Id);
+            resultCheck.Should().BeEquivalentTo(UserDatas.newUserCreated);
         }
 
         [Fact]
