@@ -2,6 +2,7 @@
 using FoodCounter.Api.Repositories.Implementations;
 using FoodCounter.Tests.ExampleDatas;
 using Xunit;
+using System.Linq;
 
 namespace FoodCounter.Tests.Api.Repositories
 {
@@ -24,6 +25,30 @@ namespace FoodCounter.Tests.Api.Repositories
             result.Should().BeEquivalentTo(UserDatas.newUser);
 
             // TODO : Check the user created by it's Id.
+        }
+
+        [Fact]
+        public async void GetOneUserById_Ok()
+        {
+            PrepareDatabase();
+
+            int id = 2;
+
+            var result = await _userRepository.GetOneByIdAsync(id);
+
+            result.Should().BeEquivalentTo(UserDatas.listUsers.ElementAt(id - 1));
+        }
+
+        [Fact]
+        public async void GetOneUserById_Bad_NotFound()
+        {
+            PrepareDatabase();
+
+            int id = 777;
+
+            var result = await _userRepository.GetOneByIdAsync(id);
+
+            result.Should().BeNull();
         }
     }
 }
