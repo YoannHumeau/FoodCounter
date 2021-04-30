@@ -123,4 +123,7 @@
   <data name="ProblemDeleting" xml:space="preserve">
     <value>Problem while deleting</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found</value>
+  </data>
 </root>

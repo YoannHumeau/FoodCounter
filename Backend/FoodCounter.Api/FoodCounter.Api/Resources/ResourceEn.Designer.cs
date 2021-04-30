@@ -77,5 +77,14 @@ namespace FoodCounter.Api.Resources {
                 return ResourceManager.GetString("ProblemDeleting", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à User not found.
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
     }
 }
