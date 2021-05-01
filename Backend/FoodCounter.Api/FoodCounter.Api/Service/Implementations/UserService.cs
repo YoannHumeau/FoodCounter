@@ -21,6 +21,16 @@ namespace FoodCounter.Api.Service
         }
 
         ///<inheritdoc/>
+        public async Task<User> CreateAsync(User newUser)
+        {
+            // TODO : Check that user already exists
+
+            var result = await _userRepository.CreateAsync(newUser);
+
+            return result;
+        }
+
+        ///<inheritdoc/>
         public async Task<User> GetOneByIdAsync(long id)
         {
             var result = await _userRepository.GetOneByIdAsync(id);

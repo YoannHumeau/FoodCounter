@@ -9,6 +9,12 @@ namespace FoodCounter.Api.Service
     public interface IUserService
     {
         /// <summary>
+        /// Create user
+        /// </summary>
+        /// <returns>Aliment created</returns>
+        public Task<User> CreateAsync(User newUser);
+
+        /// <summary>
         /// Get one user by id
         /// </summary>
         /// <returns>One user</returns>
