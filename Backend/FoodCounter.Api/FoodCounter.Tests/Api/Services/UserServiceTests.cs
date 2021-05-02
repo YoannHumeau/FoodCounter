@@ -24,6 +24,20 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public async void CreateAliment_Ok()
+        {
+            _mockUserRepository.Setup(m => m.CreateAsync(UserDatas.newUser)).ReturnsAsync(UserDatas.newUserCreated);
+
+            var result = await _userService.CreateAsync(UserDatas.newUser);
+
+            result.Should().BeEquivalentTo(UserDatas.newUserCreated);
+
+            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser));
+        }
+
+        // TODO : Tests for fail user creation (already exists)
+
+        [Fact]
         public async void GetOneAlimentById_Ok()
         {
             int id = 2;
