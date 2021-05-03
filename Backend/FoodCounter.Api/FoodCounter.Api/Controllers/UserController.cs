@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodCounter.Api.Entities;
 using FoodCounter.Api.Models;
+using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +35,26 @@ namespace FoodCounter.Api.Controllers
             _logger = logger;
             _userService = userService;
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Create a user
+        /// </summary>
+        /// <returns>User created</returns>
+        [HttpPost]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateAsync(UserCreationModelDto newUserCreationDto)
+        {
+            var newUser = _mapper.Map<User>(newUserCreationDto);
+
+            // Check errors and send http code 
+
+            var result = await _userService.CreateAsync(newUser);
+
+            return Ok(result);
         }
 
         /// <summary>
