@@ -12,6 +12,7 @@ using FoodCounter.Api.Controllers;
 using Microsoft.Extensions.Logging;
 using FoodCounter.Api.Service;
 using Microsoft.AspNetCore.Mvc;
+using FoodCounter.Api.Entities;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
@@ -30,6 +31,23 @@ namespace FoodCounter.Tests.Api.Controllers
 
             _userController = new UserController(_mockLogger.Object, mapper, _mockUserService.Object);
         }
+
+        [Fact]
+        public async void CreateUser_Ok()
+        {
+            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ReturnsAsync(UserDatas.newUserCreated);
+
+            var result = await _userController.CreateAsync(UserDatas.newUserCreationModelDto);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().Be(UserDatas.newUserCreated);
+
+            _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
+        }
+
+        // TODO : Tests for fail user creation (already exists)
 
         [Fact]
         public async void GetOneUserById_Ok()

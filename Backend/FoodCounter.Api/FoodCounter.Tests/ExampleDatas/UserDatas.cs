@@ -1,4 +1,5 @@
 ﻿using FoodCounter.Api.Entities;
+using FoodCounter.Api.Models.Dto;
 using System.Collections.Generic;
 
 namespace FoodCounter.Tests.ExampleDatas
@@ -34,6 +35,12 @@ namespace FoodCounter.Tests.ExampleDatas
         {
             Username = "cassandra",
             Password = "123456",
+        };
+
+        public static UserCreationModelDto newUserCreationModelDto = new UserCreationModelDto
+        {
+            Username = newUser.Username,
+            Password = newUser.Password
         };
 
         public static User newUserCreated = new User
