@@ -1,4 +1,5 @@
 ﻿using FoodCounter.Api.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Repositories
@@ -15,9 +16,15 @@ namespace FoodCounter.Api.Repositories
         public Task<User> CreateAsync(User newUser);
 
         /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns>List of users</returns>
+        public Task<IEnumerable<User>> GetAllAsync();
+
+        /// <summary>
         /// Get one user by id
         /// </summary>
-        /// <returns>One aliment</returns>
+        /// <returns>One user</returns>
         public Task<User> GetOneByIdAsync(long id);
     }
 }

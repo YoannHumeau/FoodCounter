@@ -36,6 +36,14 @@ namespace FoodCounter.Api.Repositories.Implementations
         }
 
         /// <inheritdoc/>
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            var result = await _connection.GetAllAsync<User>();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         public async Task<User> GetOneByIdAsync(long id)
         {
             var result = await _connection.GetAsync<User>(id);
