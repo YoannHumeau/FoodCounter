@@ -1,5 +1,6 @@
 ﻿using FoodCounter.Api.Entities;
 using FoodCounter.Api.Repositories;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Service
@@ -26,6 +27,14 @@ namespace FoodCounter.Api.Service
             // TODO : Check that user already exists
 
             var result = await _userRepository.CreateAsync(newUser);
+
+            return result;
+        }
+
+        ///<inheritdoc/>
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            var result = await _userRepository.GetAllAsync();
 
             return result;
         }

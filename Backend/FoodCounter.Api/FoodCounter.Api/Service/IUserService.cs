@@ -1,4 +1,5 @@
 ﻿using FoodCounter.Api.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Service
@@ -11,8 +12,14 @@ namespace FoodCounter.Api.Service
         /// <summary>
         /// Create user
         /// </summary>
-        /// <returns>Aliment created</returns>
+        /// <returns>User created</returns>
         public Task<User> CreateAsync(User newUser);
+
+        /// <summary>
+        /// Get all the users
+        /// </summary>
+        /// <returns>List of users</returns>
+        public Task<IEnumerable<User>> GetAllAsync();
 
         /// <summary>
         /// Get one user by id
