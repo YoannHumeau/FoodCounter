@@ -24,7 +24,7 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void CreateAliment_Ok()
+        public async void CreateUser_Ok()
         {
             _mockUserRepository.Setup(m => m.CreateAsync(UserDatas.newUser)).ReturnsAsync(UserDatas.newUserCreated);
 
@@ -38,7 +38,19 @@ namespace FoodCounter.Tests.Api.Services
         // TODO : Tests for fail user creation (already exists)
 
         [Fact]
-        public async void GetOneAlimentById_Ok()
+        public async void GetAllUsers_OK()
+        {
+            _mockUserRepository.Setup(m => m.GetAllAsync()).ReturnsAsync(UserDatas.listUsers);
+
+            var result = await _userService.GetAllAsync();
+
+            result.Should().BeEquivalentTo(UserDatas.listUsers);
+
+            _mockUserRepository.Verify(x => x.GetAllAsync(), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneUserById_Ok()
         {
             int id = 2;
 
@@ -52,7 +64,7 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void GetOneAlimentById_Bad_NotFound()
+        public async void GetOneUserById_Bad_NotFound()
         {
             int id = 777;
 
