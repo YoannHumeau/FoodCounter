@@ -1,14 +1,10 @@
 ﻿using FluentAssertions;
 using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Service;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Moq;
 using Xunit;
 using System.Linq;
 using FoodCounter.Tests.ExampleDatas;
-using FoodCounter.Api.Entities;
 
 namespace FoodCounter.Tests.Api.Services
 {
