@@ -29,6 +29,16 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
+        public async void GetAllAliments_Ok()
+        {
+            PrepareDatabase();
+
+            var result = await _userRepository.GetAllAsync();
+
+            result.Should().BeEquivalentTo(UserDatas.listUsers);
+        }
+
+        [Fact]
         public async void GetOneUserById_Ok()
         {
             PrepareDatabase();
