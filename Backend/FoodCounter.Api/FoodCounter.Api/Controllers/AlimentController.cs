@@ -53,9 +53,15 @@ namespace FoodCounter.Api.Controllers
             return Ok(result);
         }
 
+
+
+
+
+
         /// <summary>
         /// Get all the aliments or one aliment by name in query ?name=
         /// </summary>
+        /// <param name="name">name of thaliment</param>
         /// <returns>All aliments or one by search name</returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
