@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -38,24 +39,7 @@ namespace FoodCounter.Api.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Login user
-        /// </summary>
-        /// <param name="userLoginDto">User login dto</param>
-        /// <returns>User logged</returns>
-        [AllowAnonymous]
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginModelDto userLoginDto)
-        {
-            var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            var userLoggedDto = _mapper.Map<UserLoggedModelDto>(user);
-
-            return Ok(userLoggedDto);
-        }
+        #region User 
 
         /// <summary>
         /// Create a user
@@ -109,5 +93,48 @@ namespace FoodCounter.Api.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Authentication
+
+        /// <summary>
+        /// Login user
+        /// </summary>
+        /// <param name="userLoginDto">User login dto</param>
+        /// <returns>User logged</returns>
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginModelDto userLoginDto)
+        {
+            var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            var userLoggedDto = _mapper.Map<UserLoggedModelDto>(user);
+
+            return Ok(userLoggedDto);
+        }
+
+        /// <summary>
+        /// Get the user logged informations
+        /// </summary>
+        /// <returns>User logged informations</returns>
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var userId = Convert.ToInt64(User.Identity.Name);
+
+            var user = await _userService.GetOneByIdAsync(userId);
+
+            var userDto = _mapper.Map<UserFullModelDto>(user);
+
+            return Ok(userDto);
+
+            //TODO : Test me !
+        }
+
+        #endregion
     }
 }

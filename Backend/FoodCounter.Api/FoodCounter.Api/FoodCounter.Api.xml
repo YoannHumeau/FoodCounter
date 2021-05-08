@@ -61,13 +61,6 @@
             <param name="mapper"></param>
             <param name="userService"></param>
         </member>
-        <member name="M:FoodCounter.Api.Controllers.UserController.Login(FoodCounter.Api.Models.Dto.UserLoginModelDto)">
-            <summary>
-            Login user
-            </summary>
-            <param name="userLoginDto">User login dto</param>
-            <returns>User logged</returns>
-        </member>
         <member name="M:FoodCounter.Api.Controllers.UserController.CreateAsync(FoodCounter.Api.Models.Dto.UserCreationModelDto)">
             <summary>
             Create a user
@@ -85,6 +78,19 @@
             Get one user by id
             </summary>
             <returns>One user</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.Login(FoodCounter.Api.Models.Dto.UserLoginModelDto)">
+            <summary>
+            Login user
+            </summary>
+            <param name="userLoginDto">User login dto</param>
+            <returns>User logged</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.Me">
+            <summary>
+            Get the user logged informations
+            </summary>
+            <returns>User logged informations</returns>
         </member>
         <member name="T:FoodCounter.Api.DataAccess.DataAccess.DbAccess">
             <summary>
@@ -241,6 +247,21 @@
         <member name="P:FoodCounter.Api.Models.Dto.UserCreationModelDto.Password">
             <summary>
             Password
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserFullModelDto.Id">
+            <summary>
+            Technical Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserFullModelDto.Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserFullModelDto.Role">
+            <summary>
+            User role
             </summary>
         </member>
         <member name="T:FoodCounter.Api.Models.Dto.UserLoggedModelDto">
