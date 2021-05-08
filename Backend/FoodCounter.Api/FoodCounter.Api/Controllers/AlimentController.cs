@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
+using FoodCounter.Api.Entities;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -46,6 +47,7 @@ namespace FoodCounter.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> CreateAsync(AlimentCreationModelDto newAlimentDto)
         {
             var newAliment = _mapper.Map<AlimentModel>(newAlimentDto);
@@ -54,11 +56,6 @@ namespace FoodCounter.Api.Controllers
 
             return Ok(result);
         }
-
-
-
-
-
 
         /// <summary>
         /// Get all the aliments or one aliment by name in query ?name=
@@ -114,6 +111,7 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentUpdateModelDto updateAlimentDto)
         {
             if (await _alimentService.GetOneByIdAsync(id) == null)
@@ -135,6 +133,7 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {
             if ((await _alimentService.GetOneByIdAsync(id)) == null)
