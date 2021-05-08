@@ -22,6 +22,7 @@ namespace FoodCounter.Api.Service
         /// <summary>
         /// Default Constructor
         /// </summary>
+        /// <param name="configuration"></param>
         /// <param name="userRepository"></param>
         public UserService(IConfiguration configuration, IUserRepository userRepository)
         {

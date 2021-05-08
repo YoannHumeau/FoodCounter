@@ -1,5 +1,8 @@
 ﻿namespace FoodCounter.Api.Models.Dto
 {
+    /// <summary>
+    /// User model Dto with all public informations
+    /// </summary>
     public class UserFullModelDto
     {
         /// <summary>
