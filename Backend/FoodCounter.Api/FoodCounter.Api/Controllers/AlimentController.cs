@@ -8,6 +8,7 @@ using FoodCounter.Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -15,6 +16,7 @@ namespace FoodCounter.Api.Controllers
     /// Aliments Controller
     /// </summary>
     [ApiController]
+    [Authorize]
     [Route("aliments")]
     public class AlimentController : ControllerBase
     {
