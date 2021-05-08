@@ -249,6 +249,11 @@
             Password
             </summary>
         </member>
+        <member name="T:FoodCounter.Api.Models.Dto.UserFullModelDto">
+            <summary>
+            User model Dto with all public informations
+            </summary>
+        </member>
         <member name="P:FoodCounter.Api.Models.Dto.UserFullModelDto.Id">
             <summary>
             Technical Id
@@ -412,6 +417,9 @@
         <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetOneByIdAsync(System.Int64)">
             <inheritdoc/>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetOneByUsernameAndPassword(System.String,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:FoodCounter.Api.Repositories.IUserRepository">
             <summary>
             User repository class
@@ -551,6 +559,7 @@
             <summary>
             Default Constructor
             </summary>
+            <param name="configuration"></param>
             <param name="userRepository"></param>
         </member>
         <member name="M:FoodCounter.Api.Service.UserService.CreateAsync(FoodCounter.Api.Entities.User)">
