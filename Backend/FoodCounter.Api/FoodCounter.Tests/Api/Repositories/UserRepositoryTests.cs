@@ -29,7 +29,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetAllAliments_Ok()
+        public async void GetAllUsers_Ok()
         {
             PrepareDatabase();
 
