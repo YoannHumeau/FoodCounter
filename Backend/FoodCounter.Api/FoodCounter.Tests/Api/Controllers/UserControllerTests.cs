@@ -48,6 +48,22 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         // TODO : Tests for fail user creation (already exists)
+        // TODO : Make test for bad json input
+
+        [Fact]
+        public async void GetAllUser_Ok()
+        {
+            _mockUserService.Setup(m => m.GetAllAsync()).ReturnsAsync(UserDatas.listUsers);
+
+            var result = await _userController.GetAsync();
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().Be(UserDatas.listUsers);
+
+            _mockUserService.Verify(m => m.GetAllAsync(), Times.Once);
+        }
 
         [Fact]
         public async void GetOneUserById_Ok()
