@@ -17,6 +17,7 @@ namespace FoodCounter.Api.Controllers
     /// Users Controller
     /// </summary>
     [ApiController]
+    [Authorize]
     [Route("users")]
     public class UserController : ControllerBase
     {
@@ -35,6 +36,25 @@ namespace FoodCounter.Api.Controllers
             _logger = logger;
             _userService = userService;
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Login user
+        /// </summary>
+        /// <param name="userLoginDto">User login dto</param>
+        /// <returns>User logged</returns>
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginModelDto userLoginDto)
+        {
+            var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            var userLoggedDto = _mapper.Map<UserLoggedModelDto>(user);
+
+            return Ok(userLoggedDto);
         }
 
         /// <summary>

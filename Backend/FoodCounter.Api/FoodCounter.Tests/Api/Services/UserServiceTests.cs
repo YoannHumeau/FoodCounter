@@ -5,6 +5,8 @@ using Moq;
 using Xunit;
 using System.Linq;
 using FoodCounter.Tests.ExampleDatas;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace FoodCounter.Tests.Api.Services
 {
@@ -15,8 +17,15 @@ namespace FoodCounter.Tests.Api.Services
 
         public UserServiceTests()
         {
+            // Mock som configuration value
+            var inMemorySettings = new Dictionary<string, string> {
+                {"Authentication:SecretJwtKey", "If you’re gonna spew, spew into this. - Garth Algar October 28, 1992"}};
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
             _mockUserRepository = new Mock<IUserRepository>();
-            _userService = new UserService(_mockUserRepository.Object);
+            _userService = new UserService(configuration, _mockUserRepository.Object);
         }
 
         [Fact]

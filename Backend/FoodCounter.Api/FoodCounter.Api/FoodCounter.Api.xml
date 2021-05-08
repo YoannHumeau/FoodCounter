@@ -27,6 +27,7 @@
             <summary>
             Get all the aliments or one aliment by name in query ?name=
             </summary>
+            <param name="name">name of thaliment</param>
             <returns>All aliments or one by search name</returns>
         </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentController.GetOneByIdAsync(System.Int64)">
@@ -47,6 +48,44 @@
             </summary>
             <returns>Boolean</returns>
         </member>
+        <member name="T:FoodCounter.Api.Controllers.UserController">
+            <summary>
+            Users Controller
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodCounter.Api.Controllers.UserController},AutoMapper.IMapper,FoodCounter.Api.Service.IUserService)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="logger"></param>
+            <param name="mapper"></param>
+            <param name="userService"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.Login(FoodCounter.Api.Models.Dto.UserLoginModelDto)">
+            <summary>
+            Login user
+            </summary>
+            <param name="userLoginDto">User login dto</param>
+            <returns>User logged</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.CreateAsync(FoodCounter.Api.Models.Dto.UserCreationModelDto)">
+            <summary>
+            Create a user
+            </summary>
+            <returns>User created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.GetAsync">
+            <summary>
+            Get all the users
+            </summary>
+            <returns>All users</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.UserController.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one user by id
+            </summary>
+            <returns>One user</returns>
+        </member>
         <member name="T:FoodCounter.Api.DataAccess.DataAccess.DbAccess">
             <summary>
             Database access class
@@ -62,6 +101,51 @@
             Default constructor
             </summary>
             <param name="connectionString">Connectio string</param>
+        </member>
+        <member name="T:FoodCounter.Api.Entities.Role">
+            <summary>
+            Role class used forauthorisation
+            </summary>
+        </member>
+        <member name="F:FoodCounter.Api.Entities.Role.Admin">
+            <summary>
+            Role admin
+            </summary>
+        </member>
+        <member name="F:FoodCounter.Api.Entities.Role.User">
+            <summary>
+            Role user
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Entities.User">
+            <summary>
+            User class
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Entities.User.Id">
+            <summary>
+            Technical Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Entities.User.Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Entities.User.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Entities.User.Role">
+            <summary>
+            User role (Default "User")
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Entities.User.Token">
+            <summary>
+            User token
+            </summary>
         </member>
         <member name="T:FoodCounter.Api.Models.AlimentModel">
             <summary>
@@ -143,6 +227,61 @@
             Calories for 100g
             </summary>
             <example>456</example>
+        </member>
+        <member name="T:FoodCounter.Api.Models.Dto.UserCreationModelDto">
+            <summary>
+            User creation class Dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserCreationModelDto.Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserCreationModelDto.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Models.Dto.UserLoggedModelDto">
+            <summary>
+            User logged model Dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserLoggedModelDto.Id">
+            <summary>
+            Technical Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserLoggedModelDto.Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserLoggedModelDto.Role">
+            <summary>
+            User role
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserLoggedModelDto.Token">
+            <summary>
+            User token
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Models.Dto.UserLoginModelDto">
+            <summary>
+            User login class Dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserLoginModelDto.Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserLoginModelDto.Password">
+            <summary>
+            Password
+            </summary>
         </member>
         <member name="T:FoodCounter.Api.Program">
             <summary>
@@ -232,6 +371,55 @@
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentRepository.DeleteAsync(System.Int64)">
             <inheritdoc/>
         </member>
+        <member name="T:FoodCounter.Api.Repositories.Implementations.UserRepository">
+            <summary>
+            User repository class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.#ctor(FoodCounter.Api.DataAccess.DataAccess.DbAccess)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="db">Db Access</param>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.CreateAsync(FoodCounter.Api.Entities.User)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetAllAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FoodCounter.Api.Repositories.IUserRepository">
+            <summary>
+            User repository class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IUserRepository.CreateAsync(FoodCounter.Api.Entities.User)">
+            <summary>
+            Create user
+            </summary>
+            <returns>User created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IUserRepository.GetAllAsync">
+            <summary>
+            Get all users
+            </summary>
+            <returns>List of users</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IUserRepository.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one user by id
+            </summary>
+            <returns>One user</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IUserRepository.GetOneByUsernameAndPassword(System.String,System.String)">
+            <summary>
+            Get one user by username and password
+            </summary>
+            <returns>One user</returns>
+        </member>
         <member name="T:FoodCounter.Api.Resources.ResourceEn">
             <summary>
               Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
@@ -256,6 +444,11 @@
         <member name="P:FoodCounter.Api.Resources.ResourceEn.ProblemDeleting">
             <summary>
               Recherche une chaîne localisée semblable à Problem while deleting.
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.UserNotFound">
+            <summary>
+              Recherche une chaîne localisée semblable à User not found.
             </summary>
         </member>
         <member name="T:FoodCounter.Api.Service.IAlimentService">
@@ -327,6 +520,60 @@
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentService.DeleteAsync(System.Int64)">
             <inheritdoc/>
+        </member>
+        <member name="T:FoodCounter.Api.Service.UserService">
+            <summary>
+            User service class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Service.UserService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,FoodCounter.Api.Repositories.IUserRepository)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="userRepository"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Service.UserService.CreateAsync(FoodCounter.Api.Entities.User)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.UserService.GetAllAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.UserService.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.UserService.Authenticate(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FoodCounter.Api.Service.IUserService">
+            <summary>
+            User service class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IUserService.CreateAsync(FoodCounter.Api.Entities.User)">
+            <summary>
+            Create user
+            </summary>
+            <returns>User created</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IUserService.GetAllAsync">
+            <summary>
+            Get all the users
+            </summary>
+            <returns>List of users</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IUserService.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one user by id
+            </summary>
+            <returns>One user</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IUserService.Authenticate(System.String,System.String)">
+            <summary>
+            Authenticate user
+            </summary>
+            <param name="username">Username</param>
+            <param name="password">Password</param>
+            <returns></returns>
         </member>
         <member name="T:FoodCounter.Api.Startup">
             <summary>

@@ -26,5 +26,13 @@ namespace FoodCounter.Api.Service
         /// </summary>
         /// <returns>One user</returns>
         public Task<User> GetOneByIdAsync(long id);
+
+        /// <summary>
+        /// Authenticate user
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <param name="password">Password</param>
+        /// <returns></returns>
+        public Task<User> Authenticate(string username, string password);
     }
 }
