@@ -58,9 +58,24 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
+        /// Get all the users
+        /// </summary>
+        /// <returns>All users</returns>
+        [HttpGet]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAsync()
+        {
+            var result = await _userService.GetAllAsync();
+
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Get one user by id
         /// </summary>
-        /// <returns>One aliment</returns>
+        /// <returns>One user</returns>
         [HttpGet("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
