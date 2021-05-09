@@ -94,7 +94,7 @@ namespace FoodCounter.Tests.Api.Repositories
         {
             PrepareDatabase();
 
-            int id = 2;
+            int id = 4;
 
             // Check the aliment exists
             var resultBefore = await _alimentRepository.GetOneByIdAsync(id);
@@ -116,6 +116,8 @@ namespace FoodCounter.Tests.Api.Repositories
             var resultOtherAfter = await _alimentRepository.GetOneByIdAsync(id + 1);
             resultOtherAfter.Should().BeEquivalentTo(AlimentDatas.listAliments.ElementAt(id));
         }
+
+        // TODO : Make a test that check not possible to delete because of the Foreign Key
 
         [Fact]
         public async void DeleteAliment_Bad_NotFound()
