@@ -247,6 +247,31 @@
             Default constructor
             </summary>
         </member>
+        <member name="T:FoodCounter.Api.Models.Dto.AlimentConsumeDto">
+            <summary>
+            Aliment Consume Model Dto class
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeDto.Id">
+            <summary>
+            Technocal Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeDto.Aliment">
+            <summary>
+            Aliment linked by the AlimentId with Dommel
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeDto.ConsumeDate">
+            <summary>
+            Date the aliment was consumed
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeDto.Weight">
+            <summary>
+            Weight of the consume
+            </summary>
+        </member>
         <member name="T:FoodCounter.Api.Models.Dto.AlimentCreationDto">
             <summary>
             Aliment creation model dto
