@@ -129,5 +129,20 @@ namespace FoodCounter.Tests.ExampleDatas
             ConsumeDate = newAlimentConsume.ConsumeDate,
             Weight = newAlimentConsume.Weight
         };
+
+        public static AlimentConsumeCreationDto newAlimentConsumeCreationDto = new AlimentConsumeCreationDto
+        {
+            AlimentId = newAlimentConsume.AlimentId,
+            ConsumeDate = newAlimentConsume.ConsumeDate,
+            Weight = newAlimentConsume.Weight
+        };
+
+        public static AlimentConsumeDto newAlimentConsumeCreatedDto = new AlimentConsumeDto
+        {
+            Id = newAlimentConsumeCreated.Id,
+            Aliment = newAlimentConsumeCreated.Aliment,
+            ConsumeDate = newAlimentConsumeCreated.ConsumeDate,
+            Weight = newAlimentConsumeCreated.Weight
+        };
     }
 }

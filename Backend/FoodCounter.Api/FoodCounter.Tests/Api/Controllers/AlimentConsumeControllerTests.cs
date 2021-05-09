@@ -54,6 +54,25 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
+        public async void CreateAlimentConsume_Ok()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            _mockAlimentConsumeService.Setup(m => m.CreateAsync(It.IsAny<AlimentConsume>())).ReturnsAsync(AlimentConsumeDatas.newAlimentConsumeCreated);
+
+            var result = await _alimentConsumeController.CreateAsync(AlimentConsumeDatas.newAlimentConsumeCreationDto);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(AlimentConsumeDatas.newAlimentConsumeCreatedDto);
+
+            _mockAlimentConsumeService.Verify(m => m.CreateAsync(It.IsAny<AlimentConsume>()), Times.Once);
+        }
+
+        // TODO : Check for failed creation Test 
+
+        [Fact]
         public async void GetOneAlimentById_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
