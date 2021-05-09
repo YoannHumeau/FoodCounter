@@ -10,6 +10,12 @@ namespace FoodCounter.Api.Service
     public interface IAlimentConsumeService
     {
         /// <summary>
+        /// Create aliment consume
+        /// </summary>
+        /// <returns>Aliment consume created</returns>
+        public Task<AlimentConsume> CreateAsync(AlimentConsume newAlimentConsume);
+
+        /// <summary>
         /// Get one aliment consume by id
         /// </summary>
         /// <returns>One aliment</returns>
