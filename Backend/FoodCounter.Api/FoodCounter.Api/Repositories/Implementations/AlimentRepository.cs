@@ -26,9 +26,9 @@ namespace FoodCounter.Api.Repositories.Implementations
         }
 
         /// <inheritdoc/>
-        public async Task<AlimentModel> CreateAsync(AlimentModel newAliment)
+        public async Task<Aliment> CreateAsync(Aliment newAliment)
         {
-            var resultCreationId = await _connection.InsertAsync<AlimentModel>(newAliment);
+            var resultCreationId = await _connection.InsertAsync<Aliment>(newAliment);
 
             newAliment.Id = Convert.ToInt64(resultCreationId);
 
@@ -36,33 +36,33 @@ namespace FoodCounter.Api.Repositories.Implementations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<Models.AlimentModel>> GetAllAsync()
+        public async Task<IEnumerable<Models.Aliment>> GetAllAsync()
         {
-            var result = await _connection.GetAllAsync<AlimentModel>();
+            var result = await _connection.GetAllAsync<Aliment>();
 
             return result;
         }
 
         /// <inheritdoc/>
-        public async Task<AlimentModel> GetOneByIdAsync(long id)
+        public async Task<Aliment> GetOneByIdAsync(long id)
         {
-            var result = await _connection.GetAsync<AlimentModel>(id);
+            var result = await _connection.GetAsync<Aliment>(id);
 
             return result;
         }
 
         /// <inheritdoc/>
-        public async Task<AlimentModel> GetOneByNameAsync(string name)
+        public async Task<Aliment> GetOneByNameAsync(string name)
         {
-            var result = (await _connection.SelectAsync<AlimentModel>(s => s.Name == name)).FirstOrDefault();
+            var result = (await _connection.SelectAsync<Aliment>(s => s.Name == name)).FirstOrDefault();
 
             return result;
         }
 
         /// <inheritdoc/>
-        public async Task<AlimentModel> UpdateAsync(AlimentModel updateAliment)
+        public async Task<Aliment> UpdateAsync(Aliment updateAliment)
         {
-            var aliment = await _connection.GetAsync<AlimentModel>(updateAliment.Id);
+            var aliment = await _connection.GetAsync<Aliment>(updateAliment.Id);
             if (aliment == null)
                 return null;
 
@@ -70,7 +70,7 @@ namespace FoodCounter.Api.Repositories.Implementations
             aliment.Calories = updateAliment.Calories;
             aliment.Barecode = updateAliment.Barecode;
 
-            var result = await _connection.UpdateAsync<AlimentModel>(aliment);
+            var result = await _connection.UpdateAsync<Aliment>(aliment);
 
             if (!result)
                 return null;
@@ -81,12 +81,12 @@ namespace FoodCounter.Api.Repositories.Implementations
         /// <inheritdoc/>
         public async Task<bool> DeleteAsync(long id)
         {
-            var aliment = await _connection.GetAsync<AlimentModel>(id);
+            var aliment = await _connection.GetAsync<Aliment>(id);
 
             if (aliment == null)
                 return false;
 
-            var result = await _connection.DeleteAsync<AlimentModel>(aliment);
+            var result = await _connection.DeleteAsync<Aliment>(aliment);
 
             return result;
         }

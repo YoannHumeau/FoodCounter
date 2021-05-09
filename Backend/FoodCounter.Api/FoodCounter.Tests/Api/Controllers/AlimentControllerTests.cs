@@ -34,7 +34,7 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void CreateAliment_Ok()
         {
-            _mockAlimentService.Setup(m => m.CreateAsync(It.IsAny<AlimentModel>())).ReturnsAsync(AlimentDatas.newAlimentDto);
+            _mockAlimentService.Setup(m => m.CreateAsync(It.IsAny<Aliment>())).ReturnsAsync(AlimentDatas.newAlimentDto);
 
             var result = await _alimentController.CreateAsync(AlimentDatas.newAlimentCreationDto);
             var objectResult = result as OkObjectResult;
@@ -43,7 +43,7 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().Be(AlimentDatas.newAlimentDto);
 
-            _mockAlimentService.Verify(m => m.CreateAsync(It.IsAny<AlimentModel>()), Times.Once);
+            _mockAlimentService.Verify(m => m.CreateAsync(It.IsAny<Aliment>()), Times.Once);
         }
 
         // TODO : Make test for bad json inoyut
@@ -146,7 +146,7 @@ namespace FoodCounter.Tests.Api.Controllers
         {
             int id = 2;
 
-            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentModel());
+            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new Aliment());
             _mockAlimentService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentController.DeleteAsync(id);
@@ -185,7 +185,7 @@ namespace FoodCounter.Tests.Api.Controllers
         {
             int id = 2;
 
-            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentModel());
+            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new Aliment());
             _mockAlimentService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(false);
 
             var result = await _alimentController.DeleteAsync(id);
@@ -206,7 +206,7 @@ namespace FoodCounter.Tests.Api.Controllers
         public async void UpdateAliment_Ok()
         {
             _mockAlimentService.Setup(m => m.GetOneByIdAsync(AlimentDatas.updateAliment.Id)).ReturnsAsync(AlimentDatas.updateAliment);
-            _mockAlimentService.Setup(m => m.UpdateAsync(It.IsAny<AlimentModel>())).ReturnsAsync(AlimentDatas.updateAliment);
+            _mockAlimentService.Setup(m => m.UpdateAsync(It.IsAny<Aliment>())).ReturnsAsync(AlimentDatas.updateAliment);
 
             var result = await _alimentController.UpdateAsync(AlimentDatas.updateAliment.Id, AlimentDatas.updateAlimentUpdateDto);
             var objectResult = result as OkObjectResult;
@@ -215,7 +215,7 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().Be(AlimentDatas.updateAliment);
 
-            _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<AlimentModel>()), Times.Once);
+            _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<Aliment>()), Times.Once);
             _mockAlimentService.Verify(m => m.GetOneByIdAsync(AlimentDatas.updateAliment.Id), Times.Once);
         }
 
@@ -237,7 +237,7 @@ namespace FoodCounter.Tests.Api.Controllers
                 JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentNotFound }));
 
             _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
-            _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<AlimentModel>()), Times.Never);
+            _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<Aliment>()), Times.Never);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace FoodCounter.Api.Models
     /// Aliment consume class
     /// </summary>
     [Table("AlimentConsumes")]
-    public class AlimentconsumeModel
+    public class AlimentConsume
     {
         /// <summary>
         /// Technocal Id
@@ -21,9 +21,19 @@ namespace FoodCounter.Api.Models
         public long UserId { get; set; }
 
         /// <summary>
+        /// User linked by the UserId with Dommel
+        /// </summary>
+        public User User { get; set; }
+
+        /// <summary>
         /// Aliment Id
         /// </summary>
         public long AlimentId { get; set; }
+
+        /// <summary>
+        /// Aliment linked by the AlimentId with Dommel
+        /// </summary>
+        public Aliment Aliment { get; set; }
 
         /// <summary>
         /// Date the aliment was consumed

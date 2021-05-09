@@ -35,7 +35,7 @@ namespace FoodCounter.DbMigrations
             {
                 connection.Open();
 
-                var newAliment = new AlimentModel
+                var newAliment = new Aliment
                 {
                     Id = 1,
                     Name = "Aliment 01",
@@ -43,9 +43,9 @@ namespace FoodCounter.DbMigrations
                     Calories = 400
                 };
 
-                var addedAliments = connection.Insert<AlimentModel>(newAliment);
+                var addedAliments = connection.Insert<Aliment>(newAliment);
 
-                var cars = connection.Select<AlimentModel>(p => p.Name == "Alim").SingleOrDefault();
+                var cars = connection.Select<Aliment>(p => p.Name == "Alim").SingleOrDefault();
 
                 #endregion
             }

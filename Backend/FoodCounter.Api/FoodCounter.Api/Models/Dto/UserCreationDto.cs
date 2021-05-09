@@ -3,7 +3,7 @@
     /// <summary>
     /// User creation class Dto
     /// </summary>
-    public class UserCreationModelDto
+    public class UserCreationDto
     {
         /// <summary>
         /// Username

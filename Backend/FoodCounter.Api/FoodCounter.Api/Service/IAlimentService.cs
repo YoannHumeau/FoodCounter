@@ -13,31 +13,31 @@ namespace FoodCounter.Api.Service
         /// Create aliment
         /// </summary>
         /// <returns>Aliment created</returns>
-        public Task<AlimentModel> CreateAsync(AlimentModel newAliment);
+        public Task<Aliment> CreateAsync(Aliment newAliment);
 
         /// <summary>
         /// Get all the aliments
         /// </summary>
         /// <returns>List of aliments</returns>
-        public Task<IEnumerable<AlimentModel>> GetAllAsync();
+        public Task<IEnumerable<Aliment>> GetAllAsync();
 
         /// <summary>
         /// Get one aliment by id
         /// </summary>
         /// <returns>One aliment</returns>
-        public Task<AlimentModel> GetOneByIdAsync(long id);
+        public Task<Aliment> GetOneByIdAsync(long id);
 
         /// <summary>
         /// Get one aliment by name
         /// </summary>
         /// <returns>One aliment</returns>
-        public Task<AlimentModel> GetOneByNameAsync(string name);
+        public Task<Aliment> GetOneByNameAsync(string name);
 
         /// <summary>
         /// Update an aliment
         /// </summary>
         /// <returns>Aliment created</returns>
-        public Task<AlimentModel> UpdateAsync(AlimentModel newAliment);
+        public Task<Aliment> UpdateAsync(Aliment newAliment);
 
         /// <summary>
         /// Delete one aliment by id

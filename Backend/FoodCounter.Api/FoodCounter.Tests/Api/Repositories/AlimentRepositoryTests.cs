@@ -150,7 +150,7 @@ namespace FoodCounter.Tests.Api.Repositories
             PrepareDatabase();
 
             int id = 5;
-            var updateAliment = new AlimentModel
+            var updateAliment = new Aliment
             {
                 Id = AlimentDatas.listAliments.ElementAt(id - 1).Id,
                 Name = $"Aliment {id} Update",
@@ -173,7 +173,7 @@ namespace FoodCounter.Tests.Api.Repositories
             PrepareDatabase();
 
             int id = 5;
-            var updateAliment = new AlimentModel
+            var updateAliment = new Aliment
             {
                 Id = AlimentDatas.listAliments.ElementAt(id - 1).Id,
                 Name = null,

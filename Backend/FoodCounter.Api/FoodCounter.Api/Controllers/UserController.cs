@@ -50,7 +50,7 @@ namespace FoodCounter.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync(UserCreationModelDto newUserCreationDto)
+        public async Task<IActionResult> CreateAsync(UserCreationDto newUserCreationDto)
         {
             var newUser = _mapper.Map<User>(newUserCreationDto);
 
@@ -105,14 +105,14 @@ namespace FoodCounter.Api.Controllers
         /// <returns>User logged</returns>
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginModelDto userLoginDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
             var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            var userLoggedDto = _mapper.Map<UserLoggedModelDto>(user);
+            var userLoggedDto = _mapper.Map<UserLoggedDto>(user);
 
             return Ok(userLoggedDto);
         }
@@ -128,7 +128,7 @@ namespace FoodCounter.Api.Controllers
 
             var user = await _userService.GetOneByIdAsync(userId);
 
-            var userDto = _mapper.Map<UserFullModelDto>(user);
+            var userDto = _mapper.Map<UserFullDto>(user);
 
             return Ok(userDto);
 

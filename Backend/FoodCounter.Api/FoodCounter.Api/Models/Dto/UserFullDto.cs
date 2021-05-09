@@ -3,7 +3,7 @@
     /// <summary>
     /// User model Dto with all public informations
     /// </summary>
-    public class UserFullModelDto
+    public class UserFullDto
     {
         /// <summary>
         /// Technical Id

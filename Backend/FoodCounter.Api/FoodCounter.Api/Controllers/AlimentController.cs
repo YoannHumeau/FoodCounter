@@ -48,9 +48,9 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = Role.Admin)]
-        public async Task<IActionResult> CreateAsync(AlimentCreationModelDto newAlimentDto)
+        public async Task<IActionResult> CreateAsync(AlimentCreationDto newAlimentDto)
         {
-            var newAliment = _mapper.Map<AlimentModel>(newAlimentDto);
+            var newAliment = _mapper.Map<Aliment>(newAlimentDto);
 
             var result = await _alimentService.CreateAsync(newAliment);
 
@@ -112,12 +112,12 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = Role.Admin)]
-        public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentUpdateModelDto updateAlimentDto)
+        public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentUpdateDto updateAlimentDto)
         {
             if (await _alimentService.GetOneByIdAsync(id) == null)
                 return NotFound(new { Message = ResourceEn.AlimentNotFound });
 
-            var updateAliment = _mapper.Map<AlimentModel>(updateAlimentDto);
+            var updateAliment = _mapper.Map<Aliment>(updateAlimentDto);
             updateAliment.Id = id;
 
             var result = await _alimentService.UpdateAsync(updateAliment);

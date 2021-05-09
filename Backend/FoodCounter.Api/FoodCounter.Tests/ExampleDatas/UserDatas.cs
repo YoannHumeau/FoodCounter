@@ -37,7 +37,7 @@ namespace FoodCounter.Tests.ExampleDatas
             Password = "123456",
         };
 
-        public static UserCreationModelDto newUserCreationModelDto = new UserCreationModelDto
+        public static UserCreationDto newUserCreationModelDto = new UserCreationDto
         {
             Username = newUser.Username,
             Password = newUser.Password

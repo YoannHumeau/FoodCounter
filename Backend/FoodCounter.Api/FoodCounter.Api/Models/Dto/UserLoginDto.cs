@@ -5,7 +5,7 @@ namespace FoodCounter.Api.Models.Dto
     /// <summary>
     /// User login class Dto
     /// </summary>
-    public class UserLoginModelDto
+    public class UserLoginDto
     {
         /// <summary>
         /// Username

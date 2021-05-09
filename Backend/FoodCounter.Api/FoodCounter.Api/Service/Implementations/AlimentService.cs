@@ -22,7 +22,7 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<AlimentModel> CreateAsync(AlimentModel newAliment)
+        public async Task<Aliment> CreateAsync(Aliment newAliment)
         {
             var result = await _alimentRepository.CreateAsync(newAliment);
 
@@ -30,7 +30,7 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<IEnumerable<AlimentModel>> GetAllAsync()
+        public async Task<IEnumerable<Aliment>> GetAllAsync()
         {
             var result = await _alimentRepository.GetAllAsync();
 
@@ -38,7 +38,7 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<AlimentModel> GetOneByIdAsync(long id)
+        public async Task<Aliment> GetOneByIdAsync(long id)
         {
             var result = await _alimentRepository.GetOneByIdAsync(id);
 
@@ -46,7 +46,7 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<AlimentModel> GetOneByNameAsync(string name)
+        public async Task<Aliment> GetOneByNameAsync(string name)
         {
             var result = await _alimentRepository.GetOneByNameAsync(name);
 
@@ -54,7 +54,7 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<AlimentModel> UpdateAsync(AlimentModel newAliment)
+        public async Task<Aliment> UpdateAsync(Aliment newAliment)
         {
             var result = await _alimentRepository.UpdateAsync(newAliment);
 

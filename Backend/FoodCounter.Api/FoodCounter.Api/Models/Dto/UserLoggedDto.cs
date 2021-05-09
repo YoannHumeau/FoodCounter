@@ -3,7 +3,7 @@
     /// <summary>
     /// User logged model Dto
     /// </summary>
-    public class UserLoggedModelDto
+    public class UserLoggedDto
     {
         /// <summary>
         /// Technical Id

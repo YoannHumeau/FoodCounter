@@ -24,7 +24,7 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void CreateAliment_Ok()
         {
-            var newAliment = new AlimentModel
+            var newAliment = new Aliment
             {
                 Id = 8,
                 Name = AlimentDatas.newAliment.Name,

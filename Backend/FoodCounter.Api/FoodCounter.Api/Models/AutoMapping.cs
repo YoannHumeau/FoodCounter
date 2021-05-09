@@ -16,12 +16,12 @@ namespace FoodCounter.Api.Models
         {
             // Tip : CreateMap < TSource, TDestination > ()
 
-            CreateMap<AlimentCreationModelDto, AlimentModel>();
-            CreateMap<AlimentUpdateModelDto, AlimentModel>();
+            CreateMap<AlimentCreationDto, Aliment>();
+            CreateMap<AlimentUpdateDto, Aliment>();
 
-            CreateMap<UserCreationModelDto, User>();
-            CreateMap<User, UserLoggedModelDto>();
-            CreateMap<User, UserFullModelDto>();
+            CreateMap<UserCreationDto, User>();
+            CreateMap<User, UserLoggedDto>();
+            CreateMap<User, UserFullDto>();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace FoodCounter.Api.Models.Dto
     /// <summary>
     /// Aliment creation model dto
     /// </summary>
-    public class AlimentCreationModelDto
+    public class AlimentCreationDto
     {
         /// <summary>
         /// Name of the aliment

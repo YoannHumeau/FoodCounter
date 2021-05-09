@@ -1,30 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FoodCounter.Api.Models.Dto
+namespace FoodCounter.Api.Models
 {
     /// <summary>
-    /// Aliment creation model dto
+    /// Aliment model
     /// </summary>
-    public class AlimentUpdateModelDto
+    [Table("aliments")]
+    public class Aliment
     {
+        /// <summary>
+        /// Technical id
+        /// </summary>
+        [Key]
+        public long Id { get; set; }
+
         /// <summary>
         /// Name of the aliment
         /// </summary>
-        /// <example>Aliment 007</example>
-        [Required]
         public string Name { get; set; }
 
         /// <summary>
         /// Barecode used on the package
         /// </summary>
-        /// <example>1234567890123</example>
         public string Barecode { get; set; }
 
         /// <summary>
         /// Calories for 100g
         /// </summary>
-        /// <example>456</example>
-        [Required]
-        public int? Calories { get; set; }
+        public int Calories { get; set; }
     }
 }
