@@ -38,13 +38,16 @@ namespace FoodCounter.Tests.Api.Controllers
         /// <param name="userId"></param>
         private void MockUser(long userId)
         {
+            var role = UserDatas.listUsers.ElementAt((int)userId - 1).Role;
+
             _alimentConsumeController.ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext
                 {
                     User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, userId.ToString())
+                        new Claim(ClaimTypes.Name, userId.ToString()),
+                        new Claim(ClaimTypes.Role, role.ToString())
                     }))        
                 }
             };
@@ -54,6 +57,27 @@ namespace FoodCounter.Tests.Api.Controllers
         public async void GetOneAlimentById_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
+
+            int id = 2;
+            var alimentConsume = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
+            var alimentConsumeDto = AlimentConsumeDatas.listAlimentConsumesDto.ElementAt(id - 1);
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(alimentConsume);
+
+            var result = await _alimentConsumeController.GetOneByIdAsync(id);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(alimentConsumeDto);
+
+            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneAlimentByIdFOrAnotherUserWithAdmin_Ok()
+        {
+            MockUser(1); // Admin user (Wayne)
 
             int id = 2;
             var alimentConsume = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
