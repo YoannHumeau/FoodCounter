@@ -17,6 +17,13 @@
             <param name="mapper"></param>
             <param name="alimentConsumeService"></param>
         </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.GetAsync(System.Int64)">
+            <summary>
+            Get all the aliment consumes for a user (By default Himself) 
+            </summary>
+            <param name="userId">User Id to ask aliment consumes</param>
+            <returns>All aliments or one by search name</returns>
+        </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.GetOneByIdAsync(System.Int64)">
             <summary>
             Get one aliment consume by id
@@ -171,6 +178,18 @@
             <summary>
             User token
             </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Helpers.IdentityHelper">
+            <summary>
+            Identity helper class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Helpers.IdentityHelper.IsUserAdmin(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Get the role of a user
+            </summary>
+            <param name="user"></param>
+            <returns>Boolean that says user role is Admin or not</returns>
         </member>
         <member name="T:FoodCounter.Api.Models.Aliment">
             <summary>
@@ -411,11 +430,23 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:FoodCounter.Api.Repositories.IAlimentConsumeRepository">
+            <summary>
+            Aliment Consume repository class
+            </summary>
+        </member>
         <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
             <summary>
             Get one aliment consume by id
             </summary>
             <returns>One aliment</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.GetAllByUserIdAsync(System.Int64)">
+            <summary>
+            Get all the aliments consume for a user
+            </summary>
+            <param name="userId"></param>
+            <returns>list of aliments consumes</returns>
         </member>
         <member name="T:FoodCounter.Api.Repositories.IAlimentRepository">
             <summary>
@@ -458,11 +489,17 @@
             </summary>
             <returns>Boolean</returns>
         </member>
+        <member name="T:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository">
+            <inheritdoc/>
+        </member>
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.#ctor(FoodCounter.Api.DataAccess.DataAccess.DbAccess)">
             <summary>
             Default constructor
             </summary>
             <param name="db">Db Access</param>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.GetAllByUserIdAsync(System.Int64)">
+            <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
             <inheritdoc/>
@@ -595,6 +632,12 @@
             </summary>
             <returns>One aliment</returns>
         </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.GetAllByUserIdAsync(System.Int64)">
+            <summary>
+            Get all the aliment consumes for user
+            </summary>
+            <returns>List of aliment consumes of the user</returns>
+        </member>
         <member name="T:FoodCounter.Api.Service.IAlimentService">
             <summary>
             Aliment service class
@@ -648,6 +691,9 @@
             <param name="alimentConsumeRepository"></param>
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.GetAllByUserIdAsync(System.Int64)">
             <inheritdoc/>
         </member>
         <member name="T:FoodCounter.Api.Service.Implementations.AlimentService">
