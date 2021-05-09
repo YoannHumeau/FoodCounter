@@ -12,7 +12,7 @@ namespace FoodCounter.Api.Models.Dto
         /// Aliment Id
         /// </summary>
         [Required]
-        public long AlimentId { get; set; }
+        public long? AlimentId { get; set; }
 
         /// <summary>
         /// Date the aliment was consumed
@@ -23,6 +23,6 @@ namespace FoodCounter.Api.Models.Dto
         /// Weight of the aliment consume
         /// </summary>
         [Required]
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
     }
 }
