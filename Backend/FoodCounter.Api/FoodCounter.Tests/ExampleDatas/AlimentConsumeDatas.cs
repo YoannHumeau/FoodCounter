@@ -2,6 +2,7 @@
 using FoodCounter.Api.Models.Dto;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FoodCounter.Tests.ExampleDatas
 {
@@ -12,32 +13,36 @@ namespace FoodCounter.Tests.ExampleDatas
             new AlimentConsume
             {
                 Id = 1,
-                AlimentId = 1,
                 UserId = 1,
+                AlimentId = 1,
+                Aliment =  AlimentDatas.listAliments.ElementAt(0),
                 ConsumeDate = new DateTime(2021, 05, 08, 13, 37, 00),
                 Weight = 100
             },
             new AlimentConsume
             {
                 Id = 2,
-                AlimentId = 1,
                 UserId = 1,
+                AlimentId = 1,
+                Aliment =  AlimentDatas.listAliments.ElementAt(0),
                 ConsumeDate = new DateTime(2021, 05, 08, 13, 37, 00),
                 Weight = 200
             },
             new AlimentConsume
             {
                 Id = 3,
-                AlimentId = 2,
                 UserId = 1,
+                AlimentId = 2,
+                Aliment =  AlimentDatas.listAliments.ElementAt(1),
                 ConsumeDate = new DateTime(2021, 05, 08, 15, 37, 00),
                 Weight = 110
             },
             new AlimentConsume
             {
                 Id = 4,
-                AlimentId = 2,
                 UserId = 1,
+                AlimentId = 2,
+                Aliment =  AlimentDatas.listAliments.ElementAt(1),
                 ConsumeDate = new DateTime(2021, 05, 08, 15, 39, 00),
                 Weight = 220
             },
