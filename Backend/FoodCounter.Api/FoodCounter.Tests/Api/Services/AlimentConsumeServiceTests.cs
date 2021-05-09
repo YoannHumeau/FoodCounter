@@ -23,6 +23,18 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public async void CreateAliment_Ok()
+        {
+            _mockAlimentConsumeRepository.Setup(m => m.CreateAsync(AlimentConsumeDatas.newAlimentConsume)).ReturnsAsync(AlimentConsumeDatas.newAlimentConsumeCreated);
+
+            var result = await _alimentConsumeService.CreateAsync(AlimentConsumeDatas.newAlimentConsume);
+
+            result.Should().BeEquivalentTo(AlimentConsumeDatas.newAlimentConsumeCreated);
+
+            _mockAlimentConsumeRepository.Verify(m => m.CreateAsync(AlimentConsumeDatas.newAlimentConsume));
+        }
+
+        [Fact]
         public async void GetAllAlimentsByUserId_OK()
         {
             long userId = 3;
