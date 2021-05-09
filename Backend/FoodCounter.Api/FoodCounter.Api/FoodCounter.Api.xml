@@ -17,6 +17,12 @@
             <param name="mapper"></param>
             <param name="alimentConsumeService"></param>
         </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.CreateAsync(FoodCounter.Api.Models.Dto.AlimentConsumeCreationDto)">
+            <summary>
+            Create an aliment consume
+            </summary>
+            <returns>Aliment consume created</returns>
+        </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.GetAsync(System.Int64)">
             <summary>
             Get all the aliment consumes for a user (By default Himself) 
@@ -266,6 +272,26 @@
             Default constructor
             </summary>
         </member>
+        <member name="T:FoodCounter.Api.Models.Dto.AlimentConsumeCreationDto">
+            <summary>
+            Aliment Consume Model Creation Dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeCreationDto.AlimentId">
+            <summary>
+            Aliment Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeCreationDto.ConsumeDate">
+            <summary>
+            Date the aliment was consumed
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeCreationDto.Weight">
+            <summary>
+            Weight of the aliment consume
+            </summary>
+        </member>
         <member name="T:FoodCounter.Api.Models.Dto.AlimentConsumeDto">
             <summary>
             Aliment Consume Model Dto class
@@ -435,6 +461,12 @@
             Aliment Consume repository class
             </summary>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.CreateAsync(FoodCounter.Api.Models.AlimentConsume)">
+            <summary>
+            Create aliment consunme
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
         <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
             <summary>
             Get one aliment consume by id
@@ -492,11 +524,18 @@
         <member name="T:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository">
             <inheritdoc/>
         </member>
-        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.#ctor(FoodCounter.Api.DataAccess.DataAccess.DbAccess)">
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.#ctor(FoodCounter.Api.DataAccess.DataAccess.DbAccess,FoodCounter.Api.Repositories.IAlimentRepository)">
             <summary>
             Default constructor
             </summary>
             <param name="db">Db Access</param>
+            <param name="alimentRepository">Aliment repository</param>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.CreateAsync(FoodCounter.Api.Models.AlimentConsume)">
+            <summary>
+            Create aliment consunme
+            </summary>
+            <returns>Aliment consume created</returns>
         </member>
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.GetAllByUserIdAsync(System.Int64)">
             <inheritdoc/>
@@ -626,6 +665,12 @@
             AlimentConsume service class
             </summary>
         </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.CreateAsync(FoodCounter.Api.Models.AlimentConsume)">
+            <summary>
+            Create aliment consume
+            </summary>
+            <returns>Aliment consume created</returns>
+        </member>
         <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.GetOneByIdAsync(System.Int64)">
             <summary>
             Get one aliment consume by id
@@ -689,6 +734,9 @@
             Default Constructor
             </summary>
             <param name="alimentConsumeRepository"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.CreateAsync(FoodCounter.Api.Models.AlimentConsume)">
+            <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.GetOneByIdAsync(System.Int64)">
             <inheritdoc/>
