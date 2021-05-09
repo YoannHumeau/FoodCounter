@@ -10,6 +10,12 @@ namespace FoodCounter.Api.Repositories
     public interface IAlimentConsumeRepository
     {
         /// <summary>
+        /// Create aliment consunme
+        /// </summary>
+        /// <returns>Aliment created</returns>
+        public Task<AlimentConsume> CreateAsync(AlimentConsume newAlimentConsume);
+
+        /// <summary>
         /// Get one aliment consume by id
         /// </summary>
         /// <returns>One aliment</returns>

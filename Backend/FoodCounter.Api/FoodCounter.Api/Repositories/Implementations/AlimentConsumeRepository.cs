@@ -3,9 +3,9 @@ using FoodCounter.Api.DataAccess.DataAccess;
 using FoodCounter.Api.Models;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using System;
 
 namespace FoodCounter.Api.Repositories.Implementations
 {
@@ -13,14 +13,31 @@ namespace FoodCounter.Api.Repositories.Implementations
     public class AlimentConsumeRepository : IAlimentConsumeRepository
     {
         private readonly IDbConnection _connection;
+        private readonly IAlimentRepository _alimentRepository;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="db">Db Access</param>
-        public AlimentConsumeRepository(DbAccess db)
+        /// <param name="alimentRepository">Aliment repository</param>
+        public AlimentConsumeRepository(DbAccess db, IAlimentRepository alimentRepository)
         {
             _connection = db.Connection;
+            _alimentRepository = alimentRepository;
+        }
+
+        /// <summary>
+        /// Create aliment consunme
+        /// </summary>
+        /// <returns>Aliment consume created</returns>
+        public async Task<AlimentConsume> CreateAsync(AlimentConsume newAlimentConsume)
+        {
+            var resultCreationId = await _connection.InsertAsync<AlimentConsume>(newAlimentConsume);
+
+            newAlimentConsume.Id = Convert.ToInt64(resultCreationId);
+            newAlimentConsume.Aliment = await _alimentRepository.GetOneByIdAsync(newAlimentConsume.AlimentId);
+
+            return newAlimentConsume;
         }
 
         /// <inheritdoc/>
