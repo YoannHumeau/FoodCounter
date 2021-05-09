@@ -4,6 +4,25 @@
         <name>FoodCounter.Api</name>
     </assembly>
     <members>
+        <member name="T:FoodCounter.Api.Controllers.AlimentConsumeController">
+            <summary>
+            AlimentsConsume Controller
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.#ctor(Microsoft.Extensions.Logging.ILogger{FoodCounter.Api.Controllers.AlimentConsumeController},AutoMapper.IMapper,FoodCounter.Api.Service.IAlimentConsumeService)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="logger"></param>
+            <param name="mapper"></param>
+            <param name="alimentConsumeService"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one aliment consume by id
+            </summary>
+            <returns>One aliment consume</returns>
+        </member>
         <member name="T:FoodCounter.Api.Controllers.AlimentController">
             <summary>
             Aliments Controller
@@ -367,6 +386,12 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one aliment consume by id
+            </summary>
+            <returns>One aliment</returns>
+        </member>
         <member name="T:FoodCounter.Api.Repositories.IAlimentRepository">
             <summary>
             Aliment repository class
@@ -407,6 +432,15 @@
             Delete one aliment by id
             </summary>
             <returns>Boolean</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.#ctor(FoodCounter.Api.DataAccess.DataAccess.DbAccess)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="db">Db Access</param>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
         </member>
         <member name="T:FoodCounter.Api.Repositories.Implementations.AlimentRepository">
             <summary>
@@ -505,6 +539,11 @@
               les recherches de ressources à l'aide de cette classe de ressource fortement typée.
             </summary>
         </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.AlimentConsumeNotFound">
+            <summary>
+              Recherche une chaîne localisée semblable à Aliment-consume not found.
+            </summary>
+        </member>
         <member name="P:FoodCounter.Api.Resources.ResourceEn.AlimentNotFound">
             <summary>
               Recherche une chaîne localisée semblable à Aliment not found.
@@ -519,6 +558,17 @@
             <summary>
               Recherche une chaîne localisée semblable à User not found.
             </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Service.IAlimentConsumeService">
+            <summary>
+            AlimentConsume service class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.GetOneByIdAsync(System.Int64)">
+            <summary>
+            Get one aliment consume by id
+            </summary>
+            <returns>One aliment</returns>
         </member>
         <member name="T:FoodCounter.Api.Service.IAlimentService">
             <summary>
@@ -560,6 +610,20 @@
             Delete one aliment by id
             </summary>
             <returns>Boolean</returns>
+        </member>
+        <member name="T:FoodCounter.Api.Service.Implementations.AlimentConsumeService">
+            <summary>
+            AlimentConsume service class
+            </summary>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.#ctor(FoodCounter.Api.Repositories.IAlimentConsumeRepository)">
+            <summary>
+            Default Constructor
+            </summary>
+            <param name="alimentConsumeRepository"></param>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
         </member>
         <member name="T:FoodCounter.Api.Service.Implementations.AlimentService">
             <summary>
