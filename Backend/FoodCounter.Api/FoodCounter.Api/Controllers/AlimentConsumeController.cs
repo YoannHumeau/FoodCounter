@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodCounter.Api.Models;
 using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Service;
@@ -10,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-//using System.Security.Claims;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -37,6 +37,32 @@ namespace FoodCounter.Api.Controllers
             _logger = logger;
             _alimentConsumeService = alimentConsumeService;
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Create an aliment consume
+        /// </summary>
+        /// <returns>Aliment consume created</returns>
+        [HttpPost]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateAsync(AlimentConsumeCreationDto newAlimentConsumeDto)
+        {
+            if (newAlimentConsumeDto.ConsumeDate == null)
+                newAlimentConsumeDto.ConsumeDate = DateTime.UtcNow;
+
+            newAlimentConsumeDto.ConsumeDate = DateTime.Parse(newAlimentConsumeDto.ConsumeDate.ToString());
+
+            var newAliment = _mapper.Map<AlimentConsume>(newAlimentConsumeDto);
+            newAliment.UserId = Convert.ToInt64(User.Identity.Name);
+
+            var result = await _alimentConsumeService.CreateAsync(newAliment);
+
+            var resultDto = _mapper.Map<AlimentConsumeDto>(result);
+
+            return Ok(resultDto);
         }
 
         /// <summary>
