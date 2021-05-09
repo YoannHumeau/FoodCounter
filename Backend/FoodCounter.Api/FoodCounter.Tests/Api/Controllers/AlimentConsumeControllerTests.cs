@@ -32,8 +32,11 @@ namespace FoodCounter.Tests.Api.Controllers
             _alimentConsumeController = new AlimentConsumeController(_mockLogger.Object, mapper, _mockAlimentConsumeService.Object);
         }
 
-        [Fact]
-        public async void GetOneAlimentById_Ok()
+        /// <summary>
+        /// Used to mock a user logged
+        /// </summary>
+        /// <param name="userId"></param>
+        private void MockUser(long userId)
         {
             _alimentConsumeController.ControllerContext = new ControllerContext
             {
@@ -41,10 +44,16 @@ namespace FoodCounter.Tests.Api.Controllers
                 {
                     User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
                     {
-                            new Claim(ClaimTypes.Name, "3")
-                    }, "someAuthTypeName"))            
+                        new Claim(ClaimTypes.Name, userId.ToString())
+                    }))        
                 }
             };
+        }
+
+        [Fact]
+        public async void GetOneAlimentById_Ok()
+        {
+            MockUser(3); // Simple user (Benjamin)
 
             int id = 2;
             var alimentConsume = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
@@ -58,6 +67,24 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().BeEquivalentTo(alimentConsumeDto);
+
+            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneAlimentById_Bad_Forbidden_BadUser()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            int id = 5;
+            var alimentConsume = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(alimentConsume);
+
+            var result = await _alimentConsumeController.GetOneByIdAsync(id);
+            var objectResult = result as ForbidResult;
+
+            objectResult.Should().NotBeNull();
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
