@@ -13,7 +13,7 @@ namespace FoodCounter.Tests.ExampleDatas
             new AlimentConsume
             {
                 Id = 1,
-                UserId = 1,
+                UserId = 3,
                 AlimentId = 1,
                 Aliment =  AlimentDatas.listAliments.ElementAt(0),
                 ConsumeDate = new DateTime(2021, 05, 08, 13, 37, 00),
@@ -22,7 +22,7 @@ namespace FoodCounter.Tests.ExampleDatas
             new AlimentConsume
             {
                 Id = 2,
-                UserId = 1,
+                UserId = 3,
                 AlimentId = 1,
                 Aliment =  AlimentDatas.listAliments.ElementAt(0),
                 ConsumeDate = new DateTime(2021, 05, 08, 13, 37, 00),
@@ -31,7 +31,7 @@ namespace FoodCounter.Tests.ExampleDatas
             new AlimentConsume
             {
                 Id = 3,
-                UserId = 1,
+                UserId = 3,
                 AlimentId = 2,
                 Aliment =  AlimentDatas.listAliments.ElementAt(1),
                 ConsumeDate = new DateTime(2021, 05, 08, 15, 37, 00),
@@ -40,11 +40,29 @@ namespace FoodCounter.Tests.ExampleDatas
             new AlimentConsume
             {
                 Id = 4,
-                UserId = 1,
+                UserId = 3,
                 AlimentId = 2,
                 Aliment =  AlimentDatas.listAliments.ElementAt(1),
                 ConsumeDate = new DateTime(2021, 05, 08, 15, 39, 00),
                 Weight = 220
+            },
+            new AlimentConsume
+            {
+                Id = 5,
+                UserId = 1,
+                AlimentId = 2,
+                Aliment =  AlimentDatas.listAliments.ElementAt(0),
+                ConsumeDate = new DateTime(2021, 05, 08, 15, 39, 00),
+                Weight = 222
+            },
+            new AlimentConsume
+            {
+                Id = 6,
+                UserId = 1,
+                AlimentId = 2,
+                Aliment =  AlimentDatas.listAliments.ElementAt(1),
+                ConsumeDate = new DateTime(2021, 05, 08, 15, 39, 00),
+                Weight = 333
             },
         };
 
