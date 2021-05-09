@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Repositories.Implementations
 {
+    /// <inheritdoc/>
     public class AlimentConsumeRepository : IAlimentConsumeRepository
     {
         private readonly IDbConnection _connection;

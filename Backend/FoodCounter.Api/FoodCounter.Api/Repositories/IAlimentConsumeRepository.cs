@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Repositories
 {
+    /// <summary>
+    /// Aliment Consume repository class
+    /// </summary>
     public interface IAlimentConsumeRepository
     {
         /// <summary>
