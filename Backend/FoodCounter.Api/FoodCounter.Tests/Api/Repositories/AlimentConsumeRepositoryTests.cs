@@ -35,6 +35,18 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
+        public async void GetAllAlimentsConsume_Bad_ResultNull()
+        {
+            PrepareDatabase();
+
+            long userId = 2;
+
+            var result = await _alimentConsumeRepository.GetAllByUserIdAsync(userId);
+
+            result.Should().BeEquivalentTo(new List<AlimentConsume>());
+        }
+
+        [Fact]
         public async void GetOneAlimentConsumeById_Ok()
         {
             PrepareDatabase();
