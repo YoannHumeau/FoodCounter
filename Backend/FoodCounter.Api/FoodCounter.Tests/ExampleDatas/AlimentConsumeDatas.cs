@@ -66,94 +66,50 @@ namespace FoodCounter.Tests.ExampleDatas
             },
         };
 
-        public static List<Aliment> listAliments = new List<Aliment>
+        public static List<AlimentConsumeDto> listAlimentConsumesDto = new List<AlimentConsumeDto>
         {
-            new Aliment
+            new AlimentConsumeDto
             {
-                Id = 1,
-                Name = "Aliment 1",
-                Calories = 100,
-                Barecode = null
+                Id = listAlimentConsumes.ElementAt(0).Id,
+                Aliment =  listAlimentConsumes.ElementAt(0).Aliment,
+                ConsumeDate = listAlimentConsumes.ElementAt(0).ConsumeDate,
+                Weight = listAlimentConsumes.ElementAt(0).Weight
             },
-            new Aliment
+            new AlimentConsumeDto
             {
-                Id = 2,
-                Name = "Aliment 2",
-                Calories = 222,
-                Barecode = null
+                Id = listAlimentConsumes.ElementAt(1).Id,
+                Aliment =  listAlimentConsumes.ElementAt(1).Aliment,
+                ConsumeDate = listAlimentConsumes.ElementAt(1).ConsumeDate,
+                Weight = listAlimentConsumes.ElementAt(1).Weight
             },
-            new Aliment
+            new AlimentConsumeDto
             {
-                Id = 3,
-                Name = "Aliment 3",
-                Calories = 300,
-                Barecode = null
+                Id = listAlimentConsumes.ElementAt(2).Id,
+                Aliment =  listAlimentConsumes.ElementAt(2).Aliment,
+                ConsumeDate = listAlimentConsumes.ElementAt(2).ConsumeDate,
+                Weight = listAlimentConsumes.ElementAt(2).Weight
             },
-            new Aliment
+            new AlimentConsumeDto
             {
-                Id = 4,
-                Name = "Aliment 4",
-                Calories = 400,
-                Barecode = "1234567890123"
+                Id = listAlimentConsumes.ElementAt(3).Id,
+                Aliment =  listAlimentConsumes.ElementAt(3).Aliment,
+                ConsumeDate = listAlimentConsumes.ElementAt(3).ConsumeDate,
+                Weight = listAlimentConsumes.ElementAt(3).Weight
             },
-            new Aliment
+            new AlimentConsumeDto
             {
-                Id = 5,
-                Name = "Aliment 5",
-                Calories = 555,
-                Barecode = "1234567890456"
+                Id = listAlimentConsumes.ElementAt(4).Id,
+                Aliment =  listAlimentConsumes.ElementAt(4).Aliment,
+                ConsumeDate = listAlimentConsumes.ElementAt(4).ConsumeDate,
+                Weight = listAlimentConsumes.ElementAt(4).Weight
             },
-            new Aliment
+            new AlimentConsumeDto
             {
-                Id = 6,
-                Name = "Aliment 6",
-                Calories = 600,
-                Barecode = "1234567890"
+                Id = listAlimentConsumes.ElementAt(5).Id,
+                Aliment =  listAlimentConsumes.ElementAt(5).Aliment,
+                ConsumeDate = listAlimentConsumes.ElementAt(5).ConsumeDate,
+                Weight = listAlimentConsumes.ElementAt(5).Weight
             },
-            new Aliment
-            {
-                Id = 7,
-                Name = "Aliment 7",
-                Calories = 777,
-                Barecode = "1234567890"
-            }
-        };
-
-        public static Aliment newAliment = new Aliment
-        {
-            Name = "Aliment 8",
-            Calories = 123,
-            Barecode = null
-        };
-
-        public static AlimentCreationDto newAlimentCreationDto = new AlimentCreationDto
-        {
-            Name = newAliment.Name,
-            Calories = newAliment.Calories,
-            Barecode = newAliment.Barecode
-        };
-
-        public static Aliment newAlimentDto = new Aliment
-        {
-            Id = 8,
-            Name = newAliment.Name,
-            Calories = newAliment.Calories,
-            Barecode = newAliment.Barecode
-        };
-
-        public static Aliment updateAliment = new Aliment
-        {
-            Id = 5,
-            Name = "Aliment 5 Update",
-            Calories = 555,
-            Barecode = "1234567890555"
-        };
-
-        public static AlimentUpdateDto updateAlimentUpdateDto = new AlimentUpdateDto
-        {
-            Name = updateAliment.Name,
-            Calories = updateAliment.Calories,
-            Barecode = updateAliment.Barecode
         };
     }
 }

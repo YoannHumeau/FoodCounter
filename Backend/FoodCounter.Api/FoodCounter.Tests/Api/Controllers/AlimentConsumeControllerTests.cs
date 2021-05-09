@@ -5,14 +5,13 @@ using FoodCounter.Api.Models;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Service;
 using FoodCounter.Tests.ExampleDatas;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Security.Claims;
 using Xunit;
 
 namespace FoodCounter.Tests.Api.Controllers
@@ -36,17 +35,29 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void GetOneAlimentById_Ok()
         {
-            int id = 2;
-            var aliment = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
+            _alimentConsumeController.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+                    {
+                            new Claim(ClaimTypes.Name, "3")
+                    }, "someAuthTypeName"))            
+                }
+            };
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(aliment);
+            int id = 2;
+            var alimentConsume = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
+            var alimentConsumeDto = AlimentConsumeDatas.listAlimentConsumesDto.ElementAt(id - 1);
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(alimentConsume);
 
             var result = await _alimentConsumeController.GetOneByIdAsync(id);
             var objectResult = result as OkObjectResult;
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(aliment);
+            objectResult.Value.Should().BeEquivalentTo(alimentConsumeDto);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
@@ -66,7 +77,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             // Put the content as a json and compare
             JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentNotFound }));
+                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentConsumeNotFound }));
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
