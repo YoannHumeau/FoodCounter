@@ -111,5 +111,23 @@ namespace FoodCounter.Tests.ExampleDatas
                 Weight = listAlimentConsumes.ElementAt(5).Weight
             },
         };
+
+        public static AlimentConsume newAlimentConsume = new AlimentConsume
+        {
+            UserId = 3,
+            AlimentId = 2,
+            ConsumeDate = new DateTime(2021, 05, 09, 23, 01, 00),
+            Weight = 111
+        };
+
+        public static AlimentConsume newAlimentConsumeCreated = new AlimentConsume
+        {
+            Id = 7,
+            UserId = newAlimentConsume.UserId,
+            AlimentId = newAlimentConsume.AlimentId,
+            Aliment = listAlimentConsumes.ElementAt((int)newAlimentConsume.AlimentId).Aliment,
+            ConsumeDate = newAlimentConsume.ConsumeDate,
+            Weight = newAlimentConsume.Weight
+        };
     }
 }

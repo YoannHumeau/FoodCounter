@@ -14,10 +14,25 @@ namespace FoodCounter.Tests.Api.Repositories
     public class AlimentConsumeRepositoryTests : BaseRepositoryTests
     {
         private readonly IAlimentConsumeRepository _alimentConsumeRepository;
+        private readonly IAlimentRepository _alimentRepository;
 
         public AlimentConsumeRepositoryTests()
         {
-            _alimentConsumeRepository = new AlimentConsumeRepository(_dbAccess);
+            _alimentRepository = new AlimentRepository(_dbAccess);
+            _alimentConsumeRepository = new AlimentConsumeRepository(_dbAccess, _alimentRepository);
+        }
+
+        [Fact]
+        public async void CreateAliment_Ok()
+        {
+            PrepareDatabase();
+
+            var result = await _alimentConsumeRepository.CreateAsync(AlimentConsumeDatas.newAlimentConsume);
+
+            result.Should().BeEquivalentTo(AlimentConsumeDatas.newAlimentConsumeCreated);
+
+            var resultCheck = await _alimentConsumeRepository.GetOneByIdAsync(AlimentConsumeDatas.newAlimentConsumeCreated.Id);
+            resultCheck.Should().BeEquivalentTo(AlimentConsumeDatas.newAlimentConsumeCreated);
         }
 
         [Fact]
