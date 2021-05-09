@@ -1,13 +1,12 @@
 ﻿using FluentAssertions;
+using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Service;
 using FoodCounter.Api.Service.Implementations;
 using FoodCounter.Tests.ExampleDatas;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace FoodCounter.Tests.Api.Services
@@ -21,6 +20,34 @@ namespace FoodCounter.Tests.Api.Services
         {
             _mockAlimentConsumeRepository = new Mock<IAlimentConsumeRepository>();
             _alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object);
+        }
+
+        [Fact]
+        public async void GetAllAlimentsByUserId_OK()
+        {
+            long userId = 3;
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
+
+            var result = await _alimentConsumeService.GetAllByUserIdAsync(userId);
+
+            result.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
+
+            _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Once);
+        }
+
+        [Fact]
+        public async void GetAllAlimentsByUserId_Bad_ResultEmpty()
+        {
+            long userId = 2;
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
+
+            var result = await _alimentConsumeService.GetAllByUserIdAsync(userId);
+
+            result.Should().BeEquivalentTo(new List<AlimentConsume>());
+
+            _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Once);
         }
 
         [Fact]
