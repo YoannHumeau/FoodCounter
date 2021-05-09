@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using FoodCounter.Api.Models;
+using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Repositories.Implementations;
 using FoodCounter.Tests.ExampleDatas;
 using System;
@@ -11,7 +13,7 @@ namespace FoodCounter.Tests.Api.Repositories
 {
     public class AlimentConsumeRepositoryTests : BaseRepositoryTests
     {
-        private readonly AlimentConsumeRepository _alimentConsumeRepository;
+        private readonly IAlimentConsumeRepository _alimentConsumeRepository;
 
         public AlimentConsumeRepositoryTests()
         {
@@ -19,7 +21,21 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetOneAlimentById_Ok()
+        public async void GetAllAlimentsConsume_Ok()
+        {
+            PrepareDatabase();
+
+            long userId = 3;
+
+            var result = await _alimentConsumeRepository.GetAllByUserIdAsync(userId);
+
+            var resultExpected = AlimentConsumeDatas.listAlimentConsumes.Where(ac => ac.UserId == userId);
+
+            result.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.Where(ac => ac.UserId == userId));
+        }
+
+        [Fact]
+        public async void GetOneAlimentConsumeById_Ok()
         {
             PrepareDatabase();
 
@@ -31,7 +47,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void GetOneAlimentById_Bad_NotFound()
+        public async void GetOneAlimentConsumeById_Bad_NotFound()
         {
             PrepareDatabase();
 
