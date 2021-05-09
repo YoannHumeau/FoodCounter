@@ -54,7 +54,7 @@ namespace FoodCounter.Api.Controllers
             {
                 userId = Convert.ToInt64(User.Identity.Name);
             }
-            else if (userId != Convert.ToInt64(User.Identity.Name) || !Helpers.IdentityHelper.IsUserAdmin(User))
+            else if (userId != Convert.ToInt64(User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(User))
             {
                 return Forbid();
             }
