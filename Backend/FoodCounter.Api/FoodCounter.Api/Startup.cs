@@ -47,9 +47,11 @@ namespace FoodCounter.Api
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IAlimentService, AlimentService>();
+            services.AddScoped<IAlimentConsumeService, AlimentConsumeService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IAlimentRepository, AlimentRepository>();
+            services.AddScoped<IAlimentConsumeRepository, AlimentConsumeRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<DbAccess>(sp => new DbAccess(Configuration.GetConnectionString("Default")));
