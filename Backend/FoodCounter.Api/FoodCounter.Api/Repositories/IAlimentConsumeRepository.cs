@@ -1,4 +1,5 @@
 ﻿using FoodCounter.Api.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FoodCounter.Api.Repositories
@@ -13,5 +14,12 @@ namespace FoodCounter.Api.Repositories
         /// </summary>
         /// <returns>One aliment</returns>
         public Task<AlimentConsume> GetOneByIdAsync(long id);
+
+        /// <summary>
+        /// Get all the aliments consume for a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>list of aliments consumes</returns>
+        public Task<IEnumerable<AlimentConsume>> GetAllByUserIdAsync(long userId);
     }
 }
