@@ -81,8 +81,7 @@ namespace FoodCounter.Api.Controllers
             if (result == null)
                 return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
 
-            // TODO : check with role admin passtrought
-            if (result.UserId != Convert.ToInt64(User.Identity.Name))
+            if (result.UserId != Convert.ToInt64(User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(User))
                 return Forbid();
 
             var resultDto = _mapper.Map<AlimentConsumeDto>(result);
