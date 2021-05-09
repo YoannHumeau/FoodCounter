@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -48,9 +50,15 @@ namespace FoodCounter.Api.Controllers
             var result = await _alimentConsumeService.GetOneByIdAsync(id);
 
             if (result == null)
-                return NotFound(new { Message = ResourceEn.AlimentNotFound });
+                return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
 
-            return Ok(result);
+            // TODO : check with role admin passtrought
+            if (result.UserId != Convert.ToInt64(User.Identity.Name))
+                return Forbid();
+
+            var resultDto = _mapper.Map<AlimentConsumeDto>(result);
+
+            return Ok(resultDto);
         }
     }
 }
