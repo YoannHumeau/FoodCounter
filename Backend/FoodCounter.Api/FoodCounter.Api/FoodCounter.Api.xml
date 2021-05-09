@@ -153,6 +153,36 @@
             User token
             </summary>
         </member>
+        <member name="T:FoodCounter.Api.Models.AlimentconsumeModel">
+            <summary>
+            Aliment consume class
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentconsumeModel.Id">
+            <summary>
+            Technocal Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentconsumeModel.UserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentconsumeModel.AlimentId">
+            <summary>
+            Aliment Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentconsumeModel.ConsumeDate">
+            <summary>
+            Date the aliment was consumed
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.AlimentconsumeModel.Weight">
+            <summary>
+            Weight of the consume
+            </summary>
+        </member>
         <member name="T:FoodCounter.Api.Models.AlimentModel">
             <summary>
             Aliment model

@@ -49,6 +49,7 @@ namespace FoodCounter.Tests.Api.Repositories
 
                 connection.InsertAll(AlimentDatas.listAliments);
                 connection.InsertAll(UserDatas.listUsers);
+                connection.InsertAll(AlimentConsumeDatas.listAlimentConsumes);
             }
         }
 
