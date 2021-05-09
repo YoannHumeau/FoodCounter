@@ -61,6 +61,15 @@ namespace FoodCounter.Api.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Aliment-consume not found.
+        /// </summary>
+        public static string AlimentConsumeNotFound {
+            get {
+                return ResourceManager.GetString("AlimentConsumeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Aliment not found.
         /// </summary>
         public static string AlimentNotFound {
