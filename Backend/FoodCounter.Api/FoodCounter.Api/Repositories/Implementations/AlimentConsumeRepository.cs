@@ -37,7 +37,7 @@ namespace FoodCounter.Api.Repositories.Implementations
                     INNER JOIN Aliments a ON a.Id = ac.AlimentId
                     WHERE ac.UserId = @UserId ";
 
-            var result = _connection.Query<AlimentConsume, Aliment, AlimentConsume>
+            var result = await _connection.QueryAsync<AlimentConsume, Aliment, AlimentConsume>
                 (sql, (ac, a) => { ac.Aliment = a; return ac; }, new { UserId = userId} );
             
             return result;
