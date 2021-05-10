@@ -91,6 +91,54 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public async void UpdateAlimentConsume_Ok()
+        {
+            int id = 2;
+            long userId = 3;
+            var updateAlimentConsume = new AlimentConsume
+            {
+                Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Id,
+                Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Weight + 111
+            };
+
+            var afterUpdateAlimentConsume = new AlimentConsume
+            {
+                Id = updateAlimentConsume.Id,
+                UserId = userId,
+                AlimentId = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).AlimentId,
+                Aliment = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Aliment,
+                ConsumeDate = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).ConsumeDate,
+                Weight = updateAlimentConsume.Weight
+            };
+
+            _mockAlimentConsumeRepository.Setup(m => m.UpdateAsync(updateAlimentConsume)).ReturnsAsync(afterUpdateAlimentConsume);
+
+            var result = await _alimentConsumeService.UpdateAsync(updateAlimentConsume);
+
+            result.Should().BeEquivalentTo(afterUpdateAlimentConsume);
+
+            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Once);
+        }
+
+        [Fact]
+        public async void UpdateAlimentConsume_Bad_NotFound()
+        {
+            int id = 2;
+            var updateAlimentConsume = new AlimentConsume
+            {
+                Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Id,
+            };
+
+            _mockAlimentConsumeRepository.Setup(m => m.UpdateAsync(updateAlimentConsume)).ReturnsAsync(() => null);
+
+            var result = await _alimentConsumeService.UpdateAsync(updateAlimentConsume);
+
+            result.Should().BeNull();
+
+            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Once);
+        }
+
+        [Fact]
         public async void DeleteAlimentConsume_Ok()
         {
             int id = 2;
