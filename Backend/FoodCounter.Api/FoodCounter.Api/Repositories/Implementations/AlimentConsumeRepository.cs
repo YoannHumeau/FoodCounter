@@ -67,5 +67,18 @@ namespace FoodCounter.Api.Repositories.Implementations
 
             return result;
         }
+
+        /// <inheritdoc/>
+        public async Task<bool> DeleteAsync(long id)
+        {
+            var alimentConsume = await _connection.GetAsync<AlimentConsume>(id);
+
+            if (alimentConsume == null)
+                return false;
+
+            var result = await _connection.DeleteAsync<AlimentConsume>(alimentConsume);
+
+            return result;
+        }
     }
 }
