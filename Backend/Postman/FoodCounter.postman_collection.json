@@ -799,6 +799,65 @@
 							"response": []
 						},
 						{
+							"name": "AlimentConsumeUpdateOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 7,\r",
+											"    \"aliment\": {\r",
+											"        \"id\": 1,\r",
+											"        \"name\": \"Aliment 1\",\r",
+											"        \"barecode\": null,\r",
+											"        \"calories\": 100\r",
+											"    },\r",
+											"    \"consumeDate\": \"2021-05-09T22:38:40\",\r",
+											"    \"weight\": 456\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Weight\": 456\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "AlimentConsumeDeleteOneOk",
 							"event": [
 								{
@@ -947,6 +1006,48 @@
 									"response": []
 								},
 								{
+									"name": "AlimentConsumeUpdateBadNotLogged",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status test\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Weight\": 456\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/aliment-consumes/7",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"aliment-consumes",
+												"7"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "AlimentConsumeDeleteOneBadNotLogged",
 									"event": [
 										{
@@ -1074,6 +1175,48 @@
 													"key": "userId",
 													"value": "1"
 												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "AlimentConsumeUpdateBadNotAllowed",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status test\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Weight\": 456\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/aliment-consumes/5",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"aliment-consumes",
+												"5"
 											]
 										}
 									},
@@ -1259,6 +1402,111 @@
 									"port": "5000",
 									"path": [
 										"aliment-consumes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentConsumeUpdateBadMissingWeight",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"var expectedError =\r",
+											"{\r",
+											"    \"Weight\": [\r",
+											"        \"The Weight field is required.\"\r",
+											"    ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentConsumeUpdateBadNotFound",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"message\": \"Aliment-consume not found\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Weight\": 456\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/777",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"777"
 									]
 								}
 							},
