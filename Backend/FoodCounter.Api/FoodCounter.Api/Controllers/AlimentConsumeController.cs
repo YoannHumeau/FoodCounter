@@ -114,5 +114,26 @@ namespace FoodCounter.Api.Controllers
 
             return Ok(resultDto);
         }
+
+        /// <summary>
+        /// Delete an aliment consume
+        /// </summary>
+        /// <returns>Status code if deleted or not</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteAsync([FromRoute] long id)
+        {
+            if ((await _alimentConsumeService.GetOneByIdAsync(id)) == null)
+                return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
+
+            var result = await _alimentConsumeService.DeleteAsync(id);
+
+            if (result)
+                return NoContent();
+            else
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ResourceEn.ProblemDeleting });
+        }
     }
 }
