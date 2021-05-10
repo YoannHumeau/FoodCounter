@@ -46,6 +46,14 @@ namespace FoodCounter.Api.Service.Implementations
         }
 
         ///<inheritdoc/>
+        public async Task<AlimentConsume> UpdateAsync(AlimentConsume newAlimentConsume)
+        {
+            var result = await _alimentConsumeRepository.UpdateAsync(newAlimentConsume);
+
+            return result;
+        }
+
+        ///<inheritdoc/>
         public async Task<bool> DeleteAsync(long id)
         {
             var result = await _alimentConsumeRepository.DeleteAsync(id);
