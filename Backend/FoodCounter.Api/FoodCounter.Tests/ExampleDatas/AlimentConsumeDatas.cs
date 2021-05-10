@@ -144,5 +144,28 @@ namespace FoodCounter.Tests.ExampleDatas
             ConsumeDate = newAlimentConsumeCreated.ConsumeDate,
             Weight = newAlimentConsumeCreated.Weight
         };
+
+        public static AlimentConsumeUpdateDto updateAlimentConsumeUpdateDto = new AlimentConsumeUpdateDto
+        {
+            Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Weight + 111
+        };
+
+        public static AlimentConsume afterUpdateAlimentConsume = new AlimentConsume
+        {
+            Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Id,
+            UserId = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).UserId,
+            AlimentId = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).AlimentId,
+            Aliment = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Aliment,
+            ConsumeDate = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).ConsumeDate,
+            Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Weight + 111
+        };
+
+        public static AlimentConsumeDto afterUpdateAlimentConsumeDto = new AlimentConsumeDto
+        {
+            Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Id,
+            Aliment = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Aliment,
+            ConsumeDate = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).ConsumeDate,
+            Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(1).Weight + 111
+        };
     }
 }

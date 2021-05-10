@@ -153,6 +153,66 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
+        public async void UpdateAliment_Ok()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            var alimentConsumeId = AlimentConsumeDatas.afterUpdateAlimentConsume.Id;
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(alimentConsumeId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt((int)alimentConsumeId));
+            _mockAlimentConsumeService.Setup(m => m.UpdateAsync(It.IsAny<AlimentConsume>())).ReturnsAsync(AlimentConsumeDatas.afterUpdateAlimentConsume);
+
+            var result = await _alimentConsumeController.UpdateAsync(alimentConsumeId, AlimentConsumeDatas.updateAlimentConsumeUpdateDto);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(AlimentConsumeDatas.afterUpdateAlimentConsumeDto);
+
+            _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Once);
+            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(alimentConsumeId), Times.Once);
+        }
+
+        [Fact]
+        public async void UpdateAliment_Bad_Forbid_BadUser()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            int id = 5;
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt((int)id));
+
+            var result = await _alimentConsumeController.UpdateAsync(id, AlimentConsumeDatas.updateAlimentConsumeUpdateDto);
+            var objectResult = result as ForbidResult;
+
+            objectResult.Should().NotBeNull();
+
+            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UpdateAliment_Bad_NotFound()
+        {
+            int id = 777;
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+
+            var result = await _alimentConsumeController.UpdateAsync(id, AlimentConsumeDatas.updateAlimentConsumeUpdateDto);
+            var objectResult = result as NotFoundObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(404);
+
+            // Put the content as a json and compare
+            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
+                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentConsumeNotFound }));
+
+            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Never);
+        }
+
+        [Fact]
         public async void DeleteOneAlimentConsumeById_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
