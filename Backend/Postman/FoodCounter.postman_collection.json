@@ -739,6 +739,97 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "AlimentConsumeCreateOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 7,\r",
+											"    \"aliment\": {\r",
+											"        \"id\": 1,\r",
+											"        \"name\": \"Aliment 1\",\r",
+											"        \"barecode\": null,\r",
+											"        \"calories\": 100\r",
+											"    },\r",
+											"    \"consumeDate\": \"2021-05-09T22:38:40\",\r",
+											"    \"weight\": 123\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"AlimentId\": 1,\r\n    \"ConsumeDate\": \"2021-05-09T22:38:40\",\r\n    \"Weight\": 123\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentConsumeDeleteOneOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"7"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -957,62 +1048,120 @@
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Admin",
-					"item": [
+						},
 						{
-							"name": "AlimentConsumeGetOneByAdminOk",
+							"name": "AlimentConsumeCreateBadMissingAlimentId",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"pm.test(\"Status test\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"    pm.response.to.have.status(400);\r",
 											"});\r",
 											"\r",
-											"var expectedBody =\r",
+											"var expectedError =\r",
 											"{\r",
-											"    \"id\": 5,\r",
-											"    \"aliment\": {\r",
-											"        \"id\": 2,\r",
-											"        \"name\": \"Aliment 2\",\r",
-											"        \"barecode\": null,\r",
-											"        \"calories\": 222\r",
-											"    },\r",
-											"    \"consumeDate\": \"2021-05-08T15:39:00\",\r",
-											"    \"weight\": 222\r",
+											"    \"AlimentId\": [\r",
+											"        \"The AlimentId field is required.\"\r",
+											"    ]\r",
 											"}\r",
 											"\r",
-											"pm.test(\"Verify return values\", function () { \r",
-											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-											"});"
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});\r",
+											""
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ConsumeDate\": \"2021-05-09T22:38:40\",\r\n    \"Weight\": 123\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "http://localhost:5000/aliment-consumes/5",
+									"raw": "http://localhost:5000/aliment-consumes",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "5000",
 									"path": [
-										"aliment-consumes",
-										"5"
+										"aliment-consumes"
 									]
 								}
 							},
 							"response": []
 						},
+						{
+							"name": "AlimentConsumeCreateBadMissinWeight",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"var expectedError =\r",
+											"{\r",
+											"    \"Weight\": [\r",
+											"        \"The Weight field is required.\"\r",
+											"    ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(JSON.stringify(responseJson.errors)).is.to.equal(JSON.stringify(expectedError)); \r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"AlimentId\": 1,\r\n    \"ConsumeDate\": \"2021-05-09T22:38:40\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
 						{
 							"name": "AlimentConsumeGetOneForAnotherUserByAdminOk",
 							"event": [
@@ -1058,6 +1207,56 @@
 									"path": [
 										"aliment-consumes",
 										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentConsumeGetOneByAdminOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 5,\r",
+											"    \"aliment\": {\r",
+											"        \"id\": 2,\r",
+											"        \"name\": \"Aliment 2\",\r",
+											"        \"barecode\": null,\r",
+											"        \"calories\": 222\r",
+											"    },\r",
+											"    \"consumeDate\": \"2021-05-08T15:39:00\",\r",
+											"    \"weight\": 222\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"5"
 									]
 								}
 							},
