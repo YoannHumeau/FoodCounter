@@ -36,6 +36,12 @@
             </summary>
             <returns>One aliment consume</returns>
         </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.DeleteAsync(System.Int64)">
+            <summary>
+            Delete an aliment consume
+            </summary>
+            <returns>Status code if deleted or not</returns>
+        </member>
         <member name="T:FoodCounter.Api.Controllers.AlimentController">
             <summary>
             Aliments Controller
@@ -480,6 +486,13 @@
             <param name="userId"></param>
             <returns>list of aliments consumes</returns>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.DeleteAsync(System.Int64)">
+            <summary>
+            Delete an aliment consume
+            </summary>
+            <param name="id"></param>
+            <returns>Boolean if is delted or mot</returns>
+        </member>
         <member name="T:FoodCounter.Api.Repositories.IAlimentRepository">
             <summary>
             Aliment repository class
@@ -541,6 +554,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.DeleteAsync(System.Int64)">
             <inheritdoc/>
         </member>
         <member name="T:FoodCounter.Api.Repositories.Implementations.AlimentRepository">
@@ -683,6 +699,12 @@
             </summary>
             <returns>List of aliment consumes of the user</returns>
         </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.DeleteAsync(System.Int64)">
+            <summary>
+            Delete one aliment consume by id
+            </summary>
+            <returns>Boolean</returns>
+        </member>
         <member name="T:FoodCounter.Api.Service.IAlimentService">
             <summary>
             Aliment service class
@@ -742,6 +764,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.GetAllByUserIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.DeleteAsync(System.Int64)">
             <inheritdoc/>
         </member>
         <member name="T:FoodCounter.Api.Service.Implementations.AlimentService">
