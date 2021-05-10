@@ -840,6 +840,47 @@
 							"name": "NotLogged",
 							"item": [
 								{
+									"name": "AlimentConsumeCreateBadNotLogged",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status test\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"AlimentId\": 1,\r\n    \"ConsumeDate\": \"2021-05-09T22:38:40\",\r\n    \"Weight\": 123\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/aliment-consumes",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"aliment-consumes"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "AlimentConsumeGetOneBadNotLogged",
 									"event": [
 										{
@@ -900,6 +941,39 @@
 											"path": [
 												"aliment-consumes",
 												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "AlimentConsumeDeleteOneBadNotLogged",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status test\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/aliment-consumes/5",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"aliment-consumes",
+												"5"
 											]
 										}
 									},
@@ -1000,6 +1074,39 @@
 													"key": "userId",
 													"value": "1"
 												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "AlimentConsumeDeleteOneBadNotAllowed",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status test\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/aliment-consumes/5",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"aliment-consumes",
+												"5"
 											]
 										}
 									},
@@ -1152,6 +1259,48 @@
 									"port": "5000",
 									"path": [
 										"aliment-consumes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentConsumeDeleteOneBadNotFound",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"message\": \"Aliment-consume not found\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/777",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"777"
 									]
 								}
 							},
@@ -1429,6 +1578,39 @@
 											"key": "userId",
 											"value": "3"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AlimentConsumeDeleteOneForOtherUserByAdminOk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/aliment-consumes/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"aliment-consumes",
+										"1"
 									]
 								}
 							},

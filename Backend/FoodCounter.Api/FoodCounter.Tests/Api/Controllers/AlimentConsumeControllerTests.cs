@@ -155,9 +155,11 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void DeleteOneAlimentConsumeById_Ok()
         {
+            MockUser(3); // Simple user (Benjamin)
+
             int id = 2;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentConsume());
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentConsumeController.DeleteAsync(id);
@@ -177,7 +179,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             int id = 2;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentConsume());
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentConsumeController.DeleteAsync(id);
@@ -214,9 +216,11 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void DeleteOneAlimentConsumeById_Bad_InternalServerError()
         {
+            MockUser(3); // Simple user (Benjamin)
+
             int id = 2;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentConsume());
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(false);
 
             var result = await _alimentConsumeController.DeleteAsync(id);
