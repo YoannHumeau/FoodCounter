@@ -26,5 +26,11 @@ namespace FoodCounter.Api.Service
         /// </summary>
         /// <returns>List of aliment consumes of the user</returns>
         public Task<IEnumerable<AlimentConsume>> GetAllByUserIdAsync(long userId);
+
+        /// <summary>
+        /// Delete one aliment consume by id
+        /// </summary>
+        /// <returns>Boolean</returns>
+        public Task<bool> DeleteAsync(long id);
     }
 }
