@@ -21,6 +21,7 @@ namespace FoodCounter.Api.Models
 
             CreateMap<AlimentConsume, AlimentConsumeDto>();
             CreateMap<AlimentConsumeCreationDto, AlimentConsume>();
+            CreateMap<AlimentConsumeUpdateDto, AlimentConsume>();
 
             CreateMap<UserCreationDto, User>();
             CreateMap<User, UserLoggedDto>();

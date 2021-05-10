@@ -116,6 +116,34 @@ namespace FoodCounter.Api.Controllers
         }
 
         /// <summary>
+        /// Update an aliment consume
+        /// </summary>
+        /// <returns>Aliment consume updated</returns>
+        [HttpPut("{id}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentConsumeUpdateDto updateAlimentDto)
+        {
+            var alimentConsume = await _alimentConsumeService.GetOneByIdAsync(id);
+            if (alimentConsume == null)
+                return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
+
+            if (alimentConsume.UserId != Convert.ToInt64(User.Identity.Name))
+                return Forbid();
+
+            var updateConsumeAliment = _mapper.Map<AlimentConsume>(updateAlimentDto);
+            updateConsumeAliment.Id = id;
+
+            var result = await _alimentConsumeService.UpdateAsync(updateConsumeAliment);
+            var resultDto = _mapper.Map<AlimentConsumeDto>(result);
+
+            return Ok(resultDto);
+        }
+
+        /// <summary>
         /// Delete an aliment consume
         /// </summary>
         /// <returns>Status code if deleted or not</returns>
