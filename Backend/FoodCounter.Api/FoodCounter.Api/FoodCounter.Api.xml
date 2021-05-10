@@ -36,6 +36,12 @@
             </summary>
             <returns>One aliment consume</returns>
         </member>
+        <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.UpdateAsync(System.Int64,FoodCounter.Api.Models.Dto.AlimentConsumeUpdateDto)">
+            <summary>
+            Update an aliment consume
+            </summary>
+            <returns>Aliment consume updated</returns>
+        </member>
         <member name="M:FoodCounter.Api.Controllers.AlimentConsumeController.DeleteAsync(System.Int64)">
             <summary>
             Delete an aliment consume
@@ -323,6 +329,16 @@
             Weight of the consume
             </summary>
         </member>
+        <member name="T:FoodCounter.Api.Models.Dto.AlimentConsumeUpdateDto">
+            <summary>
+            Aliment Consume Update Model Creation Dto
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.AlimentConsumeUpdateDto.Weight">
+            <summary>
+            Weight of the aliment consume
+            </summary>
+        </member>
         <member name="T:FoodCounter.Api.Models.Dto.AlimentCreationDto">
             <summary>
             Aliment creation model dto
@@ -486,6 +502,12 @@
             <param name="userId"></param>
             <returns>list of aliments consumes</returns>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.UpdateAsync(FoodCounter.Api.Models.AlimentConsume)">
+            <summary>
+            Update an aliment consume
+            </summary>
+            <returns>Aliment consume updated created</returns>
+        </member>
         <member name="M:FoodCounter.Api.Repositories.IAlimentConsumeRepository.DeleteAsync(System.Int64)">
             <summary>
             Delete an aliment consume
@@ -554,6 +576,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.GetOneByIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.UpdateAsync(FoodCounter.Api.Models.AlimentConsume)">
             <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Repositories.Implementations.AlimentConsumeRepository.DeleteAsync(System.Int64)">
@@ -699,6 +724,12 @@
             </summary>
             <returns>List of aliment consumes of the user</returns>
         </member>
+        <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.UpdateAsync(FoodCounter.Api.Models.AlimentConsume)">
+            <summary>
+            Update an aliment consume
+            </summary>
+            <returns>Aliment created</returns>
+        </member>
         <member name="M:FoodCounter.Api.Service.IAlimentConsumeService.DeleteAsync(System.Int64)">
             <summary>
             Delete one aliment consume by id
@@ -764,6 +795,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.GetAllByUserIdAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.UpdateAsync(FoodCounter.Api.Models.AlimentConsume)">
             <inheritdoc/>
         </member>
         <member name="M:FoodCounter.Api.Service.Implementations.AlimentConsumeService.DeleteAsync(System.Int64)">
