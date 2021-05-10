@@ -125,8 +125,13 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {
-            if ((await _alimentConsumeService.GetOneByIdAsync(id)) == null)
+            var alimentConsume = await _alimentConsumeService.GetOneByIdAsync(id);
+
+            if (alimentConsume == null)
                 return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
+
+            if (alimentConsume.UserId != Convert.ToInt64(User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(User))
+                return Forbid();
 
             var result = await _alimentConsumeService.DeleteAsync(id);
 

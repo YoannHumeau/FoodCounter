@@ -152,8 +152,29 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
+        [Fact]
         public async void DeleteOneAlimentConsumeById_Ok()
         {
+            int id = 2;
+
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentConsume());
+            _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
+
+            var result = await _alimentConsumeController.DeleteAsync(id);
+            var objectResult = result as NoContentResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(204);
+
+            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentConsumeService.Verify(m => m.DeleteAsync(id), Times.Once);
+        }
+
+        [Fact]
+        public async void DeleteOneAlimentConsumeByIdForAnotherUserWithAdmin_Ok()
+        {
+            MockUser(1); // Admin user (Wayne)
+
             int id = 2;
 
             _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new AlimentConsume());
