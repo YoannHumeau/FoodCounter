@@ -29,6 +29,12 @@ namespace FoodCounter.Api.Repositories
         public Task<IEnumerable<AlimentConsume>> GetAllByUserIdAsync(long userId);
 
         /// <summary>
+        /// Update an aliment consume
+        /// </summary>
+        /// <returns>Aliment consume updated created</returns>
+        public Task<AlimentConsume> UpdateAsync(AlimentConsume newAlimentConsume);
+
+        /// <summary>
         /// Delete an aliment consume
         /// </summary>
         /// <param name="id"></param>
