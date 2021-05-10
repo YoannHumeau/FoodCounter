@@ -87,7 +87,7 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
-        public async void UpdateAliment_Ok()
+        public async void UpdateAlimentConsume_Ok()
         {
             PrepareDatabase();
 
@@ -116,25 +116,6 @@ namespace FoodCounter.Tests.Api.Repositories
             var result = await _alimentConsumeRepository.UpdateAsync(updateAlimentConsume);
 
             result.Should().BeEquivalentTo(afterUpdateAlimentConsume);
-        }
-
-        [Fact]
-        public async void UpdateAliment_Bad_NameNull()
-        {
-            PrepareDatabase();
-
-            int id = 5;
-            var updateAliment = new Aliment
-            {
-                Id = AlimentDatas.listAliments.ElementAt(id - 1).Id,
-                Name = null,
-                Calories = id * 111,
-                Barecode = $"1234567890{id * 111}"
-            };
-
-            var result = await Record.ExceptionAsync(() => _alimentRepository.UpdateAsync(updateAliment));
-            Assert.IsType<SqliteException>(result);
-            Assert.Equal("SQLite Error 19: 'NOT NULL constraint failed: Aliments.Name'.", result.Message);
         }
 
         [Fact]
