@@ -84,5 +84,58 @@ namespace FoodCounter.Tests.Api.Repositories
 
             result.Should().BeNull();
         }
+
+        [Fact]
+        public async void DeleteAlimentConsume_Ok()
+        {
+            PrepareDatabase();
+
+            int id = 4;
+
+            // Check the aliment consume exists
+            var resultBefore = await _alimentConsumeRepository.GetOneByIdAsync(id);
+            resultBefore.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
+
+            // Check that another aliment consume exists
+            var resultOtherBefore = await _alimentConsumeRepository.GetOneByIdAsync(id + 1);
+            resultOtherBefore.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id));
+
+            // Delete the aliment consume
+            var result = await _alimentConsumeRepository.DeleteAsync(id);
+            result.Should().BeTrue();
+
+            // Check the aliment consume is deleted
+            var resultAfter = await _alimentConsumeRepository.GetOneByIdAsync(id);
+            resultAfter.Should().BeNull();
+
+            // Check that the other aliment consume still exists
+            var resultOtherAfter = await _alimentConsumeRepository.GetOneByIdAsync(id + 1);
+            resultOtherAfter.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id));
+        }
+
+        [Fact]
+        public async void DeleteAlimentConsume_Bad_NotFound()
+        {
+            PrepareDatabase();
+
+            int id = 777;
+            int otherId = 3;
+
+            // Check the aliment consume does not exists
+            var resultBefore = await _alimentConsumeRepository.GetOneByIdAsync(id);
+            resultBefore.Should().BeNull();
+
+            // Check that another aliment consume exists
+            var resultOtherBefore = await _alimentConsumeRepository.GetOneByIdAsync(otherId + 1);
+            resultOtherBefore.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.ElementAt(otherId));
+
+            // Try to delete 
+            var result = await _alimentConsumeRepository.DeleteAsync(id);
+            result.Should().BeFalse();
+
+            // Check that the other aliment consume still exists
+            var resultOtherAfter = await _alimentConsumeRepository.GetOneByIdAsync(otherId + 1);
+            resultOtherAfter.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.ElementAt(otherId));
+        }
     }
 }

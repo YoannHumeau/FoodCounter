@@ -51,7 +51,7 @@ namespace FoodCounter.Tests.ExampleDatas
                 Id = 5,
                 UserId = 1,
                 AlimentId = 2,
-                Aliment =  AlimentDatas.listAliments.ElementAt(0),
+                Aliment =  AlimentDatas.listAliments.ElementAt(1),
                 ConsumeDate = new DateTime(2021, 05, 08, 15, 39, 00),
                 Weight = 222
             },
