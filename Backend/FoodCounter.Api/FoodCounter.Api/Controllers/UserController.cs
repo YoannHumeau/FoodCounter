@@ -104,7 +104,7 @@ namespace FoodCounter.Api.Controllers
         /// <param name="userLoginDto">User login dto</param>
         /// <returns>User logged</returns>
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost("authenticate")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
             var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);

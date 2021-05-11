@@ -105,6 +105,12 @@ namespace FoodCounter.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseRouting();
 
             app.UseAuthentication();
