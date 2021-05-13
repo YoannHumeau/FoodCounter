@@ -48,7 +48,6 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
 
-        // TODO : Tests for fail user creation (already exists)
         [Fact]
         public async void CreateUser_Bad_UsernameAlreadyExists()
         {
