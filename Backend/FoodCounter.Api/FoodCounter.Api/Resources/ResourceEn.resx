@@ -123,8 +123,14 @@
   <data name="AlimentNotFound" xml:space="preserve">
     <value>Aliment not found</value>
   </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>The email already exists</value>
+  </data>
   <data name="ProblemDeleting" xml:space="preserve">
     <value>Problem while deleting</value>
+  </data>
+  <data name="UsernameAlreadyExists" xml:space="preserve">
+    <value>The username already exists</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User not found</value>

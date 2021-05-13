@@ -79,11 +79,29 @@ namespace FoodCounter.Api.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à The email already exists.
+        /// </summary>
+        public static string EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Problem while deleting.
         /// </summary>
         public static string ProblemDeleting {
             get {
                 return ResourceManager.GetString("ProblemDeleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The username already exists.
+        /// </summary>
+        public static string UsernameAlreadyExists {
+            get {
+                return ResourceManager.GetString("UsernameAlreadyExists", resourceCulture);
             }
         }
         
