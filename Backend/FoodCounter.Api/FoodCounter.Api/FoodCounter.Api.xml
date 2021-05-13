@@ -146,11 +146,12 @@
             Connection to db
             </summary>
         </member>
-        <member name="M:FoodCounter.Api.DataAccess.DataAccess.DbAccess.#ctor(System.String)">
+        <member name="M:FoodCounter.Api.DataAccess.DataAccess.DbAccess.#ctor(System.String,System.String)">
             <summary>
             Default constructor
             </summary>
-            <param name="connectionString">Connectio string</param>
+            <param name="connectionType">Type of the database</param>
+            <param name="connectionString">Connection string</param>
         </member>
         <member name="T:FoodCounter.Api.Entities.Role">
             <summary>
@@ -180,6 +181,11 @@
         <member name="P:FoodCounter.Api.Entities.User.Username">
             <summary>
             Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Entities.User.Email">
+            <summary>
+            Email
             </summary>
         </member>
         <member name="P:FoodCounter.Api.Entities.User.Password">
@@ -395,6 +401,11 @@
             Username
             </summary>
         </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserCreationDto.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
         <member name="P:FoodCounter.Api.Models.Dto.UserCreationDto.Password">
             <summary>
             Password
@@ -413,6 +424,11 @@
         <member name="P:FoodCounter.Api.Models.Dto.UserFullDto.Username">
             <summary>
             Username
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.Dto.UserFullDto.Email">
+            <summary>
+            Email
             </summary>
         </member>
         <member name="P:FoodCounter.Api.Models.Dto.UserFullDto.Role">
@@ -458,6 +474,31 @@
         <member name="P:FoodCounter.Api.Models.Dto.UserLoginDto.Password">
             <summary>
             Password
+            </summary>
+        </member>
+        <member name="T:FoodCounter.Api.Models.UserWeight">
+            <summary>
+            Weight Model
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.UserWeight.Id">
+            <summary>
+            Technical id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.UserWeight.UserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.UserWeight.WeightDate">
+            <summary>
+            Date the weight was recorded
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Models.UserWeight.Weight">
+            <summary>
+            Weight of the user
             </summary>
         </member>
         <member name="T:FoodCounter.Api.Program">
@@ -636,6 +677,12 @@
         <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetOneByUsernameAndPassword(System.String,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetOneByUsernameAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.Implementations.UserRepository.GetOneByEmailAsync(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:FoodCounter.Api.Repositories.IUserRepository">
             <summary>
             User repository class
@@ -665,6 +712,20 @@
             </summary>
             <returns>One user</returns>
         </member>
+        <member name="M:FoodCounter.Api.Repositories.IUserRepository.GetOneByUsernameAsync(System.String)">
+            <summary>
+            Get one user by the username
+            </summary>
+            <param name="username">Username</param>
+            <returns>One user</returns>
+        </member>
+        <member name="M:FoodCounter.Api.Repositories.IUserRepository.GetOneByEmailAsync(System.String)">
+            <summary>
+            Get one user by the mail
+            </summary>
+            <param name="email">Email of the user</param>
+            <returns>One user</returns>
+        </member>
         <member name="T:FoodCounter.Api.Resources.ResourceEn">
             <summary>
               Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
@@ -691,9 +752,19 @@
               Recherche une chaîne localisée semblable à Aliment not found.
             </summary>
         </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.EmailAlreadyExists">
+            <summary>
+              Recherche une chaîne localisée semblable à The email already exists.
+            </summary>
+        </member>
         <member name="P:FoodCounter.Api.Resources.ResourceEn.ProblemDeleting">
             <summary>
               Recherche une chaîne localisée semblable à Problem while deleting.
+            </summary>
+        </member>
+        <member name="P:FoodCounter.Api.Resources.ResourceEn.UsernameAlreadyExists">
+            <summary>
+              Recherche une chaîne localisée semblable à The username already exists.
             </summary>
         </member>
         <member name="P:FoodCounter.Api.Resources.ResourceEn.UserNotFound">
