@@ -29,6 +29,11 @@ namespace FoodCounter.DbMigrations.V1
                 .WithColumn("WeightDate").AsDate().NotNullable()
                 .WithColumn("Weight").AsInt32().NotNullable()
                 ;
+
+            Create.UniqueConstraint("CONSTRAINT_Unique_UserId_WeightDate")
+                .OnTable(_tableName)
+                .Columns("UserId", "WeightDate")
+                ;
         }
     }
 }
