@@ -16,12 +16,22 @@ namespace FoodCounter.Api.DataAccess.DataAccess
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="connectionString">Connectio string</param>
-        public DbAccess(string connectionString)
+        /// <param name="connectionType">Type of the database</param>
+        /// <param name="connectionString">Connection string</param>
+        public DbAccess(string connectionType, string connectionString)
         {
-            var connection = new SqliteConnection(connectionString);
+            IDbConnection connection;
 
-            connection.Open();
+            switch (connectionType)
+            {
+                case "sqlite":
+                    connection = new SqliteConnection(connectionString);
+                    connection.Open();
+                    break;
+                default:
+                    // TODO : Put some error logs here
+                    throw new System.Exception("DB Error");
+            }
 
             Connection = connection;
         }

@@ -54,7 +54,9 @@ namespace FoodCounter.Api
             services.AddScoped<IAlimentConsumeRepository, AlimentConsumeRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddScoped<DbAccess>(sp => new DbAccess(Configuration.GetConnectionString("Default")));
+            services.AddScoped<DbAccess>(sp => new DbAccess(
+                Configuration.GetConnectionString("DatabaseType"), 
+                Configuration.GetConnectionString("Default")));
 
             // Authentication configuration
             var jwtKey = Encoding.ASCII.GetBytes(Configuration.GetSection("Authentication:SecretJwtKey").Value);
