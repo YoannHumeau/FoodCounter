@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using FoodCounter.Api.Service;
 using Microsoft.AspNetCore.Mvc;
 using FoodCounter.Api.Entities;
+using System;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
@@ -48,6 +49,48 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         // TODO : Tests for fail user creation (already exists)
+        [Fact]
+        public async void CreateUser_Bad_UsernameAlreadyExists()
+        {
+            var badNewUser = new UserCreationDto
+            {
+                Username = UserDatas.listUsers.ElementAt(2).Username,
+                Email = "new@email.tld",
+                Password = "123456"
+            };
+
+            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new ArgumentException(ResourceEn.UsernameAlreadyExists));
+
+            var result = await _userController.CreateAsync(badNewUser);
+            var objectResult = result as ForbidResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.AuthenticationSchemes.Should().BeEquivalentTo(ResourceEn.UsernameAlreadyExists);
+
+            _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
+        }
+
+        [Fact]
+        public async void CreateUser_Bad_EmailAlreadyExists()
+        {
+            var badNewUser = new UserCreationDto
+            {
+                Username = "newusername",
+                Email = UserDatas.listUsers.ElementAt(2).Email,
+                Password = "123456"
+            };
+
+            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
+
+            var result = await _userController.CreateAsync(badNewUser);
+            var objectResult = result as ForbidResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.AuthenticationSchemes.Should().BeEquivalentTo(ResourceEn.EmailAlreadyExists);
+
+            _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
+        }
+
         // TODO : Make test for bad json input
 
         [Fact]
