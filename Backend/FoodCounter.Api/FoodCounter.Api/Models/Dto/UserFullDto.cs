@@ -16,6 +16,11 @@
         public string Username { get; set; }
 
         /// <summary>
+        /// Email
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// User role
         /// </summary>
         public string Role { get; set; }

@@ -60,11 +60,14 @@ namespace FoodCounter.Api.Controllers
             try
             { 
                 var result = await _userService.CreateAsync(newUser);
+
+                var resultDto = _mapper.Map<UserFullDto>(result);
+
                 return Ok(result);
             }
             catch (ArgumentException e)
             {
-                return Forbid(e.Message);
+                return Conflict(new { Message = e.Message });
             }
             catch(Exception e)
             {
