@@ -62,10 +62,14 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new ArgumentException(ResourceEn.UsernameAlreadyExists));
 
             var result = await _userController.CreateAsync(badNewUser);
-            var objectResult = result as ForbidResult;
+            var objectResult = result as ObjectResult;
 
             objectResult.Should().NotBeNull();
-            objectResult.AuthenticationSchemes.Should().BeEquivalentTo(ResourceEn.UsernameAlreadyExists);
+            objectResult.StatusCode.Should().Be(409);
+
+            // Put the content as a json and compare
+            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
+                JsonConvert.SerializeObject(new { Message = ResourceEn.UsernameAlreadyExists }));
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
@@ -83,10 +87,14 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
 
             var result = await _userController.CreateAsync(badNewUser);
-            var objectResult = result as ForbidResult;
+            var objectResult = result as ObjectResult;
 
             objectResult.Should().NotBeNull();
-            objectResult.AuthenticationSchemes.Should().BeEquivalentTo(ResourceEn.EmailAlreadyExists);
+            objectResult.StatusCode.Should().Be(409);
+
+            // Put the content as a json and compare
+            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
+                JsonConvert.SerializeObject(new { Message = ResourceEn.EmailAlreadyExists }));
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
