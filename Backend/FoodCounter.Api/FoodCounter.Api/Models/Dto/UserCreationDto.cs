@@ -1,4 +1,6 @@
-﻿namespace FoodCounter.Api.Models.Dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FoodCounter.Api.Models.Dto
 {
     /// <summary>
     /// User creation class Dto
@@ -8,11 +10,13 @@
         /// <summary>
         /// Username
         /// </summary>
+        [Required]
         public string Username { get; set; }
 
         /// <summary>
         /// Password
         /// </summary>
+        [Required]
         public string Password { get; set; }
     }
 }

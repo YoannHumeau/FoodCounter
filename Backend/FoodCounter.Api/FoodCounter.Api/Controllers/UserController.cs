@@ -50,6 +50,7 @@ namespace FoodCounter.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateAsync(UserCreationDto newUserCreationDto)
         {
             var newUser = _mapper.Map<User>(newUserCreationDto);
