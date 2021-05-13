@@ -12,6 +12,7 @@ namespace FoodCounter.Tests.ExampleDatas
             {
                 Id = 1,
                 Username = "wayne",
+                Email = "wayne@party.time",
                 Password = "123456",
                 Role = Role.Admin
             },
@@ -19,6 +20,7 @@ namespace FoodCounter.Tests.ExampleDatas
             {
                 Id = 2,
                 Username = "garth",
+                Email = "garth.algar@party.time",
                 Password = "123456",
                 Role = Role.Admin
             },
@@ -26,6 +28,7 @@ namespace FoodCounter.Tests.ExampleDatas
             {
                 Id = 3,
                 Username = "benjamin",
+                Email = "benjamin@noahs.arcade",
                 Password = "123456",
                 Role = Role.User
             }
@@ -34,21 +37,23 @@ namespace FoodCounter.Tests.ExampleDatas
         public static User newUser = new User
         {
             Username = "cassandra",
+            Email = "cassandra@party.time",
             Password = "123456",
-        };
-
-        public static UserCreationDto newUserCreationModelDto = new UserCreationDto
-        {
-            Username = newUser.Username,
-            Password = newUser.Password
         };
 
         public static User newUserCreated = new User
         {
             Id = 4,
             Username = newUser.Username,
+            Email = newUser.Email,
             Password = newUser.Password,
             Role = Role.User
+        };
+
+        public static UserCreationDto newUserCreationModelDto = new UserCreationDto
+        {
+            Username = newUser.Username,
+            Password = newUser.Password
         };
     }
 }

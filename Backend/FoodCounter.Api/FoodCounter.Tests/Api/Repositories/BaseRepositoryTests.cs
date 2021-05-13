@@ -14,6 +14,7 @@ namespace FoodCounter.Tests.Api.Repositories
     [Collection("Sequential")]
     public class BaseRepositoryTests
     {
+        private string _connetionDatabaseType = "sqlite";
         private string _connectionStringTest = "Data Source=test.db";
         public readonly DbAccess _dbAccess;
 
@@ -22,7 +23,7 @@ namespace FoodCounter.Tests.Api.Repositories
         /// </summary>
         public BaseRepositoryTests()
         {
-            _dbAccess = new DbAccess(_connectionStringTest);
+            _dbAccess = new DbAccess(_connetionDatabaseType, _connectionStringTest);
         }
 
         /// <summary>

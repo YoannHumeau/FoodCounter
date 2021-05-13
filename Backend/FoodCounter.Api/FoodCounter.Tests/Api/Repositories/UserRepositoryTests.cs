@@ -66,5 +66,55 @@ namespace FoodCounter.Tests.Api.Repositories
 
             result.Should().BeNull();
         }
+
+        [Fact]
+        public async void GetOneUserByUsername_Ok()
+        {
+            PrepareDatabase();
+
+            var userId = 3; // user Benjamin
+            var user = UserDatas.listUsers.ElementAt(userId - 1);
+
+            var result = await _userRepository.GetOneByUsernameAsync(user.Username);
+
+            result.Should().BeEquivalentTo(user);
+        }
+
+        [Fact]
+        public async void GetOneUserByUsername_Bad_NotFound()
+        {
+            PrepareDatabase();
+
+            string username = "TrollUsername";
+
+            var result = await _userRepository.GetOneByUsernameAsync(username);
+
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public async void GetOneUserByEmail_Ok()
+        {
+            PrepareDatabase();
+
+            var userId = 3; // user Benjamin
+            var user = UserDatas.listUsers.ElementAt(userId - 1);
+
+            var result = await _userRepository.GetOneByEmailAsync(user.Email);
+
+            result.Should().BeEquivalentTo(user);
+        }
+
+        [Fact]
+        public async void GetOneUserByEmail_Bad_NotFound()
+        {
+            PrepareDatabase();
+
+            string email = "troll@email.tld";
+
+            var result = await _userRepository.GetOneByEmailAsync(email);
+
+            result.Should().BeNull();
+        }
     }
 }
