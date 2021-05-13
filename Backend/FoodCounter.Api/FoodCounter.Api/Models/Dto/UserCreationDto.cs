@@ -14,6 +14,12 @@ namespace FoodCounter.Api.Models.Dto
         public string Username { get; set; }
 
         /// <summary>
+        /// Email
+        /// </summary>
+        [Required]
+        public string Email;
+
+        /// <summary>
         /// Password
         /// </summary>
         [Required]
