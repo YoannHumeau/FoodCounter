@@ -36,6 +36,11 @@ namespace FoodCounter.Api.Service
         public async Task<User> CreateAsync(User newUser)
         {
             // TODO : Check that user already exists
+            if (_userRepository.GetOneByEmailAsync(newUser.Email) != null)
+                throw new ArgumentException(Resources.ResourceEn.EmailAlreadyExists);
+
+            if (_userRepository.GetOneByUsernameAsync(newUser.Username) != null)
+                throw new ArgumentException(Resources.ResourceEn.UsernameAlreadyExists);
 
             var result = await _userRepository.CreateAsync(newUser);
 
