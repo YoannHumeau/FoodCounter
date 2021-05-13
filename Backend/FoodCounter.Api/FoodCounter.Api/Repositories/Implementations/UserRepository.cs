@@ -56,11 +56,27 @@ namespace FoodCounter.Api.Repositories.Implementations
         /// <inheritdoc/>
         public async Task<User> GetOneByUsernameAndPassword(string username, string password)
         {
-            var result = (await _connection.SelectAsync<User>(s => s.Username == username && s.Password == password)).FirstOrDefault();
+            var result = (await _connection.SelectAsync<User>(u => u.Username == username && u.Password == password)).FirstOrDefault();
 
             return result;
 
             // Make tests here
+        }
+
+        /// <inheritdoc/>
+        public async Task<User> GetOneByUsernameAsync(string username)
+        {
+            var result = (await _connection.SelectAsync<User>(u => u.Username == username)).FirstOrDefault();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public async Task<User> GetOneByEmailAsync(string email)
+        {
+            var result = (await _connection.SelectAsync<User>(u => u.Email == email)).FirstOrDefault();
+
+            return result;
         }
     }
 }

@@ -32,5 +32,19 @@ namespace FoodCounter.Api.Repositories
         /// </summary>
         /// <returns>One user</returns>
         public Task<User> GetOneByUsernameAndPassword(string username, string password);
+
+        /// <summary>
+        /// Get one user by the username
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <returns>One user</returns>
+        public Task<User> GetOneByUsernameAsync(string username);
+
+        /// <summary>
+        /// Get one user by the mail
+        /// </summary>
+        /// <param name="email">Email of the user</param>
+        /// <returns>One user</returns>
+        public Task<User> GetOneByEmailAsync(string email);
     }
 }

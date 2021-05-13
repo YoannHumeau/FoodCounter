@@ -19,7 +19,8 @@ namespace FoodCounter.DbMigrations.V1
         {
             Create.Table(_tableName)
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-                .WithColumn("Username").AsString(60).NotNullable()
+                .WithColumn("Username").AsString(60).NotNullable().Unique()
+                .WithColumn("Email").AsString(100).NotNullable().Unique()
                 .WithColumn("Password").AsString(256).NotNullable()
                 .WithColumn("Role").AsString(4).NotNullable();
         }

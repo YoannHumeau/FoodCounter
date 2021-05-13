@@ -18,6 +18,11 @@ namespace FoodCounter.Api.Entities
         public string Username { get; set; }
 
         /// <summary>
+        /// Email
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// Password
         /// </summary>
         public string Password { get; set; }
