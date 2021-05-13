@@ -34,6 +34,8 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void CreateUser_Ok()
         {
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.newUser.Username)).ReturnsAsync(() => null);
+            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(UserDatas.newUser.Email)).ReturnsAsync(() => null);
             _mockUserRepository.Setup(m => m.CreateAsync(UserDatas.newUser)).ReturnsAsync(UserDatas.newUserCreated);
 
             var result = await _userService.CreateAsync(UserDatas.newUser);
@@ -41,10 +43,12 @@ namespace FoodCounter.Tests.Api.Services
             result.Should().BeEquivalentTo(UserDatas.newUserCreated);
 
             _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser), Times.Once);
+            _mockUserRepository.Verify(m => m.GetOneByEmailAsync(UserDatas.newUser.Email), Times.Once);
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.newUser.Username), Times.Once);
         }
 
         // TODO : Tests for fail user creation (already exists)
-        
+
         [Fact]
         public void CreateUser_Bad_UsernameAlreadyExists()
         {
@@ -55,13 +59,15 @@ namespace FoodCounter.Tests.Api.Services
                 Password = "123456"
             };
 
-            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(badNewUser.Username))
-                .ThrowsAsync(new ArgumentException(ResourceEn.UsernameAlreadyExists));
+            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(UserDatas.newUser.Email)).ReturnsAsync(() => null);
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(badNewUser.Username)).ReturnsAsync(UserDatas.listUsers.ElementAt(2));
 
             Assert.ThrowsAsync<ArgumentException>(() => _userService.CreateAsync(badNewUser))
                 .Equals(ResourceEn.UsernameAlreadyExists);
 
-            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser), Times.Never);
+            _mockUserRepository.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Never);
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(badNewUser.Username), Times.Once);
+            _mockUserRepository.Verify(m => m.GetOneByEmailAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -74,13 +80,14 @@ namespace FoodCounter.Tests.Api.Services
                 Password = "123456"
             };
 
-            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(badNewUser.Email))
-                .ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
+            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(badNewUser.Email)).ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
 
             Assert.ThrowsAsync<ArgumentException>(() => _userService.CreateAsync(badNewUser))
                 .Equals(ResourceEn.EmailAlreadyExists);
 
-            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser), Times.Never);
+            _mockUserRepository.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Never);
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(It.IsAny<string>()), Times.Never);
+            _mockUserRepository.Verify(m => m.GetOneByEmailAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
