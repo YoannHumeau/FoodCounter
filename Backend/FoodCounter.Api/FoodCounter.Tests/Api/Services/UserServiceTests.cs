@@ -7,6 +7,9 @@ using System.Linq;
 using FoodCounter.Tests.ExampleDatas;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using System;
+using FoodCounter.Api.Resources;
+using FoodCounter.Api.Entities;
 
 namespace FoodCounter.Tests.Api.Services
 {
@@ -37,10 +40,48 @@ namespace FoodCounter.Tests.Api.Services
 
             result.Should().BeEquivalentTo(UserDatas.newUserCreated);
 
-            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser));
+            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser), Times.Once);
         }
 
         // TODO : Tests for fail user creation (already exists)
+        
+        [Fact]
+        public void CreateUser_Bad_UsernameAlreadyExists()
+        {
+            var badNewUser = new User
+            {
+                Username = UserDatas.listUsers.ElementAt(2).Username,
+                Email = "new@email.tld",
+                Password = "123456"
+            };
+
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(badNewUser.Username))
+                .ThrowsAsync(new ArgumentException(ResourceEn.UsernameAlreadyExists));
+
+            Assert.ThrowsAsync<ArgumentException>(() => _userService.CreateAsync(badNewUser))
+                .Equals(ResourceEn.UsernameAlreadyExists);
+
+            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser), Times.Never);
+        }
+
+        [Fact]
+        public void CreateUser_Bad_EmailAlreadyExists()
+        {
+            var badNewUser = new User
+            {
+                Username = "newusername",
+                Email = UserDatas.listUsers.ElementAt(2).Email,
+                Password = "123456"
+            };
+
+            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(badNewUser.Email))
+                .ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
+
+            Assert.ThrowsAsync<ArgumentException>(() => _userService.CreateAsync(badNewUser))
+                .Equals(ResourceEn.EmailAlreadyExists);
+
+            _mockUserRepository.Verify(m => m.CreateAsync(UserDatas.newUser), Times.Never);
+        }
 
         [Fact]
         public async void GetAllUsers_OK()
