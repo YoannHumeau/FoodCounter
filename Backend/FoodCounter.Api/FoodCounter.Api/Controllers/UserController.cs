@@ -57,9 +57,20 @@ namespace FoodCounter.Api.Controllers
 
             // Check errors and send http code 
 
-            var result = await _userService.CreateAsync(newUser);
-
-            return Ok(result);
+            try
+            { 
+                var result = await _userService.CreateAsync(newUser);
+                return Ok(result);
+            }
+            catch (ArgumentException e)
+            {
+                return Forbid(e.Message);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
