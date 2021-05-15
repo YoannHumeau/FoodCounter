@@ -21,8 +21,9 @@ jobs:
     # - name: Curl test get should fail
     #   run: curl timezone.json http://worldtimeapi.org/api/timezone
 
-    # - name: Restore dependencies
-    #   run: dotnet restore Backend/FoodCounter.Api/
+    # Prepare dependencies
+    - name: Restore dependencies
+      run: dotnet restore Backend/FoodCounter.Api/
 
     #   # Build API
     - name: Api_Build
