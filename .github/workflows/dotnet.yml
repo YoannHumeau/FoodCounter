@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build_and_tests:
 
-    runs-on: ubuntu-20.04
+    runs-on: yoannhumeau/ubuntu-ci-cd:1.0.1
 
     steps:
     - uses: actions/checkout@v2
@@ -19,15 +19,15 @@ jobs:
       # Build API
     - name: Api_Build
       run: dotnet build Backend/FoodCounter.Api/ --no-restore
-      # Run unit tests
-    - name: Api_UnitTest
-      run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
-      # Run functional tests
-    - name: Api_Run
-      run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
-    - name: Api_PostmanTests
-      run: docker run --net=host -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
+    #   # Run unit tests
+    # - name: Api_UnitTest
+    #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
+    #   # Run functional tests
+    # - name: Api_Run
+    #   run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
+    # - name: Api_PostmanTests
+    #   run: docker run --net=host -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
 
-      # So many lines, so little time
-    - name: CountCodeLines
-      run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
+    #   # So many lines, so little time
+    # - name: CountCodeLines
+    #   run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
