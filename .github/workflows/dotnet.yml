@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build_and_tests:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     # container:
     #   image: yoannhumeau/ubuntu-ci-cd:1.0.1
 
@@ -15,11 +15,11 @@ jobs:
       with:
         dotnet-version: 3.1.301
 
-    - name: Another test that should fail
-      run: git status
+    # - name: Another test that should fail
+    #   run: git status
 
-    # - name: Curl test get should fail
-    #   run: curl timezone.json http://worldtimeapi.org/api/timezone
+    - name: Curl test get should fail
+      run: curl timezone.json http://worldtimeapi.org/api/timezone
 
     # - name: Restore dependencies
     #   run: dotnet restore Backend/FoodCounter.Api/
