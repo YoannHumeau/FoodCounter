@@ -3,9 +3,10 @@ name: .NET
 on: [push, pull_request]
 
 jobs:
-  build_and_tests:
-
-    runs-on: yoannhumeau/ubuntu-ci-cd:1.0.1
+  node-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: yoannhumeau/ubuntu-ci-cd:1.0.1
 
     steps:
     - uses: actions/checkout@v2
