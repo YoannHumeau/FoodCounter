@@ -5,18 +5,16 @@ on: [push, pull_request]
 jobs:
   build_and_tests:
     runs-on: ubuntu-latest
-    # container:
-    #   image: yoannhumeau/node-npm-debian:1.0.1
+    container:
+      image: yoannhumeau/debian-ci-cd:0.0.1-dotnetcore31
 
     steps:
-    # - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     # - name: Setup .NET
     #   uses: actions/setup-dotnet@v1
     #   with:
     #     dotnet-version: 3.1.301
 
-    - name: Check node version
-      run: node -v
     # - name: Another test that should fail
     #   run: git status
 
@@ -27,8 +25,8 @@ jobs:
     #   run: dotnet restore Backend/FoodCounter.Api/
 
     #   # Build API
-    # - name: Api_Build
-    #   run: dotnet build Backend/FoodCounter.Api/ --no-restore
+    - name: Api_Build
+      run: dotnet build Backend/FoodCounter.Api/ --no-restore
     #   # Run unit tests
     # - name: Api_UnitTest
     #   run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
