@@ -7,14 +7,14 @@ jobs:
 
     runs-on: yoannhumeau/ubuntu-ci-cd:1.0.1
 
-    # steps:
-    # - uses: actions/checkout@v2
-    # - name: Setup .NET
-    #   uses: actions/setup-dotnet@v1
-    #   with:
-    #     dotnet-version: 3.1.301
-    # - name: Restore dependencies
-    #   run: dotnet restore Backend/FoodCounter.Api/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Restore dependencies
+      run: dotnet restore Backend/FoodCounter.Api/
 
     #   # Build API
     # - name: Api_Build
