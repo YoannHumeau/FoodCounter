@@ -5,8 +5,8 @@ on: [push, pull_request]
 jobs:
   build_and_tests:
     runs-on: ubuntu-latest
-    container:
-      image: yoannhumeau/node-npm-debian:1.0.1
+    # container:
+    #   image: yoannhumeau/node-npm-debian:1.0.1
 
     steps:
     # - uses: actions/checkout@v2
