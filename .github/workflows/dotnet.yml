@@ -3,7 +3,7 @@ name: .NET
 on: [push, pull_request]
 
 jobs:
-  node-docker:
+  build_and_tests:
     runs-on: ubuntu-latest
     container:
       image: yoannhumeau/ubuntu-ci-cd:1.0.1
@@ -14,8 +14,15 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: Restore dependencies
-      run: dotnet restore Backend/FoodCounter.Api/
+
+    - name: Curl test get
+      run: curl timezone.json http://worldtimeapi.org/api/timezone
+
+    - name: Curl test result
+      run: cat timezone.json
+
+    # - name: Restore dependencies
+    #   run: dotnet restore Backend/FoodCounter.Api/
 
     #   # Build API
     # - name: Api_Build
