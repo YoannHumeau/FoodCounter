@@ -2,32 +2,45 @@ name: .NET
 
 on: [push, pull_request]
 
+
 jobs:
-  build_and_tests:
+  my_job:
+    container:
+      image: node:10.16-jessie
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
 
-    runs-on: yoannhumeau/linux-ci-cd:debian10-dotnetcore31
 
-    steps:
-    - uses: actions/checkout@v2
-#     - name: Setup .NET
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: 3.1.301
-    - name: Restore dependencies
-      run: dotnet restore Backend/FoodCounter.Api/
+# jobs:
+#   build_and_tests:
 
-      # Build API
-    - name: Api_Build
-      run: dotnet build Backend/FoodCounter.Api/ --no-restore
-      # Run unit tests
-    - name: Api_UnitTest
-      run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
-      # Run functional tests
-    - name: Api_Run
-      run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
-    - name: Api_PostmanTests
-      run: docker run --net=host -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
+#     container:
+#       image: yoannhumeau/linux-ci-cd:debian10-dotnetcore31
+#     #runs-on: yoannhumeau/linux-ci-cd:debian10-dotnetcore31
 
-      # So many lines, so little time
-    - name: CountCodeLines
-      run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
+#     steps:
+#     - uses: actions/checkout@v2
+# #     - name: Setup .NET
+# #       uses: actions/setup-dotnet@v1
+# #       with:
+# #         dotnet-version: 3.1.301
+#     - name: Restore dependencies
+#       run: dotnet restore Backend/FoodCounter.Api/
+
+#       # Build API
+#     - name: Api_Build
+#       run: dotnet build Backend/FoodCounter.Api/ --no-restore
+#       # Run unit tests
+#     - name: Api_UnitTest
+#       run: dotnet test Backend/FoodCounter.Api/ --no-build --verbosity normal
+#       # Run functional tests
+#     - name: Api_Run
+#       run: dotnet run --project Backend/FoodCounter.Api/FoodCounter.Api/FoodCounter.Api.csproj --no-build --verbosity normal &
+#     - name: Api_PostmanTests
+#       run: docker run --net=host -v $(pwd)/Backend/Postman:/etc/newman -t postman/newman:latest run "FoodCounter.postman_collection.json" --reporters="cli"
+
+#       # So many lines, so little time
+#     - name: CountCodeLines
+#       run: find Backend/FoodCounter.Api -name '*.cs' | xargs wc -l
