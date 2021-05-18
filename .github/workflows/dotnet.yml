@@ -6,11 +6,13 @@ on: [push, pull_request]
 jobs:
   my_job:
     container:
-      image: node:10.16-jessie
-      env:
-        NODE_ENV: development
-      ports:
-        - 80
+      image: yoannhumeau/linux-ci-cd:debian10-dotnetcore31
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Restore dependencies
+      run: dotnet restore Backend/FoodCounter.Api/
 
 
 # jobs:
