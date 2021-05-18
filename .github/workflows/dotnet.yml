@@ -5,11 +5,15 @@ on: [push, pull_request]
 
 jobs:
   my_job:
+    runs-on: ubuntu-latest
     container:
       image: yoannhumeau/linux-ci-cd:debian10-dotnetcore31
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Check .Net version
+      run : dotnet --version
 
     - name: Restore dependencies
       run: dotnet restore Backend/FoodCounter.Api/
