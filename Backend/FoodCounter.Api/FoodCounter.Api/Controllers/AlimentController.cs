@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using FoodCounter.Api.Service;
+using FoodCounter.Api.Services;
 using System.Threading.Tasks;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Models.Dto;

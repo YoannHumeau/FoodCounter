@@ -10,7 +10,7 @@ using FoodCounter.Api.Models;
 using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Controllers;
 using Microsoft.Extensions.Logging;
-using FoodCounter.Api.Service;
+using FoodCounter.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using FoodCounter.Api.Entities;
 using System;
@@ -97,8 +97,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
-
-        // TODO : Make test for bad json input
 
         [Fact]
         public async void GetAllUser_Ok()

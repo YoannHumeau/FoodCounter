@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FoodCounter.Api.Service
+namespace FoodCounter.Api.Services
 {
     /// <summary>
     /// AlimentConsume service class

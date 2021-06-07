@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using FoodCounter.Api.Controllers;
-using FoodCounter.Api.Service;
+using FoodCounter.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -45,8 +45,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             _mockAlimentService.Verify(m => m.CreateAsync(It.IsAny<Aliment>()), Times.Once);
         }
-
-        // TODO : Make test for bad json inoyut
 
         [Fact]
         public async void GetAllAliment_Ok()

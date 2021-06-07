@@ -3,7 +3,7 @@ using FluentAssertions;
 using FoodCounter.Api.Controllers;
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Resources;
-using FoodCounter.Api.Service;
+using FoodCounter.Api.Services;
 using FoodCounter.Tests.ExampleDatas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

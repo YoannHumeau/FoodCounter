@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using FoodCounter.Api.Repositories;
-using FoodCounter.Api.Service;
+using FoodCounter.Api.Services;
 using Moq;
 using Xunit;
 using System.Linq;

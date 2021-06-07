@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using FoodCounter.Api.Repositories;
-using FoodCounter.Api.Service;
-using FoodCounter.Api.Service.Implementations;
+using FoodCounter.Api.Services;
+using FoodCounter.Api.Services.Implementations;
 using Moq;
 using Xunit;
 using FoodCounter.Tests.ExampleDatas;

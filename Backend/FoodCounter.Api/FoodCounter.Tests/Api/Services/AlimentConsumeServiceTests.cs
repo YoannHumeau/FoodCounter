@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
-using FoodCounter.Api.Service;
-using FoodCounter.Api.Service.Implementations;
+using FoodCounter.Api.Services;
+using FoodCounter.Api.Services.Implementations;
 using FoodCounter.Tests.ExampleDatas;
 using Moq;
 using System.Collections.Generic;

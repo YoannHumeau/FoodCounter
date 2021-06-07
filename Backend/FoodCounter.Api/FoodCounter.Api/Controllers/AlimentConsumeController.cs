@@ -2,7 +2,7 @@
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Resources;
-using FoodCounter.Api.Service;
+using FoodCounter.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

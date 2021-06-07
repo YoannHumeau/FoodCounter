@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodCounter.Api.Service
+namespace FoodCounter.Api.Services
 {
     /// <summary>
     /// User service class

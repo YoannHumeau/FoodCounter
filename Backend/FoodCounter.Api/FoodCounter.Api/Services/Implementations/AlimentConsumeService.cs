@@ -3,7 +3,7 @@ using FoodCounter.Api.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FoodCounter.Api.Service.Implementations
+namespace FoodCounter.Api.Services.Implementations
 {
     /// <summary>
     /// AlimentConsume service class
