@@ -1,5 +1,7 @@
-﻿using FoodCounter.Api.Models;
+﻿using FoodCounter.Api.Exceptions;
+using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
+using FoodCounter.Api.Resources;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -41,6 +43,9 @@ namespace FoodCounter.Api.Services.Implementations
         public async Task<Aliment> GetOneByIdAsync(long id)
         {
             var result = await _alimentRepository.GetOneByIdAsync(id);
+
+            if (result == null)
+                throw new HttpNotFoundException(ResourceEn.AlimentNotFound);
 
             return result;
         }

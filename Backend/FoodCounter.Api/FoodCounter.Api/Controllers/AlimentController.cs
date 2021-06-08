@@ -95,9 +95,6 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _alimentService.GetOneByIdAsync(id);
 
-            if (result == null)
-                return NotFound(new { Message = ResourceEn.AlimentNotFound });
-
             return Ok(result);
         }
 
