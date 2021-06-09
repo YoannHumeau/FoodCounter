@@ -69,6 +69,9 @@ namespace FoodCounter.Api.Services.Implementations
         ///<inheritdoc/>
         public async Task<bool> DeleteAsync(long id)
         {
+            // Will throw exception if aliment to delete does not exists
+            await GetOneByIdAsync(id);
+
             var result = await _alimentRepository.DeleteAsync(id);
 
             return result;

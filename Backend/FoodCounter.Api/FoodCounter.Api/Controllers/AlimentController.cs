@@ -133,15 +133,9 @@ namespace FoodCounter.Api.Controllers
         [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {
-            if ((await _alimentService.GetOneByIdAsync(id)) == null)
-                return NotFound(new { Message = ResourceEn.AlimentNotFound });
-
-            var result = await _alimentService.DeleteAsync(id);
-
-            if (result)
-                return NoContent();
-            else
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ResourceEn.ProblemDeleting });
+            await _alimentService.DeleteAsync(id);
+            
+            return NoContent();
         }
     }
 }

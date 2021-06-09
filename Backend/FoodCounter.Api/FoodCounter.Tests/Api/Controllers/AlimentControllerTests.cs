@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 using AutoMapper;
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Models.Dto;
+using FoodCounter.Api.Exceptions;
+using System;
+using System.Threading.Tasks;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
@@ -84,20 +87,24 @@ namespace FoodCounter.Tests.Api.Controllers
         public async void GetOneAlimentById_Bad_NotFound()
         {
             int id = 777;
+            IActionResult resultContent = null;
 
-            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
-            var result = await _alimentController.GetOneByIdAsync(id);
-            var objectResult = result as NotFoundObjectResult;
+            Func<Task> result = async () => { resultContent = await _alimentController.GetOneByIdAsync(id); };
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
 
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
+            //var objectResult = result as NotFoundObjectResult;
 
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject( new { Message = ResourceEn.AlimentNotFound } ));
+            //objectResult.Should().NotBeNull();
+            //objectResult.StatusCode.Should().Be(404);
 
-            _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            //// Put the content as a json and compare
+            //JsonConvert.SerializeObject(objectResult.Value).Should().Be(
+            //    JsonConvert.SerializeObject( new { Message = ResourceEn.AlimentNotFound } ));
+
+            //_mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
@@ -140,11 +147,10 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void deleteOneAlimentById_Ok()
+        public async void DeleteOneAlimentById_Ok()
         {
             int id = 2;
 
-            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new Aliment());
             _mockAlimentService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentController.DeleteAsync(id);
@@ -153,7 +159,6 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(204);
 
-            _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentService.Verify(m => m.DeleteAsync(id), Times.Once);
         }
 
@@ -161,42 +166,14 @@ namespace FoodCounter.Tests.Api.Controllers
         public async void DeleteOneAlimentById_Bad_NotFound()
         {
             int id = 777;
+            IActionResult resultContent = null;
 
-            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+            _mockAlimentService.Setup(m => m.DeleteAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
-            var result = await _alimentController.GetOneByIdAsync(id);
-            var objectResult = result as NotFoundObjectResult;
+            Func<Task> result = async () => { resultContent = await _alimentController.DeleteAsync(id); };
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
 
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentNotFound }));
-
-            _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
-            _mockAlimentService.Verify(m => m.DeleteAsync(id), Times.Never);
-        }
-
-        [Fact]
-        public async void DeleteOneAlimentById_Bad_InternalServerError()
-        {
-            int id = 2;
-
-            _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(new Aliment());
-            _mockAlimentService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(false);
-
-            var result = await _alimentController.DeleteAsync(id);
-            var objectResult = result as ObjectResult;
-
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(500);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.ProblemDeleting }));
-
-            _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentService.Verify(m => m.DeleteAsync(id), Times.Once);
         }
 
