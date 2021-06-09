@@ -7,6 +7,10 @@ using Xunit;
 using FoodCounter.Tests.ExampleDatas;
 using System.Linq;
 using FoodCounter.Api.Models;
+using FoodCounter.Api.Exceptions;
+using FoodCounter.Api.Resources;
+using System;
+using System.Threading.Tasks;
 
 namespace FoodCounter.Tests.Api.Services
 {
@@ -158,12 +162,19 @@ namespace FoodCounter.Tests.Api.Services
         {
             int id = 2;
 
-            _mockAlimentRepository.Setup(m => m.DeleteAsync(id)).ReturnsAsync(false);
+            // Before deleting, the function call the aliment to check if exists, we mock this qnd return null
+            _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
-            var result = await _alimentService.DeleteAsync(id);
-            result.Should().BeFalse();
+            bool resultContent;
 
-            _mockAlimentRepository.Verify(m => m.DeleteAsync(id), Times.Once);
+            Func<Task> result = async () => { resultContent = await _alimentService.DeleteAsync(id); };
+
+            // Check exception is returned (Come from GetAlimentById)
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
+
+            _mockAlimentRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentRepository.Verify(m => m.DeleteAsync(id), Times.Never);
         }
     }
 }
