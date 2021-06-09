@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a44bf9fd-a5f0-4b04-a50c-f72b9a95634e",
+		"_postman_id": "5700c20d-8d9e-4d33-b76d-769c776eb668",
 		"name": "FoodCounter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2496,7 +2496,9 @@
 											"\r",
 											"var expectedBody =\r",
 											"{\r",
-											"    \"message\": \"Aliment not found\"\r",
+											"    \"errors\": {\r",
+											"        \"message\": \"Aliment not found\"\r",
+											"    }\r",
 											"}\r",
 											"\r",
 											"pm.test(\"Verify return values\", function () { \r",
@@ -2993,7 +2995,9 @@
 													"\r",
 													"var expectedBody =\r",
 													"{\r",
-													"    \"message\": \"Aliment not found\"\r",
+													"    \"errors\": {\r",
+													"        \"message\": \"Aliment not found\"\r",
+													"    }\r",
 													"}\r",
 													"\r",
 													"pm.test(\"Verify return values\", function () { \r",
