@@ -143,12 +143,14 @@ namespace FoodCounter.Tests.Api.Services
         {
             int id = 2;
 
+            _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentDatas.listAliments.ElementAt(id));
             _mockAlimentRepository.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentService.DeleteAsync(id);
             result.Should().BeTrue();
 
             _mockAlimentRepository.Verify(m => m.DeleteAsync(id), Times.Once);
+            _mockAlimentRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
