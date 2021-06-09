@@ -78,9 +78,13 @@ namespace FoodCounter.Tests.Api.Services
 
             _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
-            var result = await _alimentService.GetOneByIdAsync(id);
+            bool resultContent;
 
-            result.Should().BeNull();
+            Func<Task> result = async () => { resultContent = await _alimentService.DeleteAsync(id); };
+
+            // Check exception is returned (Come from GetAlimentById)
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
@@ -160,7 +164,7 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void DeleteAliment_Bad_NotFound()
         {
-            int id = 2;
+            int id = 777;
 
             // Before deleting, the function call the aliment to check if exists, we mock this qnd return null
             _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
