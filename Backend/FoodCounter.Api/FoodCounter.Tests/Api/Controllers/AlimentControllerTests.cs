@@ -84,7 +84,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneAlimentById_Bad_NotFound()
+        public void GetOneAlimentById_Bad_NotFound()
         {
             int id = 777;
             IActionResult resultContent = null;
@@ -94,17 +94,6 @@ namespace FoodCounter.Tests.Api.Controllers
             Func<Task> result = async () => { resultContent = await _alimentController.GetOneByIdAsync(id); };
             result.Should().Throw<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
-
-            //var objectResult = result as NotFoundObjectResult;
-
-            //objectResult.Should().NotBeNull();
-            //objectResult.StatusCode.Should().Be(404);
-
-            //// Put the content as a json and compare
-            //JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-            //    JsonConvert.SerializeObject( new { Message = ResourceEn.AlimentNotFound } ));
-
-            //_mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
@@ -163,7 +152,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void DeleteOneAlimentById_Bad_NotFound()
+        public void DeleteOneAlimentById_Bad_NotFound()
         {
             int id = 777;
             IActionResult resultContent = null;
