@@ -111,13 +111,10 @@ namespace FoodCounter.Api.Controllers
         [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentUpdateDto updateAlimentDto)
         {
-            if (await _alimentService.GetOneByIdAsync(id) == null)
-                return NotFound(new { Message = ResourceEn.AlimentNotFound });
-
             var updateAliment = _mapper.Map<Aliment>(updateAlimentDto);
             updateAliment.Id = id;
 
-            var result = await _alimentService.UpdateAsync(id, updateAliment);
+            var result = await _alimentService.UpdateAsync(updateAliment);
 
             return Ok(result);
         }

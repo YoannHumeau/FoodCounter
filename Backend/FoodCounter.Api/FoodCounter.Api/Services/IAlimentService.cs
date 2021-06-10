@@ -37,7 +37,7 @@ namespace FoodCounter.Api.Services
         /// Update an aliment
         /// </summary>
         /// <returns>Aliment created</returns>
-        public Task<Aliment> UpdateAsync(long id, Aliment newAliment);
+        public Task<Aliment> UpdateAsync(Aliment newAliment);
 
         /// <summary>
         /// Delete one aliment by id

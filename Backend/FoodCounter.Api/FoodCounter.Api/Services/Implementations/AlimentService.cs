@@ -59,10 +59,10 @@ namespace FoodCounter.Api.Services.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<Aliment> UpdateAsync(long id, Aliment newAliment)
+        public async Task<Aliment> UpdateAsync(Aliment newAliment)
         {
             // Check aliment exists : Will throw exception from GetOneByIdAsync() does not exists
-            await GetOneByIdAsync(id);
+            await GetOneByIdAsync(newAliment.Id);
 
             var result = await _alimentRepository.UpdateAsync(newAliment);
 
