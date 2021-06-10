@@ -117,7 +117,7 @@ namespace FoodCounter.Api.Controllers
             var updateAliment = _mapper.Map<Aliment>(updateAlimentDto);
             updateAliment.Id = id;
 
-            var result = await _alimentService.UpdateAsync(updateAliment);
+            var result = await _alimentService.UpdateAsync(id, updateAliment);
 
             return Ok(result);
         }

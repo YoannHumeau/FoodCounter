@@ -121,11 +121,13 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void UpdateAliment_Ok()
         {
+            long id = 2;
             var updateAliment = AlimentDatas.updateAliment;
 
+            _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => AlimentDatas.listAliments.ElementAt(Convert.ToInt32(id - 1)));
             _mockAlimentRepository.Setup(m => m.UpdateAsync(updateAliment)).ReturnsAsync(updateAliment);
 
-            var result = await _alimentService.UpdateAsync(updateAliment);
+            var result = await _alimentService.UpdateAsync(id, updateAliment);
 
             result.Should().BeEquivalentTo(updateAliment);
 
@@ -133,17 +135,24 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void UpdateAliment_Bad_NotFound()
+        public void UpdateAliment_Bad_NotFound()
         {
+            long id = 777;
             var updateAliment = AlimentDatas.updateAliment;
 
-            _mockAlimentRepository.Setup(m => m.UpdateAsync(updateAliment)).ReturnsAsync(() => null);
+            // Before updating, the function call the aliment to check if exists, we mock this and return null
+            _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
-            var result = await _alimentService.UpdateAsync(updateAliment);
+            Aliment resultContent;
 
-            result.Should().BeNull();
+            Func<Task> result = async () => { resultContent = await _alimentService.UpdateAsync(id, updateAliment); };
 
-            _mockAlimentRepository.Verify(m => m.UpdateAsync(updateAliment), Times.Once);
+            // Check exception is returned (Come from GetAlimentById)
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
+
+            _mockAlimentRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentRepository.Verify(m => m.DeleteAsync(id), Times.Never);
         }
 
         [Fact]
@@ -166,7 +175,7 @@ namespace FoodCounter.Tests.Api.Services
         {
             int id = 777;
 
-            // Before deleting, the function call the aliment to check if exists, we mock this qnd return null
+            // Before deleting, the function call the aliment to check if exists, we mock this and return null
             _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
             bool resultContent;

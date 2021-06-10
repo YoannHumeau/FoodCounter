@@ -59,8 +59,11 @@ namespace FoodCounter.Api.Services.Implementations
         }
 
         ///<inheritdoc/>
-        public async Task<Aliment> UpdateAsync(Aliment newAliment)
+        public async Task<Aliment> UpdateAsync(long id, Aliment newAliment)
         {
+            // Check aliment exists : Will throw exception from GetOneByIdAsync() does not exists
+            await GetOneByIdAsync(id);
+
             var result = await _alimentRepository.UpdateAsync(newAliment);
 
             return result;
@@ -69,7 +72,7 @@ namespace FoodCounter.Api.Services.Implementations
         ///<inheritdoc/>
         public async Task<bool> DeleteAsync(long id)
         {
-            // Will throw exception if aliment to delete does not exists
+            // Check aliment exists : Will throw exception from GetOneByIdAsync() does not exists
             await GetOneByIdAsync(id);
 
             var result = await _alimentRepository.DeleteAsync(id);
