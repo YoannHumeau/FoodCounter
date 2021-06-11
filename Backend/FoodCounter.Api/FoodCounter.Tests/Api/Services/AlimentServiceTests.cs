@@ -108,12 +108,14 @@ namespace FoodCounter.Tests.Api.Services
         public async void GetOneAlimentByName_Bad_NotFound()
         {
             string name = "Troll Name";
+            Aliment resultContent;
 
             _mockAlimentRepository.Setup(m => m.GetOneByNameAsync(name)).ReturnsAsync(() => null);
 
-            var result = await _alimentService.GetOneByNameAsync(name);
+            Func<Task> result = async () => { resultContent = await _alimentService.GetOneByNameAsync(name); };
 
-            result.Should().BeNull();
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentRepository.Verify(x => x.GetOneByNameAsync(name), Times.Once);
         }
