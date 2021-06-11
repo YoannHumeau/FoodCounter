@@ -55,6 +55,9 @@ namespace FoodCounter.Api.Services.Implementations
         {
             var result = await _alimentRepository.GetOneByNameAsync(name);
 
+            if (result == null)
+                throw new HttpNotFoundException(ResourceEn.AlimentNotFound);
+
             return result;
         }
 
