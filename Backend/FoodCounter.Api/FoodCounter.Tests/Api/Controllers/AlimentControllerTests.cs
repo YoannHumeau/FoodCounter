@@ -115,21 +115,16 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneAlimentByName_Bad_NotFound()
+        public void GetOneAlimentByName_Bad_NotFound()
         {
             var name = "Troll Name";
+            IActionResult resultContent = null;
 
-            _mockAlimentService.Setup(m => m.GetOneByNameAsync(name)).ReturnsAsync(() => null);
+            _mockAlimentService.Setup(m => m.GetOneByNameAsync(name)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
-            var result = await _alimentController.GetAsync(name);
-            var objectResult = result as NotFoundObjectResult;
-
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentNotFound }));
+            Func<Task> result = async () => { resultContent = await _alimentController.GetAsync(name); };
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentService.Verify(m => m.GetOneByNameAsync(name), Times.Once);
             _mockAlimentService.Verify(m => m.GetAllAsync(), Times.Never);
