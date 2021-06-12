@@ -70,6 +70,7 @@ namespace FoodCounter.Tests.Api.Controllers
         {
             int id = 2;
             var aliment = AlimentDatas.listAliments.ElementAt(id - 1);
+            var alimentDto = AlimentDatas.listAlimentsDto.ElementAt(id - 1);
 
             _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(aliment);
 
@@ -78,7 +79,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(aliment);
+            objectResult.Value.Should().BeEquivalentTo(alimentDto);
 
             _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
