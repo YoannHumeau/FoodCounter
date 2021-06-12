@@ -72,10 +72,6 @@ namespace FoodCounter.Api.Controllers
             {
                 var resultByName = await _alimentService.GetOneByNameAsync(name);
 
-                // TODO : Clean after fix
-                //if (resultByName == null)
-                //    return NotFound(new { Message = ResourceEn.AlimentNotFound });
-
                 return Ok(resultByName);
             }
 
