@@ -92,7 +92,9 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _alimentService.GetOneByIdAsync(id);
 
-            return Ok(result);
+            var resultDto = _mapper.Map<AlimentDto>(result);
+
+            return Ok(resultDto);
         }
 
         /// <summary>
