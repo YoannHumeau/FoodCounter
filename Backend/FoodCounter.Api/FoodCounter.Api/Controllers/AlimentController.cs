@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using FoodCounter.Api.Entities;
+using System.Collections.Generic;
 
 namespace FoodCounter.Api.Controllers
 {
@@ -70,14 +71,18 @@ namespace FoodCounter.Api.Controllers
         {
             if (name != null)
             {
-                var resultByName = await _alimentService.GetOneByNameAsync(name);
+                var resultOneByName = await _alimentService.GetOneByNameAsync(name);
 
-                return Ok(resultByName);
+                var resultOneByNameDto = _mapper.Map<AlimentDto>(resultOneByName);
+
+                return Ok(resultOneByNameDto);
             }
 
-            var result = await _alimentService.GetAllAsync();
+            var resultList = await _alimentService.GetAllAsync();
 
-            return Ok(result);
+            var resultListDto = _mapper.Map<IEnumerable<AlimentDto>>(resultList);
+
+            return Ok(resultListDto);
         }
 
         /// <summary>
@@ -115,7 +120,9 @@ namespace FoodCounter.Api.Controllers
 
             var result = await _alimentService.UpdateAsync(updateAliment);
 
-            return Ok(result);
+            var resultDto = _mapper.Map<AlimentDto>(result);
+
+            return Ok(resultDto);
         }
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(AlimentDatas.listAliments);
+            objectResult.Value.Should().BeEquivalentTo(AlimentDatas.listAlimentsDto);
 
             _mockAlimentService.Verify(m => m.GetAllAsync(), Times.Once);
             _mockAlimentService.Verify(m => m.GetOneByNameAsync(It.IsAny<string>()), Times.Never);
@@ -102,6 +102,7 @@ namespace FoodCounter.Tests.Api.Controllers
         {
             int id = 2;
             var aliment = AlimentDatas.listAliments.ElementAt(id - 1);
+            var alimentDto = AlimentDatas.listAlimentsDto.ElementAt(id - 1);
 
             _mockAlimentService.Setup(m => m.GetOneByNameAsync(aliment.Name)).ReturnsAsync(aliment);
 
@@ -110,7 +111,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(aliment);
+            objectResult.Value.Should().BeEquivalentTo(alimentDto);
 
             _mockAlimentService.Verify(m => m.GetOneByNameAsync(aliment.Name), Times.Once);
         }
@@ -172,7 +173,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(AlimentDatas.updateAliment);
+            objectResult.Value.Should().BeEquivalentTo(AlimentDatas.updatedAlimentDto);
 
             _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<Aliment>()), Times.Once);
         }

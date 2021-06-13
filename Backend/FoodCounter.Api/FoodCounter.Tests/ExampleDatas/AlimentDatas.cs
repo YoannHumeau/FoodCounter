@@ -143,6 +143,14 @@ namespace FoodCounter.Tests.ExampleDatas
             Barecode = "1234567890555"
         };
 
+        public static Aliment updatedAlimentDto = new Aliment
+        {
+            Id = updateAliment.Id,
+            Name = updateAliment.Name,
+            Calories = updateAliment.Calories,
+            Barecode = updateAliment.Barecode
+        };
+
         public static AlimentUpdateDto updateAlimentUpdateDto = new AlimentUpdateDto
         {
             Name = updateAliment.Name,
