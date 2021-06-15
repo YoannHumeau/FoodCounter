@@ -78,9 +78,9 @@ namespace FoodCounter.Tests.Api.Services
 
             _mockAlimentRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
-            bool resultContent;
+            Aliment resultContent;
 
-            Func<Task> result = async () => { resultContent = await _alimentService.DeleteAsync(id); };
+            Func<Task> result = async () => { resultContent = await _alimentService.GetOneByIdAsync(id); };
 
             // Check exception is returned (Come from GetAlimentById)
             result.Should().Throw<HttpNotFoundException>()
