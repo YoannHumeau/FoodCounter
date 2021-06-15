@@ -104,9 +104,6 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _alimentConsumeService.GetOneByIdAsync(id);
 
-            if (result == null)
-                return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
-
             if (result.UserId != Convert.ToInt64(User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(User))
                 return Forbid();
 
