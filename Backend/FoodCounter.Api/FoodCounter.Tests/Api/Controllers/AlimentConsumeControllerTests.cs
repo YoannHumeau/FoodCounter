@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using FoodCounter.Api.Controllers;
+using FoodCounter.Api.Exceptions;
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Services;
@@ -10,8 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FoodCounter.Tests.Api.Controllers
@@ -133,21 +136,17 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneAlimentById_Bad_NotFound()
+        public void GetOneAlimentById_Bad_NotFound()
         {
             int id = 777;
+            IActionResult resultContent = null;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentConsumeNotFound));
 
-            var result = await _alimentConsumeController.GetOneByIdAsync(id);
-            var objectResult = result as NotFoundObjectResult;
-
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentConsumeNotFound }));
+            Func<Task> result = async () => { resultContent = await _alimentConsumeController.GetOneByIdAsync(id); };
+            result.Should()
+                .Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
@@ -253,21 +252,17 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void DeleteOneAlimentConsumeById_Bad_NotFound()
+        public void DeleteOneAlimentConsumeById_Bad_NotFound()
         {
             int id = 777;
+            IActionResult resultContent = null;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentConsumeNotFound));
 
-            var result = await _alimentConsumeController.GetOneByIdAsync(id);
-            var objectResult = result as NotFoundObjectResult;
-
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentConsumeNotFound }));
+            Func<Task> result = async () => { resultContent = await _alimentConsumeController.GetOneByIdAsync(id); };
+            result.Should()
+                .Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentConsumeService.Verify(m => m.DeleteAsync(id), Times.Never);

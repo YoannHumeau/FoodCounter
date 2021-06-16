@@ -1,12 +1,16 @@
 ﻿using FluentAssertions;
+using FoodCounter.Api.Exceptions;
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
+using FoodCounter.Api.Resources;
 using FoodCounter.Api.Services;
 using FoodCounter.Api.Services.Implementations;
 using FoodCounter.Tests.ExampleDatas;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FoodCounter.Tests.Api.Services
@@ -83,9 +87,12 @@ namespace FoodCounter.Tests.Api.Services
 
             _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
-            var result = await _alimentConsumeService.GetOneByIdAsync(id);
+            AlimentConsume resultContent;
 
-            result.Should().BeNull();
+            Func<Task> result = async () => { resultContent = await _alimentConsumeService.GetOneByIdAsync(id); };
+
+            result.Should().Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
