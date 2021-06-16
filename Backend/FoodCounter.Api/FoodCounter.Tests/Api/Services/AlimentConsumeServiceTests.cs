@@ -81,7 +81,7 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void GetOneAlimentById_Bad_NotFound()
+        public void GetOneAlimentById_Bad_NotFound()
         {
             int id = 777;
 

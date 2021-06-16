@@ -105,7 +105,7 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void GetOneAlimentByName_Bad_NotFound()
+        public void GetOneAlimentByName_Bad_NotFound()
         {
             string name = "Troll Name";
             Aliment resultContent;

@@ -93,8 +93,11 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockAlimentService.Setup(m => m.GetOneByIdAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
             Func<Task> result = async () => { resultContent = await _alimentController.GetOneByIdAsync(id); };
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should()
+                .Throw<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
+
+            _mockAlimentService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
@@ -125,7 +128,8 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockAlimentService.Setup(m => m.GetOneByNameAsync(name)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
             Func<Task> result = async () => { resultContent = await _alimentController.GetAsync(name); };
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should()
+                .Throw<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentService.Verify(m => m.GetOneByNameAsync(name), Times.Once);
@@ -157,7 +161,8 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockAlimentService.Setup(m => m.DeleteAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
             Func<Task> result = async () => { resultContent = await _alimentController.DeleteAsync(id); };
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should()
+                .Throw<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentService.Verify(m => m.DeleteAsync(id), Times.Once);
@@ -187,7 +192,8 @@ namespace FoodCounter.Tests.Api.Controllers
             _mockAlimentService.Setup(m => m.UpdateAsync(It.IsAny<Aliment>())).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentNotFound));
 
             Func<Task> result = async () => { resultContent = await _alimentController.UpdateAsync(id, AlimentDatas.updateAlimentUpdateDto); };
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should()
+                .Throw<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentService.Verify(m => m.UpdateAsync(It.IsAny<Aliment>()), Times.Once);
