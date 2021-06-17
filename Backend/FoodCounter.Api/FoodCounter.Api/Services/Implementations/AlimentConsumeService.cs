@@ -2,6 +2,8 @@
 using FoodCounter.Api.Models;
 using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Resources;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,14 +15,17 @@ namespace FoodCounter.Api.Services.Implementations
     public class AlimentConsumeService : IAlimentConsumeService
     {
         private IAlimentConsumeRepository _alimentConsumeRepository;
+        private HttpContext _hcontext;
 
         /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="alimentConsumeRepository"></param>
-        public AlimentConsumeService(IAlimentConsumeRepository alimentConsumeRepository)
+        public AlimentConsumeService(IAlimentConsumeRepository alimentConsumeRepository, IHttpContextAccessor haccess)
         {
             _alimentConsumeRepository = alimentConsumeRepository;
+
+            _hcontext = haccess.HttpContext;
         }
 
         ///<inheritdoc/>
@@ -45,6 +50,9 @@ namespace FoodCounter.Api.Services.Implementations
         ///<inheritdoc/>
         public async Task<IEnumerable<AlimentConsume>> GetAllByUserIdAsync(long userId)
         {
+            if (userId != Convert.ToInt64(_hcontext.User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(_hcontext.User))
+                throw new HttpForbiddenException(ResourceEn.AccessDenied);
+
             var result = await _alimentConsumeRepository.GetAllByUserIdAsync(userId);
 
             return result;

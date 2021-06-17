@@ -76,20 +76,13 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAsync([FromQuery] long userId)
         {
-            if (userId == 0)
-            {
-                userId = Convert.ToInt64(User.Identity.Name);
-            }
-            else if (userId != Convert.ToInt64(User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(User))
-            {
-                return Forbid();
-            }
+            userId = userId == 0 ? Convert.ToInt64(User.Identity.Name) : userId;
 
             var result = await _alimentConsumeService.GetAllByUserIdAsync(userId);
 
             var resultDto = _mapper.Map<IEnumerable<AlimentConsumeDto>>(result);
 
-            return Ok(result);
+            return Ok(resultDto);
         }
 
         /// <summary>
