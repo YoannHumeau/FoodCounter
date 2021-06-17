@@ -31,19 +31,27 @@ namespace FoodCounter.Tests.ExampleDatas
                 Email = "benjamin@noahs.arcade",
                 Password = "123456",
                 Role = Role.User
+            },
+            new User
+            {
+                Id = 4,
+                Username = "cassandra",
+                Email = "cassandra@party.time",
+                Password = "123456",
+                Role = Role.User
             }
         };
 
         public static User newUser = new User
         {
-            Username = "cassandra",
-            Email = "cassandra@party.time",
+            Username = "frankie",
+            Email = "frankie@sharp.records",
             Password = "123456",
         };
 
         public static User newUserCreated = new User
         {
-            Id = 4,
+            Id = 5,
             Username = newUser.Username,
             Email = newUser.Email,
             Password = newUser.Password,

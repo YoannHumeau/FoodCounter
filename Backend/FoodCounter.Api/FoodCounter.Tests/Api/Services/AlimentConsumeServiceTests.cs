@@ -6,10 +6,12 @@ using FoodCounter.Api.Resources;
 using FoodCounter.Api.Services;
 using FoodCounter.Api.Services.Implementations;
 using FoodCounter.Tests.ExampleDatas;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,12 +21,57 @@ namespace FoodCounter.Tests.Api.Services
     {
         private readonly IAlimentConsumeService _alimentConsumeService;
         private readonly Mock<IAlimentConsumeRepository> _mockAlimentConsumeRepository;
+        private readonly Mock<IHttpContextAccessor> _mockHttpContextAccessor;
 
         public AlimentConsumeServiceTests()
         {
             _mockAlimentConsumeRepository = new Mock<IAlimentConsumeRepository>();
-            _alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object);
+            _mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            //var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            //{
+            //    new Claim(ClaimTypes.Name, "example name"),
+            //    new Claim(ClaimTypes.NameIdentifier, "1"),
+            //    new Claim("custom-claim", "example claim value"),
+            //}, "mock"));
+
+            //var wow = new DefaultHttpContext() { User = user };
+
+            //_mockHttpContextAccessor.Setup(req => req.HttpContext).Returns(wow);
+
+            _alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
         }
+
+        //private void MockUser(long userId)
+        //{
+        //    var role = UserDatas.listUsers.ElementAt((int)userId - 1).Role;
+
+        //    _alimentConsumeController.ControllerContext = new ControllerContext
+        //    {
+        //        HttpContext = new DefaultHttpContext
+        //        {
+        //            User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        //            {
+        //                new Claim(ClaimTypes.Name, userId.ToString()),
+        //                new Claim(ClaimTypes.Role, role.ToString())
+        //            }))
+        //        }
+        //    };
+        //}
+
+        private void MockUser(long userId)
+        {
+            var role = UserDatas.listUsers.ElementAt((int)userId - 1).Role;
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] 
+            {
+                new Claim(ClaimTypes.Name, userId.ToString()),
+                new Claim(ClaimTypes.Role, role.ToString()) 
+            }));
+
+            _mockHttpContextAccessor.Setup(req => req.HttpContext).Returns(new DefaultHttpContext() { User = user });
+        }
+
 
         [Fact]
         public async void CreateAliment_Ok()
@@ -41,11 +88,14 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void GetAllAlimentsByUserId_OK()
         {
+            MockUser(3); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
             long userId = 3;
 
             _mockAlimentConsumeRepository.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
 
-            var result = await _alimentConsumeService.GetAllByUserIdAsync(userId);
+            var result = await alimentConsumeService.GetAllByUserIdAsync(userId);
 
             result.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
 
@@ -55,11 +105,14 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void GetAllAlimentsByUserId_Bad_ResultEmpty()
         {
-            long userId = 2;
+            MockUser(4); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            long userId = 4;
 
             _mockAlimentConsumeRepository.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
 
-            var result = await _alimentConsumeService.GetAllByUserIdAsync(userId);
+            var result = await alimentConsumeService.GetAllByUserIdAsync(userId);
 
             result.Should().BeEquivalentTo(new List<AlimentConsume>());
 
