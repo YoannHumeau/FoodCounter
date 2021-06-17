@@ -61,6 +61,15 @@ namespace FoodCounter.Api.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à You can&apos;t access to this.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Aliment-consume not found.
         /// </summary>
         public static string AlimentConsumeNotFound {

@@ -41,7 +41,6 @@ namespace FoodCounter.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup));
@@ -53,6 +52,9 @@ namespace FoodCounter.Api
             services.AddScoped<IAlimentRepository, AlimentRepository>();
             services.AddScoped<IAlimentConsumeRepository, AlimentConsumeRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            // HttpContext Injection - Used for having User information in service classes
+            services.AddHttpContextAccessor();
 
             // DbAccess injection
             services.AddScoped<DbAccess>(sp => new DbAccess(
