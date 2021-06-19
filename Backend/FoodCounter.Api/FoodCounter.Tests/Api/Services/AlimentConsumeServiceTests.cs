@@ -122,11 +122,14 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void GetOneAlimentById_Ok()
         {
+            MockUser(3); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
             int id = 2;
 
             _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
 
-            var result = await _alimentConsumeService.GetOneByIdAsync(id);
+            var result = await alimentConsumeService.GetOneByIdAsync(id);
 
             result.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
 

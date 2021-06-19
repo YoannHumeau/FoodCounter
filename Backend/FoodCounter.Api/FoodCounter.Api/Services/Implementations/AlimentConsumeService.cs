@@ -44,6 +44,9 @@ namespace FoodCounter.Api.Services.Implementations
             if (result == null)
                 throw new HttpNotFoundException(ResourceEn.AlimentConsumeNotFound);
 
+            if (result.UserId != Convert.ToInt64(_hcontext.User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(_hcontext.User))
+                throw new HttpForbiddenException(ResourceEn.AccessDenied);
+
             return result;
         }
 

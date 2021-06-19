@@ -97,9 +97,6 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _alimentConsumeService.GetOneByIdAsync(id);
 
-            if (result.UserId != Convert.ToInt64(User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(User))
-                return Forbid();
-
             var resultDto = _mapper.Map<AlimentConsumeDto>(result);
 
             return Ok(resultDto);
