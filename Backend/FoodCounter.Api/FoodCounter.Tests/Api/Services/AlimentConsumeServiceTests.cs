@@ -74,7 +74,7 @@ namespace FoodCounter.Tests.Api.Services
 
 
         [Fact]
-        public async void CreateAliment_Ok()
+        public async void CreateAlimentConsume_Ok()
         {
             _mockAlimentConsumeRepository.Setup(m => m.CreateAsync(AlimentConsumeDatas.newAlimentConsume)).ReturnsAsync(AlimentConsumeDatas.newAlimentConsumeCreated);
 
@@ -86,7 +86,7 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void GetAllAlimentsByUserId_OK()
+        public async void GetAllAlimentsConsumeByUserId_OK()
         {
             MockUser(3); // Simple user (Benjamin)
             var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
@@ -103,9 +103,9 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void GetAllAlimentsByUserId_Bad_ResultEmpty()
+        public async void GetAllAlimentConsumesByUserId_Bad_ResultEmpty()
         {
-            MockUser(4); // Simple user (Benjamin)
+            MockUser(4); // Simple user (Cassandra)
             var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
 
             long userId = 4;
@@ -119,8 +119,10 @@ namespace FoodCounter.Tests.Api.Services
             _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Once);
         }
 
+        // TODO : Test Access Denied
+
         [Fact]
-        public async void GetOneAlimentById_Ok()
+        public async void GetOneAlimentConsumeById_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
             var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
@@ -136,8 +138,30 @@ namespace FoodCounter.Tests.Api.Services
             _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
 
+        // TODO : Test Access Denied
+
         [Fact]
-        public void GetOneAlimentById_Bad_NotFound()
+        public void GetOneAlimentConsumeById_Bad_Forbidden()
+        {
+            MockUser(4); // Simple user (Cassandra)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            int id = 2;
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
+
+            AlimentConsume resultContent;
+
+            Func<Task> result = async () => { resultContent = await alimentConsumeService.GetOneByIdAsync(id); };
+
+            result.Should().Throw<HttpForbiddenException>()
+                .WithMessage(ResourceEn.AccessDenied);
+
+            _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
+        public void GetOneAlimentConsumeById_Bad_NotFound()
         {
             int id = 777;
 
@@ -215,7 +239,7 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void DeleteAliment_Bad_NotFound()
+        public async void DeleteAlimentConsume_Bad_NotFound()
         {
             int id = 2;
 
