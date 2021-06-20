@@ -123,14 +123,14 @@ namespace FoodCounter.Tests.Api.Controllers
             MockUser(3); // Simple user (Benjamin)
 
             int id = 5;
-            var alimentConsume = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1);
+            IActionResult resultContent = null;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(alimentConsume);
+            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ThrowsAsync(new HttpForbiddenException(ResourceEn.AccessDenied));
 
-            var result = await _alimentConsumeController.GetOneByIdAsync(id);
-            var objectResult = result as ForbidResult;
-
-            objectResult.Should().NotBeNull();
+            Func<Task> result = async () => { resultContent = await _alimentConsumeController.GetOneByIdAsync(id); };
+            result.Should()
+                .Throw<HttpForbiddenException>()
+                .WithMessage(ResourceEn.AccessDenied);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
