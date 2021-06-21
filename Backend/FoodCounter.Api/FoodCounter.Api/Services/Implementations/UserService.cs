@@ -74,12 +74,14 @@ namespace FoodCounter.Api.Services
         ///<inheritdoc/>
         public async Task<User> Authenticate(string username, string password)
         {
-            //var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = await _userRepository.GetOneByUsernameAsync(username);
 
-            var user = await _userRepository.GetOneByUsernameAndPassword(username, password);
-
-            // return null if user not found
+            // If user not found return BadRequest Exception
             if (user == null)
+                throw new HttpBadRequestException(ResourceEn.UserBadAuthentication);
+
+            // If bad password return BadRequest Exception
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 throw new HttpBadRequestException(ResourceEn.UserBadAuthentication);
 
             // authentication successful so generate jwt token
