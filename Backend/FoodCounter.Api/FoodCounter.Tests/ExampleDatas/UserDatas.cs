@@ -2,6 +2,7 @@
 using FoodCounter.Api.Models.Dto;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FoodCounter.Tests.ExampleDatas
 {
@@ -40,6 +41,62 @@ namespace FoodCounter.Tests.ExampleDatas
                 Email = "cassandra@party.time",
                 Password = "123456",
                 Role = Role.User
+            }
+        };
+
+        public static List<UserFullDto> listUsersFullDto = new List<UserFullDto>
+        {
+            new UserFullDto
+            {
+                Id = listUsers.ElementAt(0).Id,
+                Username = listUsers.ElementAt(0).Username,
+                Email = listUsers.ElementAt(0).Email,
+                Role = listUsers.ElementAt(0).Role
+            },
+            new UserFullDto
+            {
+                Id = listUsers.ElementAt(1).Id,
+                Username = listUsers.ElementAt(1).Username,
+                Email = listUsers.ElementAt(1).Email,
+                Role = listUsers.ElementAt(1).Role
+            },
+            new UserFullDto
+            {
+                Id = listUsers.ElementAt(2).Id,
+                Username = listUsers.ElementAt(2).Username,
+                Email = listUsers.ElementAt(2).Email,
+                Role = listUsers.ElementAt(2).Role
+            },
+            new UserFullDto
+            {
+                Id = listUsers.ElementAt(3).Id,
+                Username = listUsers.ElementAt(3).Username,
+                Email = listUsers.ElementAt(3).Email,
+                Role = listUsers.ElementAt(3).Role
+            }
+        };
+
+        public static List<UserLimitedDto> listUsersLimitedDto = new List<UserLimitedDto>
+        {
+            new UserLimitedDto
+            {
+                Id = listUsers.ElementAt(0).Id,
+                Username = listUsers.ElementAt(0).Username
+            },
+            new UserLimitedDto
+            {
+                Id = listUsers.ElementAt(1).Id,
+                Username = listUsers.ElementAt(1).Username
+            },
+            new UserLimitedDto
+            {
+                Id = listUsers.ElementAt(2).Id,
+                Username = listUsers.ElementAt(2).Username
+            },
+            new UserLimitedDto
+            {
+                Id = listUsers.ElementAt(3).Id,
+                Username = listUsers.ElementAt(3).Username
             }
         };
 

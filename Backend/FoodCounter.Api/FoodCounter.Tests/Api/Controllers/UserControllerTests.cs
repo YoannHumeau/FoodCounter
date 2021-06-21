@@ -16,6 +16,8 @@ using FoodCounter.Api.Entities;
 using System;
 using FoodCounter.Api.Exceptions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
@@ -35,6 +37,23 @@ namespace FoodCounter.Tests.Api.Controllers
             _userController = new UserController(_mockLogger.Object, mapper, _mockUserService.Object);
         }
 
+        private void MockUser(long userId)
+        {
+            var role = UserDatas.listUsers.ElementAt((int)userId - 1).Role;
+
+            _userController.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(ClaimTypes.Name, userId.ToString()),
+                        new Claim(ClaimTypes.Role, role.ToString())
+                    }))
+                }
+            };
+        }
+
         [Fact]
         public async void CreateUser_Ok()
         {
@@ -51,7 +70,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void CreateUser_Bad_UsernameAlreadyExists()
+        public void CreateUser_Bad_UsernameAlreadyExists()
         {
             var badNewUser = new UserCreationDto
             {
@@ -73,7 +92,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void CreateUser_Bad_EmailAlreadyExists()
+        public void CreateUser_Bad_EmailAlreadyExists()
         {
             var badNewUser = new UserCreationDto
             {
@@ -110,8 +129,10 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneUserById_Ok()
+        public async void GetOneUserById_Ok_Admin()
         {
+            MockUser(1); // Admin user (Wayne)
+
             int id = 2;
             var user = UserDatas.listUsers.ElementAt(id - 1);
 
@@ -122,7 +143,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(user);
+            objectResult.Value.Should().BeEquivalentTo(UserDatas.listUsersFullDto.ElementAt(id - 1));
 
             _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
