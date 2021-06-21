@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -65,6 +66,7 @@ namespace FoodCounter.Api.Controllers
         /// </summary>
         /// <returns>All users</returns>
         [HttpGet]
+        [Authorize]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,7 +74,14 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _userService.GetAllAsync();
 
-            return Ok(result);
+            object resultDto;
+
+            if (Helpers.IdentityHelper.IsUserAdmin(User))
+                resultDto = _mapper.Map<IEnumerable<UserFullDto>>(result);
+            else
+                resultDto = _mapper.Map<IEnumerable<UserLimitedDto>>(result);
+
+            return Ok(resultDto);
         }
 
         /// <summary>
