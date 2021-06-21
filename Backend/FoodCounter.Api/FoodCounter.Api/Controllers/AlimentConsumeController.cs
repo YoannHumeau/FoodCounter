@@ -114,11 +114,6 @@ namespace FoodCounter.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentConsumeUpdateDto updateAlimentDto)
         {
-            var alimentConsume = await _alimentConsumeService.GetOneByIdAsync(id);
-
-            if (alimentConsume.UserId != Convert.ToInt64(User.Identity.Name))
-                return Forbid();
-
             var updateConsumeAliment = _mapper.Map<AlimentConsume>(updateAlimentDto);
             updateConsumeAliment.Id = id;
 
