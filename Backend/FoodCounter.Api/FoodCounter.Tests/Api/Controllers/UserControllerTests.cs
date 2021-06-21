@@ -129,7 +129,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneUserById_Ok_Admin()
+        public async void GetOneUserById_Ok_AdminLogged()
         {
             MockUser(1); // Admin user (Wayne)
 
@@ -144,6 +144,26 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().BeEquivalentTo(UserDatas.listUsersFullDto.ElementAt(id - 1));
+
+            _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
+        public async void GetOneUserById_Ok_UserLogged()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            int id = 2;
+            var user = UserDatas.listUsers.ElementAt(id - 1);
+
+            _mockUserService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(user);
+
+            var result = await _userController.GetOneByIdAsync(id);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(UserDatas.listUsersLimitedDto.ElementAt(id - 1));
 
             _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
