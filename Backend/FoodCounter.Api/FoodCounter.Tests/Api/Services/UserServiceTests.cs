@@ -150,7 +150,7 @@ namespace FoodCounter.Tests.Api.Services
                 Role = UserDatas.listUsers.ElementAt(0).Role
             };
 
-            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId -1).Username)).ReturnsAsync(userReturned);
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(userReturned);
 
             var result = await _userService.Authenticate(UserDatas.listUsers.ElementAt(userId - 1).Username, UserDatas.listUserPasswords.ElementAt(userId - 1));
 
@@ -158,6 +158,34 @@ namespace FoodCounter.Tests.Api.Services
             result.Token.Should().NotBeNull();
 
             _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username), Times.Once);
+        }
+
+        [Fact]
+        public void Login_Bad_BadPassword()
+        {
+            int userId = 1;
+            string badPassword = "BadPassword";
+
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(() => null);
+
+            Assert.ThrowsAsync<HttpBadRequestException>(() => _userService.Authenticate(UserDatas.listUsers.ElementAt(userId - 1).Username, badPassword))
+                .Equals(ResourceEn.UserBadAuthentication);
+
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username), Times.Once);
+        }
+
+        [Fact]
+        public void Login_Bad_BadUsername()
+        {
+            int userId = 1;
+            string badUsername = "BadUsername";
+
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(() => null);
+
+            Assert.ThrowsAsync<HttpBadRequestException>(() => _userService.Authenticate(badUsername, UserDatas.listUserPasswords.ElementAt(userId - 1)))
+                .Equals(ResourceEn.UserBadAuthentication);
+
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(badUsername), Times.Once);
         }
 
         #endregion
