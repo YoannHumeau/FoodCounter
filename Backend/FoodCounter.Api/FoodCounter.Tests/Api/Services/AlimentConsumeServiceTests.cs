@@ -119,7 +119,25 @@ namespace FoodCounter.Tests.Api.Services
             _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Once);
         }
 
-        // TODO : Test Access Denied
+        [Fact]
+        public void GetAllAlimentConsumeByUserId_Bad_Forbidden()
+        {
+            MockUser(4); // Simple user (Cassandra)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            long userId = 3;
+
+            IEnumerable<AlimentConsume> resultContent;
+
+            Func<Task> result = async () => { resultContent = await alimentConsumeService.GetAllByUserIdAsync(userId); };
+
+            result.Should().Throw<HttpForbiddenException>()
+                .WithMessage(ResourceEn.AccessDenied);
+
+            _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Never);
+        }
+
+        // TODO : Test Accept Admin
 
         [Fact]
         public async void GetOneAlimentConsumeById_Ok()
@@ -137,8 +155,6 @@ namespace FoodCounter.Tests.Api.Services
 
             _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
-
-        // TODO : Test Access Denied
 
         [Fact]
         public void GetOneAlimentConsumeById_Bad_Forbidden()
