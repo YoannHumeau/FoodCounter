@@ -1,6 +1,7 @@
 ﻿using FoodCounter.Api.Entities;
 using FoodCounter.Api.Exceptions;
 using FoodCounter.Api.Repositories;
+using FoodCounter.Api.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -59,6 +60,9 @@ namespace FoodCounter.Api.Services
         public async Task<User> GetOneByIdAsync(long id)
         {
             var result = await _userRepository.GetOneByIdAsync(id);
+
+            if (result == null)
+                throw new HttpNotFoundException(ResourceEn.UserNotFound);
 
             return result;
         }

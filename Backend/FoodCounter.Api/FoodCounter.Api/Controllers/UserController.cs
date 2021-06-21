@@ -89,8 +89,7 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _userService.GetOneByIdAsync(id);
 
-            if (result == null)
-                return NotFound(new { Message = ResourceEn.UserNotFound });
+            // TODO : Return Dto different if is user or admin
 
             return Ok(result);
         }
