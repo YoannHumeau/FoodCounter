@@ -66,7 +66,6 @@ namespace FoodCounter.Api.Controllers
         /// </summary>
         /// <returns>All users</returns>
         [HttpGet]
-        [Authorize]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,7 +88,6 @@ namespace FoodCounter.Api.Controllers
         /// </summary>
         /// <returns>One user</returns>
         [HttpGet("{id}")]
-        [Authorize]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
