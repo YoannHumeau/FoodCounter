@@ -319,27 +319,42 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void DeleteAlimentConsume_Ok()
         {
+            MockUser(3); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
             int id = 2;
 
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeRepository.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
-            var result = await _alimentConsumeService.DeleteAsync(id);
+            var result = await alimentConsumeService.DeleteAsync(id);
             result.Should().BeTrue();
 
             _mockAlimentConsumeRepository.Verify(m => m.DeleteAsync(id), Times.Once);
+            _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
-        public async void DeleteAlimentConsume_Bad_NotFound()
+        public void DeleteAlimentConsume_Bad_NotFound()
         {
-            int id = 2;
+            MockUser(3); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
 
+            int id = 777;
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
             _mockAlimentConsumeRepository.Setup(m => m.DeleteAsync(id)).ReturnsAsync(false);
 
-            var result = await _alimentConsumeService.DeleteAsync(id);
-            result.Should().BeFalse();
+            AlimentConsume resultContent;
 
-            _mockAlimentConsumeRepository.Verify(m => m.DeleteAsync(id), Times.Once);
+            Func<Task> result = async () => { resultContent = await alimentConsumeService.GetOneByIdAsync(id); };
+
+            result.Should()
+                .Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentConsumeNotFound);
+
+            _mockAlimentConsumeRepository.Verify(m => m.DeleteAsync(id), Times.Never);
+            _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
     }
 }
