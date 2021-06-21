@@ -360,6 +360,196 @@
 			"name": "Users",
 			"item": [
 				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "AdminGetMe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 1,\r",
+											"    \"username\": \"wayne\",\r",
+											"    \"email\": \"wayne@party.time\",\r",
+											"    \"role\": \"Admin\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AdminGetUserById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 2,\r",
+											"    \"username\": \"garth\",\r",
+											"    \"email\": \"garth.algar@party.time\",\r",
+											"    \"role\": \"Admin\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AdminGetUserAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"[\r",
+											"    {\r",
+											"        \"id\": 1,\r",
+											"        \"username\": \"wayne\",\r",
+											"        \"email\": \"wayne@party.time\",\r",
+											"        \"role\": \"Admin\"\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 2,\r",
+											"        \"username\": \"garth\",\r",
+											"        \"email\": \"garth.algar@party.time\",\r",
+											"        \"role\": \"Admin\"\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 3,\r",
+											"        \"username\": \"benjamin\",\r",
+											"        \"email\": \"benjamin@noahs.arcade\",\r",
+											"        \"role\": \"User\"\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 4,\r",
+											"        \"username\": \"cassandra\",\r",
+											"        \"email\": \"cassandra@party.time\",\r",
+											"        \"role\": \"User\"\r",
+											"    }\r",
+											"]\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{AdminToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
 					"name": "User",
 					"item": [
 						{
@@ -408,7 +598,7 @@
 							"response": []
 						},
 						{
-							"name": "UserGetById",
+							"name": "UserGetUserById",
 							"event": [
 								{
 									"listen": "test",
@@ -445,6 +635,63 @@
 									"path": [
 										"users",
 										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserGetUserAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"[\r",
+											"    {\r",
+											"        \"id\": 1,\r",
+											"        \"username\": \"wayne\"\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 2,\r",
+											"        \"username\": \"garth\"\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 3,\r",
+											"        \"username\": \"benjamin\"\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": 4,\r",
+											"        \"username\": \"cassandra\"\r",
+											"    }\r",
+											"]\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										""
 									]
 								}
 							},
@@ -505,131 +752,6 @@
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Admin",
-					"item": [
-						{
-							"name": "AdminGetMe",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status test\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"var expectedBody =\r",
-											"{\r",
-											"    \"id\": 1,\r",
-											"    \"username\": \"wayne\",\r",
-											"    \"email\": \"wayne@party.time\",\r",
-											"    \"role\": \"Admin\"\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Verify return values\", function () { \r",
-											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:5000/users/me",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "5000",
-									"path": [
-										"users",
-										"me"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "AdminGetById",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status test\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"var expectedBody =\r",
-											"{\r",
-											"    \"id\": 2,\r",
-											"    \"username\": \"garth\",\r",
-											"    \"email\": \"garth.algar@party.time\",\r",
-											"    \"role\": \"Admin\"\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Verify return values\", function () { \r",
-											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:5000/users/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "5000",
-									"path": [
-										"users",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{AdminToken}}",
-								"type": "string"
-							}
-						]
-					},
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
 						}
 					]
 				},
