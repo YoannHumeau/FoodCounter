@@ -118,7 +118,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneAlimentById_Bad_Forbidden_BadUser()
+        public void GetOneAlimentById_Bad_Forbidden_BadUser()
         {
             MockUser(3); // Simple user (Benjamin)
 
@@ -170,24 +170,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Once);
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(alimentConsumeId), Times.Once);
-        }
-
-        [Fact]
-        public async void UpdateAliment_Bad_Forbid_BadUser()
-        {
-            MockUser(3); // Simple user (Benjamin)
-
-            int id = 5;
-
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt((int)id));
-
-            var result = await _alimentConsumeController.UpdateAsync(id, AlimentConsumeDatas.updateAlimentConsumeUpdateDto);
-            var objectResult = result as ForbidResult;
-
-            objectResult.Should().NotBeNull();
-
-            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
-            _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Never);
         }
 
         [Fact]
