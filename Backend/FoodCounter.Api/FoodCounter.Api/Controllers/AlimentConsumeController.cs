@@ -115,8 +115,6 @@ namespace FoodCounter.Api.Controllers
         public async Task<IActionResult> UpdateAsync([FromRoute] long id, AlimentConsumeUpdateDto updateAlimentDto)
         {
             var alimentConsume = await _alimentConsumeService.GetOneByIdAsync(id);
-            if (alimentConsume == null)
-                return NotFound(new { Message = ResourceEn.AlimentConsumeNotFound });
 
             if (alimentConsume.UserId != Convert.ToInt64(User.Identity.Name))
                 return Forbid();
