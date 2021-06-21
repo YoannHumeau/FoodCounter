@@ -193,7 +193,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             int id = 2;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentConsumeController.DeleteAsync(id);
@@ -202,7 +201,6 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(204);
 
-            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentConsumeService.Verify(m => m.DeleteAsync(id), Times.Once);
         }
 
@@ -213,7 +211,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             int id = 2;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
 
             var result = await _alimentConsumeController.DeleteAsync(id);
@@ -222,7 +219,6 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(204);
 
-            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentConsumeService.Verify(m => m.DeleteAsync(id), Times.Once);
         }
 
@@ -250,7 +246,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             int id = 2;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeService.Setup(m => m.DeleteAsync(id)).ReturnsAsync(false);
 
             var result = await _alimentConsumeController.DeleteAsync(id);
@@ -263,7 +258,6 @@ namespace FoodCounter.Tests.Api.Controllers
             JsonConvert.SerializeObject(objectResult.Value).Should().Be(
                 JsonConvert.SerializeObject(new { Message = ResourceEn.ProblemDeleting }));
 
-            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
             _mockAlimentConsumeService.Verify(m => m.DeleteAsync(id), Times.Once);
         }
     }
