@@ -218,6 +218,9 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public async void UpdateAlimentConsume_Ok()
         {
+            MockUser(3); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
             int id = 2;
             long userId = 3;
             var updateAlimentConsume = new AlimentConsume
@@ -236,31 +239,42 @@ namespace FoodCounter.Tests.Api.Services
                 Weight = updateAlimentConsume.Weight
             };
 
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
             _mockAlimentConsumeRepository.Setup(m => m.UpdateAsync(updateAlimentConsume)).ReturnsAsync(afterUpdateAlimentConsume);
 
-            var result = await _alimentConsumeService.UpdateAsync(updateAlimentConsume);
+            var result = await alimentConsumeService.UpdateAsync(updateAlimentConsume);
 
             result.Should().BeEquivalentTo(afterUpdateAlimentConsume);
 
             _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Once);
+            _mockAlimentConsumeRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
-        public async void UpdateAlimentConsume_Bad_NotFound()
+        public void UpdateAlimentConsume_Bad_NotFound()
         {
+            MockUser(3); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
             int id = 2;
             var updateAlimentConsume = new AlimentConsume
             {
                 Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Id,
             };
 
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
             _mockAlimentConsumeRepository.Setup(m => m.UpdateAsync(updateAlimentConsume)).ReturnsAsync(() => null);
 
-            var result = await _alimentConsumeService.UpdateAsync(updateAlimentConsume);
+            AlimentConsume resultContent;
 
-            result.Should().BeNull();
+            Func<Task> result = async () => { resultContent = await _alimentConsumeService.GetOneByIdAsync(id); };
 
-            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Once);
+            result.Should()
+                .Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentConsumeNotFound);
+
+            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Never);
+            _mockAlimentConsumeRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
 
         [Fact]
