@@ -78,6 +78,12 @@ namespace FoodCounter.Api.Services.Implementations
         ///<inheritdoc/>
         public async Task<bool> DeleteAsync(long id)
         {
+            // Check aliment-consume exists : Will throw http custom exception from GetOneByIdAsync() if does not exists
+            var aliment = await GetOneByIdAsync(id);
+
+            if (aliment.UserId != Convert.ToInt64(_hcontext.User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(_hcontext.User))
+                throw new HttpForbiddenException(ResourceEn.AccessDenied);
+
             var result = await _alimentConsumeRepository.DeleteAsync(id);
 
             return result;
