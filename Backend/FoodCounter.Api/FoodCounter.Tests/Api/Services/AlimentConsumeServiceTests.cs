@@ -137,7 +137,22 @@ namespace FoodCounter.Tests.Api.Services
             _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Never);
         }
 
-        // TODO : Test Accept Admin
+        [Fact]
+        public async void GetAllAlimentConsumeByUserId_Ok_AdminCanPass()
+        {
+            MockUser(1); // Admin user (Wayne)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            long userId = 3;
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
+
+            var result = await alimentConsumeService.GetAllByUserIdAsync(userId);
+
+            result.Should().BeEquivalentTo(AlimentConsumeDatas.listAlimentConsumes.Where(x => x.UserId == userId));
+
+            _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Once);
+        }
 
         [Fact]
         public async void GetOneAlimentConsumeById_Ok()
