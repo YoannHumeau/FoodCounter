@@ -141,8 +141,6 @@ namespace FoodCounter.Api.Controllers
             var userDto = _mapper.Map<UserFullDto>(user);
 
             return Ok(userDto);
-
-            //TODO : Test me !
         }
 
         #endregion
