@@ -8,6 +8,14 @@ namespace FoodCounter.Tests.ExampleDatas
 {
     public static class UserDatas
     {
+        public static List<string> listUserPasswords = new List<string>
+        {
+            "123456",
+            "123456",
+            "123456",
+            "Pa$$w0rd"
+        };
+
         public static List<User> listUsers = new List<User>
         {
             new User
@@ -15,7 +23,7 @@ namespace FoodCounter.Tests.ExampleDatas
                 Id = 1,
                 Username = "wayne",
                 Email = "wayne@party.time",
-                Password = "123456",
+                Password = BCrypt.Net.BCrypt.HashPassword(listUserPasswords.ElementAt(0)),
                 Role = Role.Admin
             },
             new User
@@ -23,7 +31,7 @@ namespace FoodCounter.Tests.ExampleDatas
                 Id = 2,
                 Username = "garth",
                 Email = "garth.algar@party.time",
-                Password = "123456",
+                Password = BCrypt.Net.BCrypt.HashPassword(listUserPasswords.ElementAt(1)),
                 Role = Role.Admin
             },
             new User
@@ -31,7 +39,7 @@ namespace FoodCounter.Tests.ExampleDatas
                 Id = 3,
                 Username = "benjamin",
                 Email = "benjamin@noahs.arcade",
-                Password = "123456",
+                Password = BCrypt.Net.BCrypt.HashPassword(listUserPasswords.ElementAt(2)),
                 Role = Role.User
             },
             new User
@@ -39,7 +47,7 @@ namespace FoodCounter.Tests.ExampleDatas
                 Id = 4,
                 Username = "cassandra",
                 Email = "cassandra@party.time",
-                Password = "123456",
+                Password = BCrypt.Net.BCrypt.HashPassword(listUserPasswords.ElementAt(3)),
                 Role = Role.User
             }
         };

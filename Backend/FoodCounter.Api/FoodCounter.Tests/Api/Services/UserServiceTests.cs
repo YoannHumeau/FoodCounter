@@ -133,5 +133,33 @@ namespace FoodCounter.Tests.Api.Services
 
             _mockUserRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
+
+        #region Authenticate
+
+        [Fact]
+        public async void Login_Ok()
+        {
+            int userId = 1;
+
+            var userReturned = new User
+            {
+                Id = UserDatas.listUsers.ElementAt(0).Id,
+                Username = UserDatas.listUsers.ElementAt(0).Username,
+                Email = UserDatas.listUsers.ElementAt(0).Email,
+                Password = UserDatas.listUsers.ElementAt(0).Password,
+                Role = UserDatas.listUsers.ElementAt(0).Role
+            };
+
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId -1).Username)).ReturnsAsync(userReturned);
+
+            var result = await _userService.Authenticate(UserDatas.listUsers.ElementAt(userId - 1).Username, UserDatas.listUserPasswords.ElementAt(userId - 1));
+
+            result.Should().BeEquivalentTo(UserDatas.listUsers.ElementAt(userId - 1), opt => opt.Excluding(u => u.Token));
+            result.Token.Should().NotBeNull();
+
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username), Times.Once);
+        }
+
+        #endregion
     }
 }
