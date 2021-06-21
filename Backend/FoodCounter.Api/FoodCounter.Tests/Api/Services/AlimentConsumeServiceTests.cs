@@ -278,6 +278,45 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public void UpdateAlimentConsume_Bad_Forbidden()
+        {
+            MockUser(4); // Simple user (Cassandra)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            int id = 2;
+            long userId = 3;
+            var updateAlimentConsume = new AlimentConsume
+            {
+                Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Id,
+                Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Weight + 111
+            };
+
+            var afterUpdateAlimentConsume = new AlimentConsume
+            {
+                Id = updateAlimentConsume.Id,
+                UserId = userId,
+                AlimentId = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).AlimentId,
+                Aliment = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Aliment,
+                ConsumeDate = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).ConsumeDate,
+                Weight = updateAlimentConsume.Weight
+            };
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
+            _mockAlimentConsumeRepository.Setup(m => m.UpdateAsync(updateAlimentConsume)).ReturnsAsync(afterUpdateAlimentConsume);
+
+            AlimentConsume resultContent;
+
+            Func<Task> result = async () => { resultContent = await alimentConsumeService.GetOneByIdAsync(id); };
+
+            result.Should()
+                .Throw<HttpForbiddenException>()
+                .WithMessage(ResourceEn.AccessDenied);
+
+            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Never);
+            _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
         public async void DeleteAlimentConsume_Ok()
         {
             int id = 2;
