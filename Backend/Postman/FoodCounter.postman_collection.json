@@ -359,6 +359,94 @@
 					"name": "User",
 					"item": [
 						{
+							"name": "UserGetMe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 3,\r",
+											"    \"username\": \"benjamin\",\r",
+											"    \"email\": \"benjamin@noahs.arcade\",\r",
+											"    \"role\": \"User\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserGetById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 2,\r",
+											"    \"username\": \"garth\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "CreateUser",
 							"event": [
 								{
@@ -413,50 +501,6 @@
 								}
 							},
 							"response": []
-						},
-						{
-							"name": "UserGetMe",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status test\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"var expectedBody =\r",
-											"{\r",
-											"    \"id\": 3,\r",
-											"    \"username\": \"benjamin\",\r",
-											"    \"email\": \"benjamin@noahs.arcade\",\r",
-											"    \"role\": \"User\"\r",
-											"}\r",
-											"pm.test(\"Verify return values\", function () { \r",
-											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:5000/users/me",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "5000",
-									"path": [
-										"users",
-										"me"
-									]
-								}
-							},
-							"response": []
 						}
 					]
 				},
@@ -507,6 +551,51 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "AdminGetById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"id\": 2,\r",
+											"    \"username\": \"garth\",\r",
+											"    \"email\": \"garth.algar@party.time\",\r",
+											"    \"role\": \"Admin\"\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"auth": {
@@ -543,6 +632,50 @@
 				{
 					"name": "Bad",
 					"item": [
+						{
+							"name": "UserGetByIdBadNotFound",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"var expectedBody =\r",
+											"{\r",
+											"    \"errors\": {\r",
+											"        \"message\": \"User not found\"\r",
+											"    }\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Verify return values\", function () { \r",
+											"    pm.expect(JSON.stringify(pm.response.json())).is.to.equal(JSON.stringify(expectedBody)); \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/users/777",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"users",
+										"777"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "CreateUserBadUsernameAlreadyExists",
 							"event": [
