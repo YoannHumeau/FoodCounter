@@ -184,5 +184,26 @@ namespace FoodCounter.Tests.Api.Controllers
 
             _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
+
+        [Fact]
+        public void Login_Bad_BadUsername()
+        {
+            var badUserLogin = new UserLoginDto
+            {
+                Username = "TrollName",
+                Password = UserDatas.userLoginDto.Password
+            };
+
+            _mockUserService.Setup(m => m.Authenticate(badUserLogin.Username, badUserLogin.Password)).ThrowsAsync(new HttpBadRequestException(ResourceEn.UserBadAuthentication));
+
+            IActionResult resultContent;
+
+            Func<Task> result = async () => { resultContent = await _userController.Login(badUserLogin); };
+            result.Should()
+                .Throw<HttpBadRequestException>()
+                .WithMessage(ResourceEn.UserBadAuthentication);
+
+            _mockUserService.Verify(m => m.Authenticate(badUserLogin.Username, badUserLogin.Password), Times.Once);
+        }
     }
 }
