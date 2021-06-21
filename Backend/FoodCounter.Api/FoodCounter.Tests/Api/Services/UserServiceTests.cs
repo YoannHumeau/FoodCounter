@@ -122,15 +122,14 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
-        public async void GetOneUserById_Bad_NotFound()
+        public void GetOneUserById_Bad_NotFound()
         {
             int id = 777;
 
             _mockUserRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
 
-            var result = await _userService.GetOneByIdAsync(id);
-
-            result.Should().BeNull();
+            Assert.ThrowsAsync<HttpNotFoundException>(() => _userService.GetOneByIdAsync(id))
+                .Equals(ResourceEn.EmailAlreadyExists);
 
             _mockUserRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
