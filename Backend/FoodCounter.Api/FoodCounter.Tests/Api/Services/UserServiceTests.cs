@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Entities;
+using FoodCounter.Api.Exceptions;
 
 namespace FoodCounter.Tests.Api.Services
 {
@@ -52,17 +53,19 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public void CreateUser_Bad_UsernameAlreadyExists()
         {
+            var userExists = UserDatas.listUsers.ElementAt(2);
+
             var badNewUser = new User
             {
-                Username = UserDatas.listUsers.ElementAt(2).Username,
+                Username = userExists.Username,
                 Email = "new@email.tld",
                 Password = "123456"
             };
 
             _mockUserRepository.Setup(m => m.GetOneByEmailAsync(UserDatas.newUser.Email)).ReturnsAsync(() => null);
-            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(badNewUser.Username)).ReturnsAsync(UserDatas.listUsers.ElementAt(2));
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(badNewUser.Username)).ReturnsAsync(userExists);
 
-            Assert.ThrowsAsync<ArgumentException>(() => _userService.CreateAsync(badNewUser))
+            Assert.ThrowsAsync<HttpConflictException>(() => _userService.CreateAsync(badNewUser))
                 .Equals(ResourceEn.UsernameAlreadyExists);
 
             _mockUserRepository.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Never);
@@ -73,16 +76,18 @@ namespace FoodCounter.Tests.Api.Services
         [Fact]
         public void CreateUser_Bad_EmailAlreadyExists()
         {
+            var userExists = UserDatas.listUsers.ElementAt(2);
+
             var badNewUser = new User
             {
                 Username = "newusername",
-                Email = UserDatas.listUsers.ElementAt(2).Email,
+                Email = userExists.Email,
                 Password = "123456"
             };
 
-            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(badNewUser.Email)).ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
+            _mockUserRepository.Setup(m => m.GetOneByEmailAsync(badNewUser.Email)).ReturnsAsync(userExists);
 
-            Assert.ThrowsAsync<ArgumentException>(() => _userService.CreateAsync(badNewUser))
+            Assert.ThrowsAsync<HttpConflictException>(() => _userService.CreateAsync(badNewUser))
                 .Equals(ResourceEn.EmailAlreadyExists);
 
             _mockUserRepository.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Never);
