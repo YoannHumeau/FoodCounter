@@ -1,4 +1,5 @@
 ﻿using FoodCounter.Api.Entities;
+using FoodCounter.Api.Exceptions;
 using FoodCounter.Api.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -35,12 +36,11 @@ namespace FoodCounter.Api.Services
         ///<inheritdoc/>
         public async Task<User> CreateAsync(User newUser)
         {
-            // TODO : Check that user already exists
             if (await _userRepository.GetOneByEmailAsync(newUser.Email) != null)
-                throw new ArgumentException(Resources.ResourceEn.EmailAlreadyExists);
+                throw new HttpConflictException(Resources.ResourceEn.EmailAlreadyExists);
 
             if (await _userRepository.GetOneByUsernameAsync(newUser.Username) != null)
-                throw new ArgumentException(Resources.ResourceEn.UsernameAlreadyExists);
+                throw new HttpConflictException(Resources.ResourceEn.UsernameAlreadyExists);
 
             var result = await _userRepository.CreateAsync(newUser);
 

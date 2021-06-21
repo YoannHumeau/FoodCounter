@@ -55,25 +55,13 @@ namespace FoodCounter.Api.Controllers
         {
             var newUser = _mapper.Map<User>(newUserCreationDto);
 
-            // Check errors and send http code 
+            var result = await _userService.CreateAsync(newUser);
 
-            try
-            { 
-                var result = await _userService.CreateAsync(newUser);
+            var resultDto = _mapper.Map<UserFullDto>(result);
 
-                var resultDto = _mapper.Map<UserFullDto>(result);
+            return Ok(result);
 
-                return Ok(result);
-            }
-            catch (ArgumentException e)
-            {
-                return Conflict(new { Message = e.Message });
-            }
-            catch(Exception e)
-            {
-                _logger.LogError(e.Message);
-                return StatusCode(500);
-            }
+            // TODO : send User Dto
         }
 
         /// <summary>
