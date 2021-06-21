@@ -82,6 +82,7 @@ namespace FoodCounter.Api.Controllers
         /// </summary>
         /// <returns>One user</returns>
         [HttpGet("{id}")]
+        [Authorize]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,9 +90,14 @@ namespace FoodCounter.Api.Controllers
         {
             var result = await _userService.GetOneByIdAsync(id);
 
-            // TODO : Return Dto different if is user or admin
+            object resultDto;
 
-            return Ok(result);
+            if (Helpers.IdentityHelper.IsUserAdmin(User))
+                resultDto = _mapper.Map<UserFullDto>(result);
+            else
+                resultDto = _mapper.Map<UserLimitedDto>(result);
+
+            return Ok(resultDto);
         }
 
         #endregion
