@@ -186,12 +186,52 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
+        public async void Login_Ok()
+        {
+            int userid = 2;
+            string tokenReturned = "RandomTokenForTheTest";
+
+            var userLoginDto = new UserLoginDto
+            {
+                Username = UserDatas.listUsers.ElementAt(userid).Username,
+                Password = UserDatas.listUsers.ElementAt(userid).Password
+            };
+
+            var userReturned = new User
+            {
+                Id = UserDatas.listUsers.ElementAt(userid).Id,
+                Username = UserDatas.listUsers.ElementAt(userid).Username,
+                Role = UserDatas.listUsers.ElementAt(userid).Role,
+                Token = tokenReturned
+            };
+
+            var userLoggedDto = new UserLoggedDto
+            {
+                Id = UserDatas.listUsers.ElementAt(userid).Id,
+                Username = UserDatas.listUsers.ElementAt(userid).Username,
+                Role = UserDatas.listUsers.ElementAt(userid).Role,
+                Token = tokenReturned
+            };
+
+            _mockUserService.Setup(m => m.Authenticate(userLoginDto.Username, userLoginDto.Password)).ReturnsAsync(userReturned);
+
+            var result = await _userController.Login(userLoginDto);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(userLoggedDto);
+
+            _mockUserService.Verify(m => m.Authenticate(userLoginDto.Username, userLoginDto.Password), Times.Once);
+        }
+
+        [Fact]
         public void Login_Bad_BadUsername()
         {
             var badUserLogin = new UserLoginDto
             {
                 Username = "TrollName",
-                Password = UserDatas.userLoginDto.Password
+                Password = UserDatas.listUsers.ElementAt(2).Password
             };
 
             _mockUserService.Setup(m => m.Authenticate(badUserLogin.Username, badUserLogin.Password)).ThrowsAsync(new HttpBadRequestException(ResourceEn.UserBadAuthentication));
@@ -211,7 +251,7 @@ namespace FoodCounter.Tests.Api.Controllers
         {
             var badUserLogin = new UserLoginDto
             {
-                Username = UserDatas.userLoginDto.Username,
+                Username = UserDatas.listUsers.ElementAt(2).Username,
                 Password = "TrollName"
             };
 

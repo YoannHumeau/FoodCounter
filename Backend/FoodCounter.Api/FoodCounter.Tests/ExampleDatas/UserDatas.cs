@@ -129,11 +129,5 @@ namespace FoodCounter.Tests.ExampleDatas
             Username = newUser.Username,
             Password = newUser.Password
         };
-
-        public static UserLoginDto userLoginDto = new UserLoginDto
-        {
-            Username = listUsers.ElementAt(2).Username,
-            Password = listUsers.ElementAt(2).Password
-        };
     }
 }
