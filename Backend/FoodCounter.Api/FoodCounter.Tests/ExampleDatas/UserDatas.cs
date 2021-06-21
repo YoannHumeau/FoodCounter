@@ -1,5 +1,6 @@
 ﻿using FoodCounter.Api.Entities;
 using FoodCounter.Api.Models.Dto;
+using System;
 using System.Collections.Generic;
 
 namespace FoodCounter.Tests.ExampleDatas
@@ -56,6 +57,14 @@ namespace FoodCounter.Tests.ExampleDatas
             Email = newUser.Email,
             Password = newUser.Password,
             Role = Role.User
+        };
+
+        public static UserFullDto newUserCreatedFullDto = new UserFullDto
+        {
+            Id = newUserCreated.Id,
+            Username = newUserCreated.Username,
+            Email = newUserCreated.Email,
+            Role = newUserCreated.Role
         };
 
         public static UserCreationDto newUserCreationModelDto = new UserCreationDto

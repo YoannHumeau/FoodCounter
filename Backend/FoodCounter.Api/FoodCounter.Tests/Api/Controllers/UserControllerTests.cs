@@ -45,7 +45,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
-            objectResult.Value.Should().Be(UserDatas.newUserCreated);
+            objectResult.Value.Should().BeEquivalentTo(UserDatas.newUserCreatedFullDto);
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
@@ -128,21 +128,18 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneUserById_Bad_NotFound()
+        public void GetOneUserById_Bad_NotFound()
         {
             int id = 777;
 
-            _mockUserService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+            _mockUserService.Setup(m => m.GetOneByIdAsync(id)).ThrowsAsync(new HttpNotFoundException(ResourceEn.UserNotFound));
 
-            var result = await _userController.GetOneByIdAsync(id);
-            var objectResult = result as NotFoundObjectResult;
+            IActionResult resultContent;
 
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.UserNotFound }));
+            Func<Task> result = async () => { resultContent = await _userController.GetOneByIdAsync(id); };
+            result.Should()
+                .Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.UserNotFound);
 
             _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
         }
