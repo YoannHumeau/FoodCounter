@@ -80,7 +80,7 @@ namespace FoodCounter.Api.Services
 
             // return null if user not found
             if (user == null)
-                return null;
+                throw new HttpBadRequestException(ResourceEn.UserBadAuthentication);
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -132,6 +132,9 @@
   <data name="ProblemDeleting" xml:space="preserve">
     <value>Problem while deleting</value>
   </data>
+  <data name="UserBadAuthentication" xml:space="preserve">
+    <value>Username or password is incorrect</value>
+  </data>
   <data name="UsernameAlreadyExists" xml:space="preserve">
     <value>The username already exists</value>
   </data>

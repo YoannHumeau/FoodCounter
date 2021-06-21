@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using FoodCounter.Api.Entities;
-using FoodCounter.Api.Models;
 using FoodCounter.Api.Models.Dto;
-using FoodCounter.Api.Resources;
 using FoodCounter.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -114,9 +112,6 @@ namespace FoodCounter.Api.Controllers
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
         {
             var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
 
             var userLoggedDto = _mapper.Map<UserLoggedDto>(user);
 

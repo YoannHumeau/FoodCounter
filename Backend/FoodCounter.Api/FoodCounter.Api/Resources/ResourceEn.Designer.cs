@@ -106,6 +106,15 @@ namespace FoodCounter.Api.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Username or password is incorrect.
+        /// </summary>
+        public static string UserBadAuthentication {
+            get {
+                return ResourceManager.GetString("UserBadAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à The username already exists.
         /// </summary>
         public static string UsernameAlreadyExists {
