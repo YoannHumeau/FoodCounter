@@ -356,5 +356,28 @@ namespace FoodCounter.Tests.Api.Services
             _mockAlimentConsumeRepository.Verify(m => m.DeleteAsync(id), Times.Never);
             _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
         }
+
+        [Fact]
+        public void DeleteAlimentConsume_Bad_Forbidden()
+        {
+            MockUser(4); // Simple user (Cassandra)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            int id = 2;
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
+            _mockAlimentConsumeRepository.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
+
+            bool resultContent;
+
+            Func<Task> result = async () => { resultContent = await alimentConsumeService.DeleteAsync(id); };
+
+            result.Should()
+                .Throw<HttpForbiddenException>()
+                .WithMessage(ResourceEn.AccessDenied);
+
+            _mockAlimentConsumeRepository.Verify(m => m.DeleteAsync(id), Times.Never);
+            _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
+        }
     }
 }
