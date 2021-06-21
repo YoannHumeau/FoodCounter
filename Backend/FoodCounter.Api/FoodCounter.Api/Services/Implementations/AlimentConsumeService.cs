@@ -65,12 +65,12 @@ namespace FoodCounter.Api.Services.Implementations
         public async Task<AlimentConsume> UpdateAsync(AlimentConsume newAlimentConsume)
         {
             // Check aliment-consume exists : Will throw http custom exception from GetOneByIdAsync() if does not exists
-            await GetOneByIdAsync(newAlimentConsume.Id);
+            var aliment = await GetOneByIdAsync(newAlimentConsume.Id);
+
+            if(aliment.UserId != Convert.ToInt64(_hcontext.User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(_hcontext.User))
+                throw new HttpForbiddenException(ResourceEn.AccessDenied);
 
             var result = await _alimentConsumeRepository.UpdateAsync(newAlimentConsume);
-
-            if(result.UserId != Convert.ToInt64(_hcontext.User.Identity.Name) && !Helpers.IdentityHelper.IsUserAdmin(_hcontext.User))
-                throw new HttpForbiddenException(ResourceEn.AccessDenied);
 
             return result;
         }
