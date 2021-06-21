@@ -28,6 +28,7 @@ namespace FoodCounter.Tests.Api.Services
             _mockAlimentConsumeRepository = new Mock<IAlimentConsumeRepository>();
             _mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
 
+            #region Dirty code to clean
             //var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             //{
             //    new Claim(ClaimTypes.Name, "example name"),
@@ -38,6 +39,9 @@ namespace FoodCounter.Tests.Api.Services
             //var wow = new DefaultHttpContext() { User = user };
 
             //_mockHttpContextAccessor.Setup(req => req.HttpContext).Returns(wow);
+            #endregion
+
+            // TODO : Find a way to mock and override in methods the mock for a different user
 
             _alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
         }
@@ -131,7 +135,8 @@ namespace FoodCounter.Tests.Api.Services
 
             Func<Task> result = async () => { resultContent = await alimentConsumeService.GetAllByUserIdAsync(userId); };
 
-            result.Should().Throw<HttpForbiddenException>()
+            result.Should()
+                .Throw<HttpForbiddenException>()
                 .WithMessage(ResourceEn.AccessDenied);
 
             _mockAlimentConsumeRepository.Verify(x => x.GetAllByUserIdAsync(userId), Times.Never);
@@ -185,7 +190,8 @@ namespace FoodCounter.Tests.Api.Services
 
             Func<Task> result = async () => { resultContent = await alimentConsumeService.GetOneByIdAsync(id); };
 
-            result.Should().Throw<HttpForbiddenException>()
+            result.Should()
+                .Throw<HttpForbiddenException>()
                 .WithMessage(ResourceEn.AccessDenied);
 
             _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
@@ -202,7 +208,8 @@ namespace FoodCounter.Tests.Api.Services
 
             Func<Task> result = async () => { resultContent = await _alimentConsumeService.GetOneByIdAsync(id); };
 
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should()
+                .Throw<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
