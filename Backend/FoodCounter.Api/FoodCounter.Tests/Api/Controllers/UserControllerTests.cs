@@ -14,6 +14,8 @@ using FoodCounter.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using FoodCounter.Api.Entities;
 using System;
+using FoodCounter.Api.Exceptions;
+using System.Threading.Tasks;
 
 namespace FoodCounter.Tests.Api.Controllers
 {
@@ -58,17 +60,14 @@ namespace FoodCounter.Tests.Api.Controllers
                 Password = "123456"
             };
 
-            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new ArgumentException(ResourceEn.UsernameAlreadyExists));
+            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new HttpConflictException(ResourceEn.UsernameAlreadyExists));
 
-            var result = await _userController.CreateAsync(badNewUser);
-            var objectResult = result as ObjectResult;
+            IActionResult resultContent;
 
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(409);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.UsernameAlreadyExists }));
+            Func<Task> result = async () => { resultContent = await _userController.CreateAsync(badNewUser); };
+            result.Should()
+                .Throw<HttpConflictException>()
+                .WithMessage(ResourceEn.UsernameAlreadyExists);
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
@@ -83,17 +82,14 @@ namespace FoodCounter.Tests.Api.Controllers
                 Password = "123456"
             };
 
-            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new ArgumentException(ResourceEn.EmailAlreadyExists));
+            _mockUserService.Setup(m => m.CreateAsync(It.IsAny<User>())).ThrowsAsync(new HttpConflictException(ResourceEn.EmailAlreadyExists));
 
-            var result = await _userController.CreateAsync(badNewUser);
-            var objectResult = result as ObjectResult;
+            IActionResult resultContent;
 
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(409);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.EmailAlreadyExists }));
+            Func<Task> result = async () => { resultContent = await _userController.CreateAsync(badNewUser); };
+            result.Should()
+                .Throw<HttpConflictException>()
+                .WithMessage(ResourceEn.EmailAlreadyExists);
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
