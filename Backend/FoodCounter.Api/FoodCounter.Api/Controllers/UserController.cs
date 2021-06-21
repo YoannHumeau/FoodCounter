@@ -59,9 +59,7 @@ namespace FoodCounter.Api.Controllers
 
             var resultDto = _mapper.Map<UserFullDto>(result);
 
-            return Ok(result);
-
-            // TODO : send User Dto
+            return Ok(resultDto);
         }
 
         /// <summary>
