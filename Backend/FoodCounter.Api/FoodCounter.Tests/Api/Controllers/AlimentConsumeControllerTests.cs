@@ -158,7 +158,6 @@ namespace FoodCounter.Tests.Api.Controllers
 
             var alimentConsumeId = AlimentConsumeDatas.afterUpdateAlimentConsume.Id;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(alimentConsumeId)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt((int)alimentConsumeId));
             _mockAlimentConsumeService.Setup(m => m.UpdateAsync(It.IsAny<AlimentConsume>())).ReturnsAsync(AlimentConsumeDatas.afterUpdateAlimentConsume);
 
             var result = await _alimentConsumeController.UpdateAsync(alimentConsumeId, AlimentConsumeDatas.updateAlimentConsumeUpdateDto);
@@ -169,28 +168,22 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Value.Should().BeEquivalentTo(AlimentConsumeDatas.afterUpdateAlimentConsumeDto);
 
             _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Once);
-            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(alimentConsumeId), Times.Once);
         }
 
         [Fact]
-        public async void UpdateAliment_Bad_NotFound()
+        public void UpdateAliment_Bad_NotFound()
         {
             int id = 777;
+            IActionResult resultContent = null;
 
-            _mockAlimentConsumeService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(() => null);
+            _mockAlimentConsumeService.Setup(m => m.UpdateAsync(It.IsAny<AlimentConsume>())).ThrowsAsync(new HttpNotFoundException(ResourceEn.AlimentConsumeNotFound));
 
-            var result = await _alimentConsumeController.UpdateAsync(id, AlimentConsumeDatas.updateAlimentConsumeUpdateDto);
-            var objectResult = result as NotFoundObjectResult;
+            Func<Task> result = async () => { resultContent = await _alimentConsumeController.UpdateAsync(id, AlimentConsumeDatas.updateAlimentConsumeUpdateDto); };
+            result.Should()
+                .Throw<HttpNotFoundException>()
+                .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
-            objectResult.Should().NotBeNull();
-            objectResult.StatusCode.Should().Be(404);
-
-            // Put the content as a json and compare
-            JsonConvert.SerializeObject(objectResult.Value).Should().Be(
-                JsonConvert.SerializeObject(new { Message = ResourceEn.AlimentConsumeNotFound }));
-
-            _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
-            _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Never);
+            _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Once);
         }
 
         [Fact]
