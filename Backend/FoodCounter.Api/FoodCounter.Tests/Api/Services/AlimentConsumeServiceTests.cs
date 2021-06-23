@@ -251,6 +251,33 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public void UpdateAlimentConsume_Bad_UserNotOwner()
+        {
+            MockUser(4); // Simple user (Benjamin)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            int id = 2;
+            var updateAlimentConsume = new AlimentConsume
+            {
+                Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Id,
+                Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Weight + 111
+            };
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
+
+            AlimentConsume resultContent;
+
+            Func<Task> result = async () => { resultContent = await alimentConsumeService.UpdateAsync(updateAlimentConsume); };
+
+            result.Should()
+                .Throw<HttpForbiddenException>()
+                .WithMessage(ResourceEn.AccessDenied);
+
+            _mockAlimentConsumeRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Never);
+        }
+
+        [Fact]
         public void UpdateAlimentConsume_Bad_NotFound()
         {
             MockUser(3); // Simple user (Benjamin)
