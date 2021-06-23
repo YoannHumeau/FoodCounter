@@ -54,16 +54,6 @@ namespace FoodCounter.Api.Repositories.Implementations
         }
 
         /// <inheritdoc/>
-        public async Task<User> GetOneByUsernameAndPassword(string username, string password)
-        {
-            var result = (await _connection.SelectAsync<User>(u => u.Username == username && u.Password == password)).FirstOrDefault();
-
-            return result;
-
-            // Make tests here
-        }
-
-        /// <inheritdoc/>
         public async Task<User> GetOneByUsernameAsync(string username)
         {
             var result = (await _connection.SelectAsync<User>(u => u.Username == username)).FirstOrDefault();
