@@ -141,7 +141,7 @@ namespace FoodCounter.Tests.Api.Services
         {
             int userId = 1;
 
-            var userReturned = new User
+            var userReturnedByDatabase = new User
             {
                 Id = UserDatas.listUsers.ElementAt(0).Id,
                 Username = UserDatas.listUsers.ElementAt(0).Username,
@@ -150,26 +150,12 @@ namespace FoodCounter.Tests.Api.Services
                 Role = UserDatas.listUsers.ElementAt(0).Role
             };
 
-            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(userReturned);
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(userReturnedByDatabase);
 
             var result = await _userService.Authenticate(UserDatas.listUsers.ElementAt(userId - 1).Username, UserDatas.listUserPasswords.ElementAt(userId - 1));
 
             result.Should().BeEquivalentTo(UserDatas.listUsers.ElementAt(userId - 1), opt => opt.Excluding(u => u.Token));
             result.Token.Should().NotBeNull();
-
-            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username), Times.Once);
-        }
-
-        [Fact]
-        public void Login_Bad_BadPassword()
-        {
-            int userId = 1;
-            string badPassword = "BadPassword";
-
-            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(() => null);
-
-            Assert.ThrowsAsync<HttpBadRequestException>(() => _userService.Authenticate(UserDatas.listUsers.ElementAt(userId - 1).Username, badPassword))
-                .Equals(ResourceEn.UserBadAuthentication);
 
             _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username), Times.Once);
         }
@@ -186,6 +172,29 @@ namespace FoodCounter.Tests.Api.Services
                 .Equals(ResourceEn.UserBadAuthentication);
 
             _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(badUsername), Times.Once);
+        }
+
+        [Fact]
+        public void Login_Bad_BadPassword()
+        {
+            int userId = 1;
+            string badPassword = "BadPassword";
+
+            var userReturnedByDatabase = new User
+            {
+                Id = UserDatas.listUsers.ElementAt(0).Id,
+                Username = UserDatas.listUsers.ElementAt(0).Username,
+                Email = UserDatas.listUsers.ElementAt(0).Email,
+                Password = UserDatas.listUsers.ElementAt(0).Password,
+                Role = UserDatas.listUsers.ElementAt(0).Role
+            };
+
+            _mockUserRepository.Setup(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username)).ReturnsAsync(userReturnedByDatabase);
+
+            Assert.ThrowsAsync<HttpBadRequestException>(() => _userService.Authenticate(UserDatas.listUsers.ElementAt(userId - 1).Username, badPassword))
+                .Equals(ResourceEn.UserBadAuthentication);
+
+            _mockUserRepository.Verify(m => m.GetOneByUsernameAsync(UserDatas.listUsers.ElementAt(userId - 1).Username), Times.Once);
         }
 
         #endregion
