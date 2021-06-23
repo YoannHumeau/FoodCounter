@@ -76,7 +76,7 @@ namespace FoodCounter.Tests.Api.Controllers
         // TODO : Check for failed creation Test 
 
         [Fact]
-        public async void GetOneAlimentById_Ok()
+        public async void GetOneAlimentConsumeById_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
 
@@ -97,7 +97,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void GetOneAlimentByIdFOrAnotherUserWithAdmin_Ok()
+        public async void GetOneAlimentConsumeByIdFOrAnotherUserWithAdmin_Ok()
         {
             MockUser(1); // Admin user (Wayne)
 
@@ -118,7 +118,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public void GetOneAlimentById_Bad_Forbidden_BadUser()
+        public void GetOneAlimentConsumeById_Bad_Forbidden_BadUser()
         {
             MockUser(3); // Simple user (Benjamin)
 
@@ -136,7 +136,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public void GetOneAlimentById_Bad_NotFound()
+        public void GetOneAlimentConsumeById_Bad_NotFound()
         {
             int id = 777;
             IActionResult resultContent = null;
@@ -152,7 +152,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void UpdateAliment_Ok()
+        public async void UpdateAlimentConsume_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
 
@@ -171,7 +171,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public void UpdateAliment_Bad_NotFound()
+        public void UpdateAlimentConsume_Bad_NotFound()
         {
             int id = 777;
             IActionResult resultContent = null;
