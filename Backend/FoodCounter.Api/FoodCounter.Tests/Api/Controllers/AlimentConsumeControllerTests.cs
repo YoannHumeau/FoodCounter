@@ -3,6 +3,7 @@ using FluentAssertions;
 using FoodCounter.Api.Controllers;
 using FoodCounter.Api.Exceptions;
 using FoodCounter.Api.Models;
+using FoodCounter.Api.Models.Dto;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Services;
 using FoodCounter.Tests.ExampleDatas;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -74,6 +76,31 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         // TODO : Check for failed creation Test 
+
+        [Fact]
+        public async void GetAllConsumeConsume_Ok_WithNoUserId()
+        {
+            long userId = 3; // Simple user (Benjamin)
+            MockUser(userId);
+
+            var listAlimentConsume = AlimentConsumeDatas.listAlimentConsumes.Where(ac => ac.UserId == userId);
+
+            // Generation of the alimentConsumesDto list for this user
+            var listAlimentConsumeDto = new List<AlimentConsumeDto>();
+            foreach(var alimentConsume in listAlimentConsume)
+                listAlimentConsumeDto.Add(AlimentConsumeDatas.listAlimentConsumesDto.ElementAt(Convert.ToInt32(alimentConsume.Id - 1)));
+
+            _mockAlimentConsumeService.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(listAlimentConsume);
+
+            var result = await _alimentConsumeController.GetAsync(0);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(listAlimentConsumeDto);
+
+            _mockAlimentConsumeService.Verify(m => m.GetAllByUserIdAsync(userId), Times.Once);
+        }
 
         [Fact]
         public async void GetOneAlimentConsumeById_Ok()
