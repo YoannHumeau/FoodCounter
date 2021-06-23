@@ -133,7 +133,7 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void GetAllUser_Ok_UserLogged()
         {
-            MockUser(1); // Simple user (Benjamin)
+            MockUser(3); // Simple user (Benjamin)
 
             _mockUserService.Setup(m => m.GetAllAsync()).ReturnsAsync(UserDatas.listUsers);
 
@@ -143,6 +143,7 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().BeEquivalentTo(UserDatas.listUsersLimitedDto);
+            objectResult.Value.Should().NotBeEquivalentTo(UserDatas.listUsersFullDto);
 
             _mockUserService.Verify(m => m.GetAllAsync(), Times.Once);
         }
