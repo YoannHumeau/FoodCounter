@@ -119,6 +119,28 @@ namespace FoodCounter.Tests.Api.Repositories
         }
 
         [Fact]
+        public async void UpdateAlimentConsume_Bad_BadId()
+        {
+            PrepareDatabase();
+
+            int id = 777;
+
+            var updateAlimentConsume = new AlimentConsume
+            {
+                Id = id,
+                Weight = 1234
+            };
+
+            // Check that the aliment in not database.
+            var resultBefore = await _alimentConsumeRepository.GetOneByIdAsync(id);
+            resultBefore.Should().BeNull();
+
+            var result = await _alimentConsumeRepository.UpdateAsync(updateAlimentConsume);
+
+            result.Should().BeNull();
+        }
+
+        [Fact]
         public async void DeleteAlimentConsume_Ok()
         {
             PrepareDatabase();
