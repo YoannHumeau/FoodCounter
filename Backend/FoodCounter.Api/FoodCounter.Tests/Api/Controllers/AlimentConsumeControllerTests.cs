@@ -103,6 +103,31 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
+        public async void GetAllConsumeConsume_Ok_WithUserId()
+        {
+            long userId = 3; // Simple user (Benjamin)
+            MockUser(userId);
+
+            var listAlimentConsume = AlimentConsumeDatas.listAlimentConsumes.Where(ac => ac.UserId == userId);
+
+            // Generation of the alimentConsumesDto list for this user
+            var listAlimentConsumeDto = new List<AlimentConsumeDto>();
+            foreach (var alimentConsume in listAlimentConsume)
+                listAlimentConsumeDto.Add(AlimentConsumeDatas.listAlimentConsumesDto.ElementAt(Convert.ToInt32(alimentConsume.Id - 1)));
+
+            _mockAlimentConsumeService.Setup(m => m.GetAllByUserIdAsync(userId)).ReturnsAsync(listAlimentConsume);
+
+            var result = await _alimentConsumeController.GetAsync(userId);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(listAlimentConsumeDto);
+
+            _mockAlimentConsumeService.Verify(m => m.GetAllByUserIdAsync(userId), Times.Once);
+        }
+
+        [Fact]
         public async void GetOneAlimentConsumeById_Ok()
         {
             MockUser(3); // Simple user (Benjamin)
