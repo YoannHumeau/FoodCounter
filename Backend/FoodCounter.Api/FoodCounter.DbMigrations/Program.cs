@@ -8,9 +8,11 @@ using FoodCounter.DbMigrations.V1;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Sqlite;
 using Dommel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FoodCounter.DbMigrations
 {
+    [ExcludeFromCodeCoverage]
     class Program
     {
         static void Main(string[] args)

@@ -24,11 +24,13 @@ using FoodCounter.Api.Repositories;
 using FoodCounter.Api.Repositories.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.CodeAnalysis;
 
 //using FoodCounter.Api.Exceptions;
 
 namespace FoodCounter.Api
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
