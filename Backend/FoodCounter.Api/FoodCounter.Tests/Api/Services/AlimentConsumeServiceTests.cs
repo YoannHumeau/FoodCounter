@@ -251,9 +251,44 @@ namespace FoodCounter.Tests.Api.Services
         }
 
         [Fact]
+        public async void UpdateAlimentConsume_Ok_UserNotOwnerButIsAdmin()
+        {
+            MockUser(1); // Admin user (Wayne)
+            var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
+
+            int id = 2;
+            long userId = 3;
+            var updateAlimentConsume = new AlimentConsume
+            {
+                Id = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Id,
+                Weight = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Weight + 111
+            };
+
+            var afterUpdateAlimentConsume = new AlimentConsume
+            {
+                Id = updateAlimentConsume.Id,
+                UserId = userId,
+                AlimentId = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).AlimentId,
+                Aliment = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).Aliment,
+                ConsumeDate = AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1).ConsumeDate,
+                Weight = updateAlimentConsume.Weight
+            };
+
+            _mockAlimentConsumeRepository.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(AlimentConsumeDatas.listAlimentConsumes.ElementAt(id - 1));
+            _mockAlimentConsumeRepository.Setup(m => m.UpdateAsync(updateAlimentConsume)).ReturnsAsync(afterUpdateAlimentConsume);
+
+            var result = await alimentConsumeService.UpdateAsync(updateAlimentConsume);
+
+            result.Should().BeEquivalentTo(afterUpdateAlimentConsume);
+
+            _mockAlimentConsumeRepository.Verify(m => m.UpdateAsync(updateAlimentConsume), Times.Once);
+            _mockAlimentConsumeRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+        }
+
+        [Fact]
         public void UpdateAlimentConsume_Bad_UserNotOwner()
         {
-            MockUser(4); // Simple user (Benjamin)
+            MockUser(4); // Simple user (Cassandra)
             var alimentConsumeService = new AlimentConsumeService(_mockAlimentConsumeRepository.Object, _mockHttpContextAccessor.Object);
 
             int id = 2;
