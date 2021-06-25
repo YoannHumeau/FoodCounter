@@ -61,7 +61,7 @@ namespace FoodCounter.Api
             // DbAccess injection
             services.AddScoped<DbAccess>(sp => new DbAccess(
                 Configuration.GetConnectionString("DatabaseType"),
-                Configuration.GetConnectionString("Default")));
+                Configuration.GetConnectionString("DatabaseConnectionString")));
 
             // Authentication configuration
             var jwtKey = Encoding.ASCII.GetBytes(Configuration.GetSection("Authentication:SecretJwtKey").Value);
