@@ -59,7 +59,7 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
-        public async void CreateAlimentConsume_Ok()
+        public async void CreateAlimentConsume_Ok_WithDate()
         {
             MockUser(3); // Simple user (Benjamin)
 
@@ -71,6 +71,49 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.Should().NotBeNull();
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().BeEquivalentTo(AlimentConsumeDatas.newAlimentConsumeCreatedDto);
+
+            _mockAlimentConsumeService.Verify(m => m.CreateAsync(It.IsAny<AlimentConsume>()), Times.Once);
+        }
+
+        [Fact]
+        public async void CreateAlimentConsume_Ok_WithoutDate()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            var date = DateTime.UtcNow;
+
+            var newAlimentConsumeCreationDtoWithoutDate = new AlimentConsumeCreationDto
+            {
+                AlimentId = AlimentConsumeDatas.newAlimentConsumeCreationDto.AlimentId,
+                Weight = AlimentConsumeDatas.newAlimentConsumeCreationDto.Weight
+            };
+
+            var newAlimentConsumeCreationDtoWithDate = new AlimentConsume
+            {
+                Id = AlimentConsumeDatas.newAlimentConsumeCreated.Id,
+                UserId = AlimentConsumeDatas.newAlimentConsumeCreated.UserId,
+                AlimentId = AlimentConsumeDatas.newAlimentConsumeCreated.AlimentId,
+                Aliment = AlimentConsumeDatas.newAlimentConsumeCreated.Aliment,
+                ConsumeDate = date,
+                Weight = AlimentConsumeDatas.newAlimentConsumeCreated.Weight
+            };
+
+            var newAlimentConsumeCreatedDto = new AlimentConsumeDto
+            {
+                Id = AlimentConsumeDatas.newAlimentConsumeCreated.Id,
+                Aliment = AlimentConsumeDatas.newAlimentConsumeCreated.Aliment,
+                ConsumeDate = date,
+                Weight = AlimentConsumeDatas.newAlimentConsumeCreated.Weight
+            };
+
+            _mockAlimentConsumeService.Setup(m => m.CreateAsync(It.IsAny<AlimentConsume>())).ReturnsAsync(newAlimentConsumeCreationDtoWithDate);
+
+            var result = await _alimentConsumeController.CreateAsync(newAlimentConsumeCreationDtoWithoutDate);
+            var objectResult = result as OkObjectResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(200);
+            objectResult.Value.Should().BeEquivalentTo(newAlimentConsumeCreatedDto);
 
             _mockAlimentConsumeService.Verify(m => m.CreateAsync(It.IsAny<AlimentConsume>()), Times.Once);
         }
