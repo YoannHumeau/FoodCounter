@@ -126,6 +126,9 @@
   <data name="AlimentNotFound" xml:space="preserve">
     <value>Aliment not found</value>
   </data>
+  <data name="DbError" xml:space="preserve">
+    <value>Db Error</value>
+  </data>
   <data name="EmailAlreadyExists" xml:space="preserve">
     <value>The email already exists</value>
   </data>

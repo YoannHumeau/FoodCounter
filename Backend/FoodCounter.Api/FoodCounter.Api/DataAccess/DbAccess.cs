@@ -30,7 +30,7 @@ namespace FoodCounter.Api.DataAccess.DataAccess
                     break;
                 default:
                     // TODO : Put some error logs here
-                    throw new System.Exception("DB Error");
+                    throw new System.Exception(Resources.ResourceEn.DbError);
             }
 
             Connection = connection;

@@ -88,6 +88,15 @@ namespace FoodCounter.Api.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Db Error.
+        /// </summary>
+        public static string DbError {
+            get {
+                return ResourceManager.GetString("DbError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à The email already exists.
         /// </summary>
         public static string EmailAlreadyExists {
