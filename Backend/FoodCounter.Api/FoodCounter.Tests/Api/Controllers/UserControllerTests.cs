@@ -85,7 +85,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _userController.CreateAsync(badNewUser); };
             result.Should()
-                .Throw<HttpConflictException>()
+                .ThrowAsync<HttpConflictException>()
                 .WithMessage(ResourceEn.UsernameAlreadyExists);
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
@@ -107,7 +107,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _userController.CreateAsync(badNewUser); };
             result.Should()
-                .Throw<HttpConflictException>()
+                .ThrowAsync<HttpConflictException>()
                 .WithMessage(ResourceEn.EmailAlreadyExists);
 
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
@@ -199,7 +199,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _userController.GetOneByIdAsync(id); };
             result.Should()
-                .Throw<HttpNotFoundException>()
+                .ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.UserNotFound);
 
             _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
@@ -300,7 +300,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _userController.Login(badUserLogin); };
             result.Should()
-                .Throw<HttpBadRequestException>()
+                .ThrowAsync<HttpBadRequestException>()
                 .WithMessage(ResourceEn.UserBadAuthentication);
 
             _mockUserService.Verify(m => m.Authenticate(badUserLogin.Username, badUserLogin.Password), Times.Once);
@@ -321,7 +321,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _userController.Login(badUserLogin); };
             result.Should()
-                .Throw<HttpBadRequestException>()
+                .ThrowAsync<HttpBadRequestException>()
                 .WithMessage(ResourceEn.UserBadAuthentication);
 
             _mockUserService.Verify(m => m.Authenticate(badUserLogin.Username, badUserLogin.Password), Times.Once);

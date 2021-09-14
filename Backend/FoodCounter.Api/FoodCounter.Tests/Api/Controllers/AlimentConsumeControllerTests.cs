@@ -224,7 +224,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _alimentConsumeController.GetOneByIdAsync(id); };
             result.Should()
-                .Throw<HttpForbiddenException>()
+                .ThrowAsync<HttpForbiddenException>()
                 .WithMessage(ResourceEn.AccessDenied);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
@@ -240,7 +240,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _alimentConsumeController.GetOneByIdAsync(id); };
             result.Should()
-                .Throw<HttpNotFoundException>()
+                .ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
@@ -275,7 +275,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _alimentConsumeController.UpdateAsync(id, AlimentConsumeDatas.updateAlimentConsumeUpdateDto); };
             result.Should()
-                .Throw<HttpNotFoundException>()
+                .ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeService.Verify(m => m.UpdateAsync(It.IsAny<AlimentConsume>()), Times.Once);
@@ -327,7 +327,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             Func<Task> result = async () => { resultContent = await _alimentConsumeController.GetOneByIdAsync(id); };
             result.Should()
-                .Throw<HttpNotFoundException>()
+                .ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentConsumeNotFound);
 
             _mockAlimentConsumeService.Verify(m => m.GetOneByIdAsync(id), Times.Once);

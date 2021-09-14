@@ -83,7 +83,7 @@ namespace FoodCounter.Tests.Api.Services
             Func<Task> result = async () => { resultContent = await _alimentService.GetOneByIdAsync(id); };
 
             // Check exception is returned (Come from GetAlimentById)
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should().ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentRepository.Verify(x => x.GetOneByIdAsync(id), Times.Once);
@@ -114,7 +114,7 @@ namespace FoodCounter.Tests.Api.Services
 
             Func<Task> result = async () => { resultContent = await _alimentService.GetOneByNameAsync(name); };
 
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should().ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentRepository.Verify(x => x.GetOneByNameAsync(name), Times.Once);
@@ -148,7 +148,7 @@ namespace FoodCounter.Tests.Api.Services
             Func<Task> result = async () => { resultContent = await _alimentService.UpdateAsync(updateAliment); };
 
             // Check exception is returned (Come from GetAlimentById)
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should().ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentRepository.Verify(m => m.GetOneByIdAsync(updateAliment.Id), Times.Once);
@@ -183,7 +183,7 @@ namespace FoodCounter.Tests.Api.Services
             Func<Task> result = async () => { resultContent = await _alimentService.DeleteAsync(id); };
 
             // Check exception is returned (Come from GetAlimentById)
-            result.Should().Throw<HttpNotFoundException>()
+            result.Should().ThrowAsync<HttpNotFoundException>()
                 .WithMessage(ResourceEn.AlimentNotFound);
 
             _mockAlimentRepository.Verify(m => m.GetOneByIdAsync(id), Times.Once);
