@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodCounter.Api.Services
+namespace FoodCounter.Api.Services.Implementations
 {
     /// <summary>
     /// User service class

@@ -11,6 +11,7 @@ using System;
 using FoodCounter.Api.Resources;
 using FoodCounter.Api.Entities;
 using FoodCounter.Api.Exceptions;
+using FoodCounter.Api.Services.Implementations;
 
 namespace FoodCounter.Tests.Api.Services
 {
