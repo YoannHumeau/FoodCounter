@@ -70,7 +70,7 @@ namespace FoodCounter.Api.Repositories.Implementations
         ///<inheritdoc/>
         public async Task<bool> UpdateUserPassword(User user, string newPassword)
         {
-            user.Password = newPassword;
+            // user.Password = newPassword;
 
             try
             {

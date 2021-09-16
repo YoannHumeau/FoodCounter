@@ -254,9 +254,9 @@ namespace FoodCounter.Tests.Api.Controllers
         [Fact]
         public async void UpdateUserPassword()
         {
-            MockUser(3); // Simple user (Benjamin)
+            MockUser(4); // Simple user (Benjamin)
 
-            int id = 3;
+            int id = 4;
             var user = UserDatas.listUsers.ElementAt(id - 1);
 
             _mockUserService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(user);

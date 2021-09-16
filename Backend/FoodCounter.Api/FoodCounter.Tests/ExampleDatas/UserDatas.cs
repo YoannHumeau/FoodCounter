@@ -16,6 +16,8 @@ namespace FoodCounter.Tests.ExampleDatas
             "Pa$$w0rd"
         };
 
+        public static string UserPasswordToUpdate = "PasswordUpdate";
+
         public static List<User> listUsers = new List<User>
         {
             new User
@@ -140,7 +142,7 @@ namespace FoodCounter.Tests.ExampleDatas
 
         public static UserUpdatePasswordDto userUpdatePassword = new UserUpdatePasswordDto
         {
-            Password = listUserPasswords.ElementAt(3)
+            Password = UserPasswordToUpdate
         };
 
         public static User userUpdatedPassword = new User
@@ -148,7 +150,7 @@ namespace FoodCounter.Tests.ExampleDatas
             Id = listUsers.ElementAt(3).Id,
             Username = listUsers.ElementAt(3).Username,
             Email = listUsers.ElementAt(3).Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(listUserPasswords.ElementAt(3)), // Use another password
+            Password = BCrypt.Net.BCrypt.HashPassword(UserPasswordToUpdate), // Use another password
             Role = listUsers.ElementAt(3).Role
         };
     }

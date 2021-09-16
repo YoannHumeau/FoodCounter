@@ -122,6 +122,7 @@ namespace FoodCounter.Api.Controllers
             var user = await _userService.GetOneByIdAsync(userId);
 
             var newPasswordHashed = BCrypt.Net.BCrypt.HashPassword(updatePassword.Password);
+            user.Password = newPasswordHashed;
 
             await _userService.UpdateUserPassword(user, newPasswordHashed);
 
