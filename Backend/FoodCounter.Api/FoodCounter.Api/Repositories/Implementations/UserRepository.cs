@@ -28,8 +28,6 @@ namespace FoodCounter.Api.Repositories.Implementations
         /// <inheritdoc/>
         public async Task<User> CreateAsync(User newUser)
         {
-            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
-
             var resultCreationId = await _connection.InsertAsync<User>(newUser);
 
             newUser.Id = Convert.ToInt64(resultCreationId);

@@ -53,6 +53,7 @@ namespace FoodCounter.Api.Controllers
         public async Task<IActionResult> CreateAsync(UserCreationDto newUserCreationDto)
         {
             var newUser = _mapper.Map<User>(newUserCreationDto);
+            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUserCreationDto.Password);
 
             var result = await _userService.CreateAsync(newUser);
 
