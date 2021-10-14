@@ -34,5 +34,13 @@ namespace FoodCounter.Api.Services
         /// <param name="password">Password</param>
         /// <returns></returns>
         public Task<User> Authenticate(string username, string password);
+
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="newPassword"></param>
+        /// <returns>Bool that say if passwor is updated</returns>
+        Task<bool> UpdateUserPassword(User user, string newPassword);
     }
 }

@@ -67,6 +67,17 @@ namespace FoodCounter.Api.Services.Implementations
             return result;
         }
 
+        ///<inheritdoc/>
+        public async Task<bool> UpdateUserPassword(User user, string newPassword)
+        {
+            var result = await _userRepository.UpdateUserPassword(user, newPassword);
+
+            if (!result)
+                throw new HttpInternalErrorException(ResourceEn.PasswordNotUpdated);
+
+            return result;
+        }
+
         #endregion
 
         #region Authentication
