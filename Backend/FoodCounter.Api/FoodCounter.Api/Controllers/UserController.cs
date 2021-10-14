@@ -105,6 +105,28 @@ namespace FoodCounter.Api.Controllers
             return Ok(resultDto);
         }
 
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="updatePassword">Model dor update password</param>
+        /// <returns>Statuts that inform if password is updated</returns>
+        [HttpPut("password")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateUserPassword(UserUpdatePassword updatePassword)
+        {
+            var userId = Convert.ToInt64(User.Identity.Name);
+
+            var user = await _userService.GetOneByIdAsync(userId);
+
+            var newPasswordHashed = BCrypt.Net.BCrypt.HashPassword(updatePassword.Password);
+
+            await _userService.UpdateUserPassword(user, newPasswordHashed);
+
+            return NoContent();
+        }
+
         #endregion
 
         #region Authentication

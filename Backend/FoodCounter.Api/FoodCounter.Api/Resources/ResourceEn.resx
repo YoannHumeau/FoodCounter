@@ -132,6 +132,9 @@
   <data name="EmailAlreadyExists" xml:space="preserve">
     <value>The email already exists</value>
   </data>
+  <data name="PasswordNotUpdated" xml:space="preserve">
+    <value>Password was not updated due to internal error</value>
+  </data>
   <data name="ProblemDeleting" xml:space="preserve">
     <value>Problem while deleting</value>
   </data>

@@ -54,6 +54,8 @@ namespace FoodCounter.Tests.Api.Controllers
             };
         }
 
+        #region User
+
         [Fact]
         public async void CreateUser_Ok()
         {
@@ -246,6 +248,32 @@ namespace FoodCounter.Tests.Api.Controllers
         }
 
         [Fact]
+        public async void UpdateUserPassword()
+        {
+            MockUser(3); // Simple user (Benjamin)
+
+            int id = 3;
+            var user = UserDatas.listUsers.ElementAt(id - 1);
+
+            _mockUserService.Setup(m => m.GetOneByIdAsync(id)).ReturnsAsync(user);
+            _mockUserService.Setup(m => m.UpdateUserPassword(It.IsAny<User>(), UserDatas.userUpdatePassword.Password)).ReturnsAsync(true);
+
+            var result = await _userController.UpdateUserPassword(UserDatas.userUpdatePassword);
+            var objectResult = result as NoContentResult;
+
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(204);
+
+            _mockUserService.Verify(m => m.UpdateUserPassword(It.IsAny<User>(), It.IsAny<string>()), Times.Once);
+            _mockUserService.Verify(m => m.UpdateUserPassword(It.IsAny<User>(), UserDatas.userUpdatePassword.Password), Times.Never);
+            _mockUserService.Verify(m => m.GetOneByIdAsync(id), Times.Once);
+        }
+
+        #endregion
+
+        #region Authenticate
+
+        [Fact]
         public async void Login_Ok()
         {
             int userid = 2;
@@ -326,5 +354,7 @@ namespace FoodCounter.Tests.Api.Controllers
 
             _mockUserService.Verify(m => m.Authenticate(badUserLogin.Username, badUserLogin.Password), Times.Once);
         }
+
+        #endregion
     }
 }

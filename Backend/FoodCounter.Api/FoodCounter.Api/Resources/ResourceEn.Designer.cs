@@ -106,6 +106,15 @@ namespace FoodCounter.Api.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Password was not updated due to internal error.
+        /// </summary>
+        public static string PasswordNotUpdated {
+            get {
+                return ResourceManager.GetString("PasswordNotUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Problem while deleting.
         /// </summary>
         public static string ProblemDeleting {
