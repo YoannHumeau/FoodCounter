@@ -137,5 +137,19 @@ namespace FoodCounter.Tests.ExampleDatas
             Username = newUser.Username,
             Password = newUser.Password
         };
+
+        public static UserUpdatePassword userUpdatePassword = new UserUpdatePassword
+        {
+            Password = listUserPasswords.ElementAt(3)
+        };
+
+        public static User userUpdatedPassword = new User
+        {
+            Id = listUsers.ElementAt(3).Id,
+            Username = listUsers.ElementAt(3).Username,
+            Email = listUsers.ElementAt(3).Email,
+            Password = BCrypt.Net.BCrypt.HashPassword(listUserPasswords.ElementAt(3)), // Use another password
+            Role = listUsers.ElementAt(3).Role
+        };
     }
 }

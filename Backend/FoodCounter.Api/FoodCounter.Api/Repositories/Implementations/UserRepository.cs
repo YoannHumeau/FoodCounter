@@ -68,5 +68,22 @@ namespace FoodCounter.Api.Repositories.Implementations
 
             return result;
         }
+
+        ///<inheritdoc/>
+        public async Task<bool> UpdateUserPassword(User user, string newPassword)
+        {
+            user.Password = newPassword;
+
+            try
+            {
+                await _connection.UpdateAsync(user);
+                return true;
+            }
+            catch (Exception e)
+            {
+                // TODO : log exception
+                return false;
+            }
+        }
     }
 }

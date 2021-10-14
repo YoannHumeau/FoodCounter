@@ -40,5 +40,13 @@ namespace FoodCounter.Api.Repositories
         /// <param name="email">Email of the user</param>
         /// <returns>One user</returns>
         public Task<User> GetOneByEmailAsync(string email);
+
+        /// <summary>
+        /// Update user password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="newPassword"></param>
+        /// <returns>Bool that say if passwor is updated</returns>
+        Task<bool> UpdateUserPassword(User user, string newPassword);
     }
 }
