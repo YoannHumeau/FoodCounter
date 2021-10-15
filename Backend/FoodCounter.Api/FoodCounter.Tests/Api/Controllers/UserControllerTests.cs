@@ -68,6 +68,10 @@ namespace FoodCounter.Tests.Api.Controllers
             objectResult.StatusCode.Should().Be(200);
             objectResult.Value.Should().BeEquivalentTo(UserDatas.newUserCreatedFullDto);
 
+            // TODO : Have to test that the password is hashed
+            // var newUserReturned = objectResult.Value as UserFullDto;
+            // BCrypt.Net.BCrypt.Verify(UserDatas.newUserCreated.Password, result.Password).Should().BeTrue();
+
             _mockUserService.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Once);
         }
 
