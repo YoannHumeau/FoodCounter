@@ -115,7 +115,7 @@ namespace FoodCounter.Api.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateUserPassword(UserUpdatePassword updatePassword)
+        public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordDto updatePassword)
         {
             var userId = Convert.ToInt64(User.Identity.Name);
 

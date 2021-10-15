@@ -2,7 +2,7 @@
 
 namespace FoodCounter.Api.Models.Dto
 {
-    public class UserUpdatePassword
+    public class UserUpdatePasswordDto
     {
         /// <summary>
         /// Password

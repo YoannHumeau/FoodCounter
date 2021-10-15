@@ -138,7 +138,7 @@ namespace FoodCounter.Tests.ExampleDatas
             Password = newUser.Password
         };
 
-        public static UserUpdatePassword userUpdatePassword = new UserUpdatePassword
+        public static UserUpdatePasswordDto userUpdatePassword = new UserUpdatePasswordDto
         {
             Password = listUserPasswords.ElementAt(3)
         };
